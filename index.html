@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b2c">
+  <meta name="description" content="Der digitale Adventskalender">
+  <title>Der digitale Adventskalender 🎄</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="snow">✦ ❄ ✦</div>
+      <p class="eyebrow">DER DIGITALE</p>
+      <h1>Adventskalender</h1>
+      <p class="subtitle">Jeden Tag ein kleines Türchen für die Pause.</p>
+      <div id="status" class="status"></div>
+    </header>
+
+    <section id="calendar" class="calendar" aria-label="Adventskalender"></section>
+
+    <section id="today" class="today hidden" aria-live="polite">
+      <div class="today-inner">
+        <div class="today-top">
+          <span id="todayEmoji" class="today-emoji"></span>
+          <div>
+            <div class="today-label">TÜRCHEN <span id="todayNumber"></span></div>
+            <h2 id="todayTitle"></h2>
+          </div>
+        </div>
+        <div id="todayContent" class="today-content"></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>🎄 Frohe Adventszeit!</span>
+      <span id="year"></span>
+    </footer>
+  </main>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
