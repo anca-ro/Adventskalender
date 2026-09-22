@@ -124,23 +124,16 @@ const ADVENT_CONTENT = {
     // ,media: { type: "youtube", url: "https://www.youtube.com/watch?v=VIDEO_ID", title: "Weihnachtsvideo" }
   },
   9: {
+  title: "Video-Türchen",
+  emoji: "🎬",
+  html: `<p>Heute gibt es ein kleines Video.</p>`,
+  media: {
+    type: "youtube",
+    url: "https://www.youtube.com/watch?v=NL4D1PcgZd4",
     title: "Weihnachtsvideo",
-    emoji: "🎬",
-    media: {
-  type: "youtube",
-  url: "https://www.youtube.com/watch?v=NL4D1PcgZd4",
-  title: "Weihnachtsvideo",
-  caption: "Viel Spaß beim Anschauen!"
-}
-    html: `
-      <p>Stellt euch vor, unser Team wäre ein Weihnachtsessen.</p>
-      <div class="card">
-        <p><strong>Welches Gericht wären wir – und warum?</strong></p>
-        <p>Glühwein zählt als Getränk und damit nicht als Ausweichantwort.</p>
-      </div>
-      
-    `
-  },
+    caption: "Viel Spaß beim Anschauen!"
+  }
+},  
   10: {
     title: "Geotechnik-Quiz",
     emoji: "🧪",
