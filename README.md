@@ -58,3 +58,57 @@ Die Website sammelt standardmäßig keine Namen, E-Mail-Adressen oder anderen pe
 Die Inhalte aller 24 Türchen sind bei dieser rein statischen Variante im JavaScript enthalten. Ein technisch versierter Nutzer kann sie vorab aus dem Quelltext auslesen. Für einen normalen Büro-Adventskalender ist das in der Regel ausreichend.
 
 Für echte Gewinnspiele oder geheime Inhalte wäre eine serverseitige Lösung sinnvoll.
+
+
+## Musik und YouTube-Videos in einem Türchen
+
+Jedes Türchen kann optional ein `media`-Feld besitzen. Der Player wird automatisch unter dem normalen Inhalt des Türchens angezeigt. Es gibt kein Autoplay.
+
+### Eigene MP3-Datei
+
+1. Lege im Repository einen Ordner `audio` an.
+2. Lade dort z. B. `weihnachtslied.mp3` hoch.
+3. Ergänze das gewünschte Türchen in `content.js`:
+
+```js
+11: {
+  title: "Weihnachtsmusik",
+  emoji: "🎵",
+  html: `<p>Heute gibt es etwas auf die Ohren.</p>`,
+  media: {
+    type: "audio",
+    src: "audio/weihnachtslied.mp3",
+    caption: "Kopfhörer auf oder gemeinsam anhören."
+  }
+}
+```
+
+Für MP3 ist kein `mime` nötig. Andere Formate können z. B. mit `mime: "audio/ogg"` angegeben werden.
+
+### YouTube-Video
+
+Ergänze beim gewünschten Türchen:
+
+```js
+8: {
+  title: "Video-Türchen",
+  emoji: "🎬",
+  html: `<p>Heute gibt es ein kleines Video.</p>`,
+  media: {
+    type: "youtube",
+    url: "https://www.youtube.com/watch?v=VIDEO_ID",
+    title: "Weihnachtsvideo",
+    caption: "Viel Spaß beim Anschauen!"
+  }
+}
+```
+
+Akzeptiert werden normale YouTube-Links, `youtu.be`-Links, Shorts-/Live-Links und eine reine 11-stellige YouTube-Video-ID. Die Einbettung verwendet `youtube-nocookie.com`.
+
+### Wichtig
+
+- Ein einzelnes Türchen sollte entweder `audio` oder `youtube` verwenden.
+- Medien starten nicht automatisch.
+- Bei eigenen Audiodateien auf Urheber-/Nutzungsrechte achten.
+- YouTube-Videos müssen das Einbetten auf externen Websites erlauben.
+- Große Video-Dateien sollten nicht direkt im GitHub-Repository gespeichert werden; dafür ist YouTube deutlich geeigneter.

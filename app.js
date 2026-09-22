@@ -11,7 +11,114 @@ function berlinDateParts() {
 }
 
 function getAdventState() {
-  return { state: "during", day: 10, year: 2026 };
+  const d = berlinDateParts();
+  if (d.month < 12 || (d.month === 12 && d.day < 1))
+    return { state: "before", day: 0, year: d.year };
+  if (d.month > 12 || (d.month === 12 && d.day > END_DAY))
+    return { state: "after", day: END_DAY, year: d.year };
+  return { state: "during", day: d.day, year: d.year };
+}
+
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function getYouTubeId(value) {
+  if (!value) return null;
+  const input = String(value).trim();
+
+  // Eine reine Video-ID kann direkt verwendet werden.
+  if (/^[A-Za-z0-9_-]{11}$/.test(input)) return input;
+
+  try {
+    const url = new URL(input);
+    const host = url.hostname.replace(/^www\./, "");
+
+    if (host === "youtu.be") {
+      const id = url.pathname.split("/").filter(Boolean)[0];
+      return /^[A-Za-z0-9_-]{11}$/.test(id || "") ? id : null;
+    }
+
+    if (host === "youtube.com" || host === "m.youtube.com" || host === "music.youtube.com") {
+      if (url.pathname === "/watch") {
+        const id = url.searchParams.get("v");
+        return /^[A-Za-z0-9_-]{11}$/.test(id || "") ? id : null;
+      }
+
+      const parts = url.pathname.split("/").filter(Boolean);
+      if (["embed", "shorts", "live"].includes(parts[0])) {
+        const id = parts[1];
+        return /^[A-Za-z0-9_-]{11}$/.test(id || "") ? id : null;
+      }
+    }
+  } catch (_) {
+    return null;
+  }
+
+  return null;
+}
+
+function renderMedia(media) {
+  if (!media || !media.type) return "";
+
+  const caption = media.caption
+    ? `<p class="media-caption">${escapeHtml(media.caption)}</p>`
+    : "";
+
+  if (media.type === "audio") {
+    if (!media.src) return "";
+    const src = escapeHtml(media.src);
+    const mime = escapeHtml(media.mime || "audio/mpeg");
+
+    return `
+      <div class="media-card">
+        <div class="media-heading">🎵 Musik</div>
+        <audio class="audio-player" controls preload="metadata">
+          <source src="${src}" type="${mime}">
+          Dein Browser unterstützt die Audiowiedergabe leider nicht.
+        </audio>
+        ${caption}
+      </div>
+    `;
+  }
+
+  if (media.type === "youtube") {
+    const id = getYouTubeId(media.url || media.id);
+    if (!id) {
+      return `
+        <div class="media-card media-error">
+          <strong>Video konnte nicht eingebunden werden.</strong>
+          <p>Bitte prüfe die YouTube-URL bzw. Video-ID in <code>content.js</code>.</p>
+        </div>
+      `;
+    }
+
+    const title = escapeHtml(media.title || "YouTube-Video zum Adventstürchen");
+    return `
+      <div class="media-card">
+        <div class="media-heading">🎬 Video</div>
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/${id}"
+            title="${title}"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+        ${caption}
+      </div>
+    `;
+  }
+
+  return "";
 }
 
 function render() {
@@ -60,7 +167,7 @@ function showDoor(day, scroll = true) {
   document.getElementById("todayNumber").textContent = day;
   document.getElementById("todayTitle").textContent = item.title;
   document.getElementById("todayEmoji").textContent = item.emoji;
-  document.getElementById("todayContent").innerHTML = item.html;
+  document.getElementById("todayContent").innerHTML = item.html + renderMedia(item.media);
 
   const section = document.getElementById("today");
   section.classList.remove("hidden");

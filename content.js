@@ -1,6 +1,16 @@
 /*
  * 24 fertige Türchen.
  * Du kannst später ausschließlich diese Datei ändern.
+ *
+ * Optional kann jedes Türchen zusätzlich ein `media`-Feld bekommen.
+ *
+ * AUDIO (Datei im Repository, z. B. /audio/lied.mp3):
+ * media: { type: "audio", src: "audio/lied.mp3", caption: "Heute gibt es Musik." }
+ *
+ * YOUTUBE (normale URL, youtu.be-Link oder 11-stellige Video-ID):
+ * media: { type: "youtube", url: "https://www.youtube.com/watch?v=VIDEO_ID", title: "Mein Video" }
+ *
+ * Hinweis: Hinter `html: `...`` muss vor `media:` ein Komma stehen.
  */
 const ADVENT_CONTENT = {
   1: {
@@ -110,6 +120,8 @@ const ADVENT_CONTENT = {
       </div>
       <p class="small">Ja. Das Niveau ist heute bewusst niedrig. Es ist schließlich Advent.</p>
     `
+    // Beispiel für dieses Türchen:
+    // ,media: { type: "youtube", url: "https://www.youtube.com/watch?v=VIDEO_ID", title: "Weihnachtsvideo" }
   },
   9: {
     title: "Team-Weihnachtsessen",
@@ -152,6 +164,8 @@ const ADVENT_CONTENT = {
         <p>Und anschließend eines, das sie definitiv nicht mehr hören kann.</p>
       </div>
     `
+    // Beispiel für eine eigene MP3-Datei im Unterordner audio:
+    // ,media: { type: "audio", src: "audio/weihnachtslied.mp3", caption: "Kopfhörer auf oder gemeinsam anhören." }
   },
   12: {
     title: "Halbzeit!",
