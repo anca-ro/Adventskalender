@@ -14,16 +14,6 @@ function getAdventState() {
   return { state: "during", day: 10, year: 2026 };
 }
 
-
-*  const d = berlinDateParts();
- * if (d.month < 12 || (d.month === 12 && d.day < 1))
-  *  return { state: "before", day: 0, year: d.year };
-  *if (d.month > 12 || (d.month === 12 && d.day > END_DAY))
-   * return { state: "after", day: END_DAY, year: d.year };
-  *return { state: "during", day: d.day, year: d.year };
-
-
-
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
