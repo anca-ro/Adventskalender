@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eaf2ed">
+<meta name="description" content="Ein kleines Winter-Arcade-Spiel: Räume verschneite Wege, sammle Pylone und entkomme den frechen Winterwichteln.">
+<title>Winterräumer · Winter-Arcade</title>
+<style>
+:root {color-scheme:light; --ink:#183e35; --muted:#64796e; --pine:#24614b; --mint:#dcebe0; --paper:#f8faf5; --gold:#e9af46; --red:#c65548}
+* {box-sizing:border-box}
+body {margin:0; min-height:100svh; color:var(--ink); font-family:ui-rounded,"Avenir Next",Avenir,system-ui,sans-serif; background:radial-gradient(ellipse at 16% 13%,#fffdf2 0,transparent 46%),radial-gradient(ellipse at 85% 80%,#dbece6 0,transparent 55%),#eaf2ed}
+body::before {content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;background-image:radial-gradient(#fff 1.4px,transparent 1.4px);background-size:37px 37px}
+button {font:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:manipulation}
+button:disabled {opacity:.4;cursor:default}
+button:focus-visible,a:focus-visible,canvas:focus-visible {outline:3px solid #d49029;outline-offset:5px}
+[hidden] {display:none!important}
+.shell {position:relative;width:min(100% - 64px,1000px);margin:0 auto;padding:28px 0 18px}
+.topline {display:flex;align-items:center;justify-content:space-between;padding-bottom:24px;font-size:11px;font-weight:800;letter-spacing:.18em}
+.brand {display:flex;align-items:center;gap:10px}.brand-mark {font-size:23px;color:var(--pine)}
+.edition {color:var(--muted);font-size:10px;letter-spacing:.13em}
+.layout {display:grid;grid-template-columns:minmax(230px,1fr) minmax(0,486px);gap:68px;align-items:center}
+.intro {padding-bottom:24px}.eyebrow {margin:0 0 15px;color:var(--pine);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+h1 {font-size:clamp(44px,5.2vw,65px);letter-spacing:-.065em;line-height:1.02;margin:0 0 21px;font-weight:850}h1 span {color:var(--pine)}
+.subtitle {font-size:16px;line-height:1.7;max-width:300px;color:var(--muted);margin:0 0 25px}
+.mission {border-top:1px solid #cbdacf;padding-top:22px;max-width:290px}.mission h2 {font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 17px}
+.legend {list-style:none;padding:0;margin:0;display:grid;gap:16px}.legend li {display:flex;align-items:center;gap:12px;font-size:13px;line-height:1.45}.legend-icon {flex:0 0 35px;height:35px;display:grid;place-items:center;border-radius:11px;background:#fff9;border:1px solid #d8e5da;font-size:21px;color:#6eaaa2}.legend-icon.cone {color:#c18b27;background:#fff4d7}.legend-icon.enemy {color:#c65565}.legend strong {display:block;font-size:13px}.legend small {font-size:11px;color:var(--muted)}
+.keyboard {margin-top:29px;font-size:11px;color:var(--muted);line-height:2}.keys {display:flex;gap:4px;margin-bottom:5px}kbd {display:inline-grid;place-items:center;min-width:25px;height:25px;border:1px solid #c8d8ce;border-bottom-width:3px;border-radius:6px;background:#ffffff80;font:600 11px system-ui;color:var(--ink)}
+.play-column {min-width:0}.game-top {display:flex;align-items:center;justify-content:space-between;margin:0 2px 10px}.round {font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.round i {display:inline-block;background:#3a8463;width:7px;height:7px;border-radius:50%;margin-right:7px}.tools {display:flex;gap:6px}.tool {display:grid;place-items:center;width:34px;height:32px;border:1px solid #cbdacf;border-radius:10px;background:#f8faf5;color:var(--pine);font-size:16px}.tool:hover {background:#fff}
+.machine {padding:10px;border:1px solid #fff;border-radius:23px;background:#fff9;box-shadow:0 20px 55px #20483713,0 3px 7px #20483708}
+.hud {display:grid;grid-template-columns:1fr 1fr 1fr;padding:7px 12px 13px;gap:8px}.stat {display:grid;gap:3px}.stat.center {text-align:center}.stat.right {text-align:right}.stat-label {font-size:9px;letter-spacing:.11em;font-weight:800;text-transform:uppercase;color:var(--muted)}.stat-value {font-size:24px;line-height:1.15;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.035em}.stat-value.best {font-size:20px;color:#708574}.hearts {color:var(--red);letter-spacing:2px;font-size:20px}.lost {opacity:.2}
+.board {position:relative;isolation:isolate;border:4px solid #366a54;border-radius:13px;overflow:hidden;background:#dcebea;box-shadow:0 2px 0 #204e3b;touch-action:none}#game {display:block;width:100%;height:auto;aspect-ratio:19/21;touch-action:none;outline-offset:-4px}
+.overlay {position:absolute;inset:0;z-index:3;display:grid;place-items:safe center;overflow-y:auto;padding:18px;background:#183c3333;backdrop-filter:blur(3px)}
+.card {width:100%;max-width:320px;padding:27px 24px 23px;border:1px solid #fff;border-radius:20px;background:#fffef6f5;box-shadow:0 15px 50px #113c3430;text-align:center}.card-icon {display:grid;place-items:center;margin:0 auto 15px;width:54px;height:54px;border:1px solid #d7e7d7;border-radius:18px;background:#e8f1e1;font-size:28px;color:var(--pine)}.card .eyebrow {font-size:9px;margin:0 0 10px;color:#9e7430}.card h2 {font-size:29px;line-height:1.12;letter-spacing:-.04em;margin:0 0 13px}.card p {font-size:13px;line-height:1.65;color:var(--muted);margin:0 0 20px}.primary {width:100%;padding:13px 12px;border:0;border-radius:10px;background:var(--pine);color:#fff;font-weight:750;font-size:14px;box-shadow:0 3px 0 #15432f}.primary:hover {background:#347659}.primary:active {transform:translateY(1px);box-shadow:0 2px 0 #15432f}.secondary {display:block;margin:15px auto 0;padding:3px;border:0;background:transparent;color:var(--muted);font-size:11px;text-decoration:underline;text-underline-offset:3px}.card-foot {display:block;margin-top:14px;font-size:10px;color:#879587}.result {font-size:38px!important;color:var(--pine)!important;font-weight:850;letter-spacing:-.04em;margin-bottom:10px!important}
+.countdown {position:absolute;z-index:2;left:50%;top:56%;transform:translate(-50%,-50%);background:#fffdefed;box-shadow:0 6px 24px #25473922;border:1px solid #fff;padding:12px 23px;border-radius:12px;text-align:center;pointer-events:none;white-space:nowrap;font-weight:800;font-size:19px}.countdown small {display:block;font-size:10px;font-weight:600;letter-spacing:.03em;color:var(--muted);margin-top:4px}
+.below {display:flex;justify-content:space-between;align-items:center;padding:13px 3px 5px;font-size:10px;color:var(--muted);gap:8px}.below strong {font-weight:750;color:var(--pine)}.meter {height:4px;border-radius:5px;overflow:hidden;background:#dbe6dc;margin:3px 3px 0}.meter span {display:block;width:0;height:100%;background:#3f9270;transition:width .15s linear}.power-bar {position:absolute;inset:0 0 auto;height:4px;background:#efd16d;z-index:1;transform:scaleX(0);transform-origin:left}.toast {position:absolute;z-index:2;top:15px;left:50%;transform:translateX(-50%);padding:7px 13px;max-width:90%;text-align:center;background:#184836ec;color:#fff8d7;border-radius:9px;font-size:11px;font-weight:700;pointer-events:none}
+.mobile-controls {display:none;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,42px);gap:5px;justify-content:center;margin-top:12px}.mobile-controls button {border:1px solid #c7dacf;border-bottom:3px solid #b7cdbd;border-radius:11px;background:#f9fcf7;color:var(--pine);font-size:19px;touch-action:none}.mobile-controls button:active {background:#d1e6d7;transform:translateY(1px)}[data-dir="up"] {grid-column:2}[data-dir="left"] {grid-column:1;grid-row:2}[data-dir="down"] {grid-column:2;grid-row:2}[data-dir="right"] {grid-column:3;grid-row:2}
+.footer {display:flex;justify-content:space-between;margin-top:22px;padding-top:14px;border-top:1px solid #d1dfd3;color:#7b8e80;font-size:10px}.footer a {color:inherit;text-decoration:none}.footer a:hover {color:var(--pine)}
+.sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:800px) {.shell{width:min(100% - 32px,750px)}.layout{gap:28px;grid-template-columns:minmax(190px,1fr) minmax(0,440px)}h1{font-size:45px}.subtitle{font-size:14px}.legend small{font-size:10px}.edition{display:none}}
+@media (min-width:621px) and (max-width:1050px) {h1 span{display:block}.keys{flex-wrap:wrap}}
+@media (max-width:620px) {.shell{width:min(100% - 24px,420px);padding-top:12px}.topline{padding-bottom:13px;font-size:9px}.brand-mark{font-size:18px}.layout{display:block}.intro{padding:0}.eyebrow,.mission,.keyboard{display:none}h1{font-size:35px;letter-spacing:-.055em;margin-bottom:5px}h1 br{display:none}.subtitle{font-size:12px;line-height:1.5;max-width:none;margin:0 0 15px}.play-column{width:min(100%,calc((100svh - 285px)*19/21));min-width:248px;margin:auto}.game-top{margin-bottom:7px}.round{font-size:9px}.tool{width:32px;height:29px}.machine{padding:7px;border-radius:18px}.hud{padding:5px 7px 10px}.stat-value{font-size:21px}.stat-value.best{font-size:18px}.stat-label{font-size:8px}.hearts{font-size:18px}.board{border-width:3px;border-radius:10px}.card{padding:18px 17px}.card-icon{width:43px;height:43px;font-size:23px;margin-bottom:11px}.card .eyebrow{display:block;font-size:8px}.card h2{font-size:24px;margin-bottom:9px}.card p{font-size:11px;margin-bottom:16px}.primary{font-size:12px;padding:11px}.card-foot{font-size:9px;margin-top:11px}.mobile-controls{display:grid}.below{font-size:9px;padding-top:10px}.footer{margin-top:14px;padding-top:10px;font-size:9px}.footer span{max-width:180px;text-align:right}}
+@media (pointer:coarse) and (min-width:621px) {.mobile-controls{display:grid}}
+@media (max-width:380px) {.play-column{width:100%;min-width:0}.overlay{padding:10px}.card{padding:15px 13px}.card-icon,.card .eyebrow,.card-foot{display:none}.card h2{font-size:21px}.card p{line-height:1.45;margin-bottom:12px}.card .result{font-size:27px!important}.secondary{margin-top:12px}.below{font-size:8px}}
+@media (prefers-reduced-motion:reduce) {*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="topline"><div class="brand"><span class="brand-mark" aria-hidden="true">✳</span> WINTER-ARCADE</div><span class="edition">KLEINE PAUSE. GROSSES WINTERABENTEUER.</span></header>
+  <div class="layout">
+    <aside class="intro">
+      <p class="eyebrow">Die Weihnachtsschicht beginnt</p>
+      <h1>Winter<span>räumer.</span></h1>
+      <p class="subtitle">Draußen fällt der Schnee.<br>Du machst den Weg frei.</p>
+      <section class="mission" aria-label="Spielregeln"><h2>Dein Einsatz</h2><ul class="legend">
+        <li><span class="legend-icon" aria-hidden="true">❄</span><div><strong>Aus Schnee wird Straße.</strong><small>Weiße Wege räumen. Asphalt bleibt frei.</small></div></li>
+        <li><span class="legend-icon cone" aria-hidden="true"><svg width="22" height="26" viewBox="0 0 24 28"><rect x="2" y="23" width="20" height="4" rx="1.5" fill="#ae4f26"/><path d="M10 2h4l6 21H4Z" fill="#f17e36" stroke="#bd5829"/><path d="M8.9 6h6.2l1.2 4.2H7.7ZM6.3 15h11.4l1.2 4.2H5.1Z" fill="#fff9e9"/></svg></span><div><strong>Pylon einsammeln. Power an.</strong><small>8 Sekunden lang kannst du Wichtel fangen.</small></div></li>
+        <li><span class="legend-icon enemy" aria-hidden="true">♟</span><div><strong>Die Wichtel sind unterwegs.</strong><small>Drei Leben. Drei Runden. Ein freies Dorf.</small></div></li>
+      </ul></section>
+      <div class="keyboard"><div class="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd><span style="padding:0 5px">oder</span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div>Richtung vor der Kreuzung vormerken.<br><kbd>P</kbd> Pause · Seitentunnel als Abkürzung nutzen.</div>
+    </aside>
+    <section class="play-column" aria-label="Winterräumer-Spiel">
+      <div class="game-top"><span class="round" id="round"><i></i>Runde 1 von 3</span><div class="tools"><button class="tool" id="sound" type="button" aria-label="Ton ausschalten" aria-pressed="true" title="Ton ausschalten">♫</button><button class="tool" id="pause" type="button" aria-label="Spiel pausieren" title="Pause (P)" disabled>Ⅱ</button></div></div>
+      <div class="machine">
+        <div class="hud"><div class="stat"><span class="stat-label">Punkte</span><span class="stat-value" id="score">0</span></div><div class="stat center"><span class="stat-label">Leben</span><span class="hearts" id="lives" aria-label="3 Leben">♥♥♥</span></div><div class="stat right"><span class="stat-label">Dein Rekord</span><span class="stat-value best" id="best">0</span></div></div>
+        <div class="board" id="board">
+          <canvas id="game" width="570" height="630" tabindex="0" aria-label="Winterräumer: Pfeiltasten oder WASD zum Fahren, P für Pause. Auf Touchscreens wischen oder die Richtungstasten benutzen.">Für dieses Spiel brauchst du einen Browser mit Canvas-Unterstützung.</canvas>
+          <div class="power-bar" id="power-bar"></div><div class="toast" id="toast" hidden></div>
+          <div class="countdown" id="countdown" hidden></div>
+          <div class="overlay" id="overlay"><div class="card">
+            <div class="card-icon" id="card-icon" aria-hidden="true">❄</div><p class="eyebrow" id="card-kicker">Dein Dorf zählt auf dich</p>
+            <h2 id="card-title">Bereit für die<br>erste Schneeschicht?</h2><p id="card-text">Räume alle Flocken und weich den Wichteln aus. Die orangefarbenen Pylone geben dir Räum-Power!</p>
+            <p class="result" id="result" hidden></p><button class="primary" id="start" type="button">Motor an & los! &nbsp; →</button><button class="secondary" id="restart" type="button" hidden>Neue Partie starten</button><span class="card-foot" id="card-foot">Pfeiltasten / WASD · Mobil: wischen oder Pfeile</span>
+          </div></div>
+        </div>
+        <div class="below"><span id="progress-text">0 von 180 geräumt</span><strong id="power-text">▲ Pylone geben Räum-Power</strong></div><div class="meter" role="progressbar" aria-label="Geräumte Wege" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><span id="progress-fill"></span></div>
+      </div>
+      <div class="mobile-controls" aria-label="Richtung wählen"><button data-dir="up" type="button" aria-label="Nach oben">↑</button><button data-dir="left" type="button" aria-label="Nach links">←</button><button data-dir="down" type="button" aria-label="Nach unten">↓</button><button data-dir="right" type="button" aria-label="Nach rechts">→</button></div>
+    </section>
+  </div>
+  <footer class="footer"><a href="index.html">← Zum Adventskalender</a><span>Mit einer Prise Winterzauber. &nbsp; ✳</span></footer>
+  <p class="sr-only" role="status" aria-live="polite" id="announcement"></p>
+  <noscript>Bitte aktiviere JavaScript, um den Winterräumer zu spielen.</noscript>
+</main>
+<audio id="winter-music" src="audio/Der%20Schneepflug-Cowboy.mp3" preload="auto" loop></audio>
+
+<script id="winter-engine">
+/* Pure simulation; the renderer and the tests use these same rules. */
+const WINTER_MAP = [
+  '###################',
+  '#........#........#',
+  '#.##.###.#.###.##.#',
+  '#o##.###.#.###.##o#',
+  '#.................#',
+  '#.##.#.#####.#.##.#',
+  '#....#...#...#....#',
+  '####.###.#.###.####',
+  '####.#.......#.####',
+  '####.#.##.##.#.####',
+  '.....#.#   #.#.....',
+  '####.#.#   #.#.####',
+  '####.#.#####.#.####',
+  '#........#........#',
+  '#.##.###.#.###.##.#',
+  '#o.#.....S.....#.o#',
+  '##.#.#.#####.#.#.##',
+  '#....#...#...#....#',
+  '#.######.#.######.#',
+  '#.................#',
+  '###################'
+];
+const WINTER_LEVELS = [
+  {
+    name: 'Winterdorf', ghostSpeed: 4.35, frightenedSpeed: 3.1,
+    palette: {"edge": "#397457", "face": "#528368", "shadow": "#bdd0c5"},
+    map: WINTER_MAP
+  },
+  {
+    name: 'Frostviertel', ghostSpeed: 4.75, frightenedSpeed: 3.25,
+    palette: {"edge": "#3c617b", "face": "#64869e", "shadow": "#bdd1de"},
+    map: [
+      '###################',
+      '#.................#',
+      '#.###.###.###.###.#',
+      '#o....#.....#....o#',
+      '#.##.##.#.#.##.##.#',
+      '#.................#',
+      '####.###.#.###.####',
+      '####.###.#.###.####',
+      '####.#.......#.####',
+      '####.#.##.##.#.####',
+      '.....#.#   #.#.....',
+      '####.#.#   #.#.####',
+      '####.#.#####.#.####',
+      '#.................#',
+      '#.##.###.#.###.##.#',
+      '#o.#.....S.....#.o#',
+      '##.#.##.###.##.#.##',
+      '#....#.......#....#',
+      '#.##.#.#####.#.##.#',
+      '#.................#',
+      '###################'
+    ]
+  },
+  {
+    name: 'Nordring', ghostSpeed: 5.15, frightenedSpeed: 3.4,
+    palette: {"edge": "#694f6c", "face": "#92758f", "shadow": "#d3c3d1"},
+    map: [
+      '###################',
+      '#........#........#',
+      '#.###.##.#.##.###.#',
+      '#o..#....#....#..o#',
+      '###.#.##.#.##.#.###',
+      '#.................#',
+      '#.##.###.#.###.##.#',
+      '#.##.###.#.###.##.#',
+      '#....#.......#....#',
+      '#.##.#.##.##.#.##.#',
+      '.....#.#   #.#.....',
+      '#.##.#.#   #.#.##.#',
+      '#.##.#.#####.#.##.#',
+      '#....#.......#....#',
+      '#.##.#.#.#.#.#.##.#',
+      '#o.......S.......o#',
+      '###.###.###.###.###',
+      '#.....#.....#.....#',
+      '#.###.#.#.#.#.###.#',
+      '#.................#',
+      '###################'
+    ]
+  }
+];
+const WINTER_DIRS = {
+  up: {x: 0, y: -1}, left: {x: -1, y: 0},
+  down: {x: 0, y: 1}, right: {x: 1, y: 0}
+};
+const WINTER_REVERSE = {up: 'down', down: 'up', left: 'right', right: 'left'};
+class WinterGame {
+  constructor(random = Math.random) {
+    this.random = random;
+    this.width = 19; this.height = 21; this.events = [];
+    this.start(); this.state = 'ready'; this.events = [];
+  }
+  start() {
+    this.score = 0; this.lives = 3; this.round = 1; this.elapsed = 0;
+    this.events = []; this.loadRound();
+  }
+  loadRound() {
+    this.level = WINTER_LEVELS[this.round - 1];
+    this.grid = this.level.map.map(row => [...row].map(c => c === 'S' ? ' ' : c));
+    this.total = this.grid.flat().filter(c => c === '.' || c === 'o').length;
+    this.remaining = this.total; this.roundTime = 0; this.power = 0; this.combo = 0;
+    this.resetActors(); this.countdown = 1.5; this.state = 'countdown';
+    this.events.push({type: 'round', round: this.round});
+  }
+  actor(x, y, dir) { return {x, y, dir, next: null, progress: 0, wait: 0}; }
+  resetActors() {
+    this.player = {...this.actor(9, 15, 'left'), want: 'left'};
+    this.ghosts = ['#d75d63', '#a478bd', '#de9b38', '#4c98b1'].map((color, i) => ({
+      ...this.actor(9, 10, 'up'), color, index: i, wait: 2 + i * 2.1
+    }));
+    this.grace = 2.5;
+  }
+  neighbor(x, y, dir) {
+    const d = WINTER_DIRS[dir]; if (!d) return null;
+    let nx = x + d.x, ny = y + d.y;
+    if (ny === 10) nx = (nx + this.width) % this.width;
+    if (nx < 0 || nx >= this.width || ny < 0 || ny >= this.height || this.grid[ny][nx] === '#') return null;
+    return {x: nx, y: ny};
+  }
+  position(a) {
+    const d = a.next ? WINTER_DIRS[a.dir] : {x: 0, y: 0};
+    return {x: a.x + d.x * a.progress, y: a.y + d.y * a.progress};
+  }
+  request(dir) {
+    if (!WINTER_DIRS[dir] || !['playing', 'countdown'].includes(this.state)) return;
+    const p = this.player; p.want = dir;
+    // Reverse the segment without changing the physical position.
+    if (p.next && dir === WINTER_REVERSE[p.dir]) {
+      const old = {x: p.x, y: p.y}; p.x = p.next.x; p.y = p.next.y;
+      p.next = old; p.progress = 1 - p.progress; p.dir = dir;
+    }
+  }
+  pause() {
+    if (!['playing', 'countdown'].includes(this.state)) return;
+    this.previousState = this.state; this.state = 'paused';
+  }
+  resume() { if (this.state === 'paused') this.state = this.previousState; }
+  nextRound() { if (this.state === 'roundwon') { this.round++; this.loadRound(); } }
+  distances(target) {
+    // BFS respects the maze and the two-way tunnel; no Array.shift per visit.
+    let nearest = null, best = Infinity;
+    for (let y = 0; y < this.height; y++) for (let x = 0; x < this.width; x++) {
+      if (this.grid[y][x] === '#') continue;
+      const d = Math.abs(x - target.x) + Math.abs(y - target.y);
+      if (d < best) { best = d; nearest = {x, y}; }
+    }
+    const dist = new Int16Array(this.width * this.height).fill(-1), queue = [nearest];
+    dist[nearest.y * this.width + nearest.x] = 0;
+    for (let head = 0; head < queue.length; head++) {
+      const p = queue[head];
+      for (const dir of Object.keys(WINTER_DIRS)) {
+        const n = this.neighbor(p.x, p.y, dir); if (!n) continue;
+        const key = n.y * this.width + n.x;
+        if (dist[key] !== -1) continue;
+        dist[key] = dist[p.y * this.width + p.x] + 1; queue.push(n);
+      }
+    }
+    return dist;
+  }
+  ghostDirection(g) {
+    let options = Object.keys(WINTER_DIRS).filter(dir => this.neighbor(g.x, g.y, dir));
+    // The depot has one exit. Leaving it takes priority over frightened AI,
+    // otherwise maximizing distance can trap a ghost in its six-cell loop.
+    if (this.inDepot(g.x, g.y)) {
+      const distance = this.distances({x: 9, y: 8});
+      return options.sort((a, b) => {
+        const na = this.neighbor(g.x, g.y, a), nb = this.neighbor(g.x, g.y, b);
+        return distance[na.y * this.width + na.x] - distance[nb.y * this.width + nb.x];
+      })[0];
+    }
+    options = options.filter(dir => {
+      const n = this.neighbor(g.x, g.y, dir);
+      return !this.inDepot(n.x, n.y);
+    });
+    const forward = options.filter(dir => dir !== WINTER_REVERSE[g.dir]);
+    if (forward.length) options = forward;
+    const corners = [{x: 17, y: 1}, {x: 1, y: 1}, {x: 17, y: 19}, {x: 1, y: 19}];
+    const scatter = this.roundTime % 24 < 6;
+    const p = this.player, d = WINTER_DIRS[p.dir];
+    let target = scatter ? corners[g.index] : p;
+    if (!scatter && g.index === 1) target = {x: p.x + d.x * 3, y: p.y + d.y * 3};
+    if (!scatter && g.index === 2 && Math.hypot(g.x - p.x, g.y - p.y) < 5) target = corners[2];
+    if (!scatter && g.index === 3 && this.random() < .24) return options[Math.floor(this.random() * options.length)];
+    const dist = this.distances(this.power > 0 ? p : target);
+    options.sort((a, b) => {
+      const na = this.neighbor(g.x, g.y, a), nb = this.neighbor(g.x, g.y, b);
+      const delta = dist[na.y * this.width + na.x] - dist[nb.y * this.width + nb.x];
+      return this.power > 0 ? -delta : delta;
+    });
+    return options[0];
+  }
+  inDepot(x, y) { return (x >= 8 && x <= 10 && y >= 10 && y <= 11) || (x === 9 && y === 9); }
+  ghostSpeed(g) {
+    return this.power > 0 ? this.level.frightenedSpeed : this.level.ghostSpeed + g.index * .06;
+  }
+  move(a, distance, isPlayer) {
+    while (distance > 1e-8 && this.state === 'playing') {
+      if (!a.next) {
+        const dir = isPlayer ? (this.neighbor(a.x, a.y, a.want) ? a.want : a.dir) : this.ghostDirection(a);
+        const next = this.neighbor(a.x, a.y, dir); if (!next) return;
+        a.dir = dir; a.next = next; a.progress = 0;
+      }
+      const part = Math.min(distance, 1 - a.progress);
+      a.progress += part; distance -= part;
+      if (a.progress >= 1 - 1e-8) {
+        a.x = a.next.x; a.y = a.next.y; a.next = null; a.progress = 0;
+        if (isPlayer) this.collect();
+      }
+    }
+  }
+  collect() {
+    const p = this.player, tile = this.grid[p.y][p.x];
+    if (tile !== '.' && tile !== 'o') return;
+    this.grid[p.y][p.x] = ' '; this.remaining--; this.score += tile === 'o' ? 50 : 10;
+    if (tile === 'o') { this.power = 8; this.combo = 0; }
+    this.events.push({type: tile === 'o' ? 'power' : 'collect', x: p.x, y: p.y});
+    if (!this.remaining) {
+      this.score += 500; this.state = this.round === 3 ? 'won' : 'roundwon';
+      this.events.push({type: this.state});
+    }
+  }
+  collide() {
+    const p = this.position(this.player);
+    for (const g of this.ghosts) {
+      if (g.wait > 0) continue;
+      const q = this.position(g);
+      let dx = Math.abs(p.x - q.x); dx = Math.min(dx, this.width - dx);
+      if (Math.hypot(dx, p.y - q.y) >= .63) continue;
+      if (this.power > 0) {
+        const points = 100 * 2 ** Math.min(this.combo++, 3); this.score += points;
+        this.events.push({type: 'ghost', x: q.x, y: q.y, points});
+        Object.assign(g, this.actor(9, 10, 'up'), {wait: 4});
+      } else if (this.grace <= 0) {
+        this.lives--; this.power = 0; this.events.push({type: 'hit'});
+        if (!this.lives) { this.state = 'gameover'; this.events.push({type: 'gameover'}); }
+        else { this.resetActors(); this.countdown = 1.2; this.state = 'countdown'; }
+        return;
+      }
+    }
+  }
+  update(dt) {
+    if (this.state === 'countdown') {
+      this.countdown = Math.max(0, this.countdown - dt);
+      if (this.countdown === 0) this.state = 'playing';
+      return;
+    }
+    if (this.state !== 'playing') return;
+    this.elapsed += dt; this.roundTime += dt;
+    this.power = Math.max(0, this.power - dt); this.grace = Math.max(0, this.grace - dt);
+    this.move(this.player, dt * 6.2, true);
+    // The final snowflake commits the win before any further actor update.
+    if (this.state !== 'playing') return;
+    for (const g of this.ghosts) {
+      if (g.wait > 0) { g.wait = Math.max(0, g.wait - dt); continue; }
+      this.move(g, dt * this.ghostSpeed(g), false);
+    }
+    this.collide();
+  }
+}
+if (typeof module !== 'undefined' && module.exports) module.exports = {WinterGame, WINTER_MAP, WINTER_LEVELS, WINTER_DIRS};
+</script>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const canvas = $('game'), ctx = canvas.getContext('2d');
+  const game = new WinterGame(), S = 30, W = 570, H = 630, STEP = 1 / 120;
+  const terrain = document.createElement('canvas');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const storageKey = 'adventMiniGameHighscores';
+  let best = readBest(), soundOn = true, audio = null, frame = null;
+  let last = 0, accumulator = 0, lastState = 'ready', particles = [], toastTime = 0, visualTime = 0;
+  let pointer = null, density = 1;
+  const text = (id, value) => { if ($(id).textContent !== String(value)) $(id).textContent = value; };
+  function readScores() {
+    try {
+      const data = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      return data && typeof data === 'object' && !Array.isArray(data) ? data : {};
+    } catch { return {}; }
+  }
+  function readBest() {
+    const value = Number(readScores().winterRaeumer);
+    return Number.isFinite(value) && value > 0 ? Math.floor(value) : 0;
+  }
+  function saveBest() {
+    best = Math.max(best, readBest(), game.score);
+    try { const scores = readScores(); scores.winterRaeumer = best; localStorage.setItem(storageKey, JSON.stringify(scores)); } catch {}
+    if (window.parent !== window && location.origin !== 'null') {
+      window.parent.postMessage({type: 'advent-minigame-highscore', game: 'winterRaeumer', score: best}, location.origin);
+    }
+  }
+  function tone(frequency, duration = .08, volume = .025) {
+    if (!soundOn) return;
+    try {
+      audio ??= new (window.AudioContext || window.webkitAudioContext)();
+      if (audio.state === 'suspended') audio.resume().catch(() => {});
+      const oscillator = audio.createOscillator(), gain = audio.createGain();
+      oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(frequency, audio.currentTime);
+      gain.gain.setValueAtTime(volume, audio.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + duration);
+      oscillator.connect(gain); gain.connect(audio.destination); oscillator.start(); oscillator.stop(audio.currentTime + duration);
+    } catch {}
+  }
+  function syncMusic() {
+    const music = $('winter-music');
+    if (!soundOn || !running()) { if (!music.paused) music.pause(); return; }
+    if (music.paused) music.play().catch(() => {});
+  }
+  function announce(message) { text('announcement', message); }
+  function toast(message) { text('toast', message); $('toast').hidden = false; toastTime = 2; announce(message); }
+  function roundRect(c, x, y, w, h, r, fill) { c.fillStyle = fill; c.beginPath(); c.roundRect(x, y, w, h, r); c.fill(); }
+  function paintRoad(c, x, y) {
+    const px = x * S, py = y * S, cx = px + S / 2, cy = py + S / 2;
+    const exits = Object.keys(WINTER_DIRS).filter(dir => game.neighbor(x, y, dir));
+    c.fillStyle = '#dce8e8'; c.fillRect(px, py, S, S);
+    roundRect(c, px + 2, py + 2, S - 4, S - 4, 4, '#637179');
+    c.fillStyle = '#637179';
+    for (const dir of exits) {
+      const d = WINTER_DIRS[dir];
+      if (d.x) c.fillRect(d.x < 0 ? px : cx, py + 2, S / 2, S - 4);
+      else c.fillRect(px + 2, d.y < 0 ? py : cy, S - 4, S / 2);
+    }
+    // Short centre-line dashes follow the real street, including bends.
+    c.strokeStyle = '#eadbb0'; c.lineWidth = 1.4; c.beginPath();
+    for (const dir of exits) {
+      const d = WINTER_DIRS[dir];
+      c.moveTo(cx + d.x * 6, cy + d.y * 6); c.lineTo(cx + d.x * 11, cy + d.y * 11);
+    }
+    c.stroke();
+    c.fillStyle = '#a7b2b52e'; c.fillRect(px + 6, py + 7, 2, 1); c.fillRect(px + 22, py + 23, 2, 1);
+  }
+  function paintTerrain() {
+    terrain.width = Math.round(W * density); terrain.height = Math.round(H * density);
+    const c = terrain.getContext('2d'); c.setTransform(density, 0, 0, density, 0, 0);
+    const palette = game.level.palette;
+    $('board').style.borderColor = palette.edge;
+    c.fillStyle = '#e1eeee'; c.fillRect(0, 0, W, H);
+    for (let y = 0; y < 21; y++) for (let x = 0; x < 19; x++) {
+      const px = x * S, py = y * S;
+      if (game.grid[y][x] !== '#') {
+        paintRoad(c, x, y);
+        continue;
+      }
+      const left = x > 0 && game.grid[y][x - 1] === '#', right = x < 18 && game.grid[y][x + 1] === '#';
+      const above = y > 0 && game.grid[y - 1][x] === '#', below = y < 20 && game.grid[y + 1][x] === '#';
+      const ax = px + (left ? 0 : 3), ay = py + (above ? 0 : 3);
+      const aw = S - (left ? 0 : 3) - (right ? 0 : 3), ah = S - (above ? 0 : 3) - (below ? 0 : 3);
+      roundRect(c, ax, ay + 2, aw, ah, 5, palette.shadow);
+      roundRect(c, ax, ay, aw, ah, 5, palette.edge);
+      roundRect(c, ax + 1, ay + 1, aw - 2, ah - 4, 4, palette.face);
+      if (!above) roundRect(c, ax, ay, aw, 6, 3, '#f6fcf4');
+      c.fillStyle = '#ffffff0d'; c.beginPath(); c.arc(px + 15, py + 15, 5, 0, Math.PI * 2); c.fill();
+      if ((x * 3 + y * 7) % 9 === 0) {
+        c.fillStyle = '#d46c5d'; c.beginPath(); c.arc(px + 12, py + 16, 2, 0, 7); c.arc(px + 17, py + 18, 1.6, 0, 7); c.fill();
+      }
+      if ((x + y * 3) % 13 === 0) { c.fillStyle = '#f0d48c'; c.fillRect(px + 20, py + 12, 2.5, 2.5); }
+    }
+    // A marked depot floor, never a roof over a traversable street.
+    roundRect(c, 8 * S, 10 * S, S * 3, S * 2, 8, '#d5e1df');
+    c.save(); c.strokeStyle = '#86ac98'; c.lineWidth = 1; c.setLineDash([4, 4]);
+    c.strokeRect(8 * S + 7, 10 * S + 7, S * 3 - 14, S * 2 - 14); c.restore();
+    c.fillStyle = '#638b76'; c.font = 'bold 8px system-ui'; c.textAlign = 'center'; c.fillText('WICHTELHOF', 9.5 * S, 11.65 * S);
+    c.fillStyle = '#c77947'; c.fillRect(9 * S + 3, 9 * S + 2, S - 6, 2);
+  }
+  function resize() {
+    density = Math.min(window.devicePixelRatio || 1, 2);
+    // Fixed logical coordinates keep all positions and particles stable on resize.
+    canvas.width = Math.round(W * density); canvas.height = Math.round(H * density);
+    ctx.setTransform(density, 0, 0, density, 0, 0); paintTerrain(); draw();
+  }
+  function drawCone(x, y) {
+    ctx.save(); ctx.translate(x, y);
+    ctx.fillStyle = '#bce0dc55'; ctx.beginPath(); ctx.ellipse(0, 10, 11, 3, 0, 0, 7); ctx.fill();
+    roundRect(ctx, -9, 7, 18, 4, 1.5, '#ae4f26');
+    ctx.beginPath(); ctx.moveTo(-2, -11); ctx.lineTo(2, -11); ctx.lineTo(7.5, 7); ctx.lineTo(-7.5, 7); ctx.closePath();
+    ctx.fillStyle = '#f17e36'; ctx.fill(); ctx.strokeStyle = '#bd5829'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = '#fff9e9';
+    for (const [top, bottom] of [[-7, -3], [1, 4]]) {
+      const a = 2 + (top + 11) * 5.5 / 18, b = 2 + (bottom + 11) * 5.5 / 18;
+      ctx.beginPath(); ctx.moveTo(-a, top); ctx.lineTo(a, top); ctx.lineTo(b, bottom); ctx.lineTo(-b, bottom); ctx.closePath(); ctx.fill();
+    }
+    ctx.restore();
+  }
+  function drawPlow() {
+    const p = game.position(game.player), d = WINTER_DIRS[game.player.dir];
+    for (const offset of [-W, 0, W]) {
+      const x = (p.x + .5) * S + offset, y = (p.y + .5) * S;
+      if (x < -S || x > W + S) continue;
+      ctx.save(); ctx.translate(x, y);
+      if (game.grace > 0 && game.state !== 'ready') {
+        ctx.strokeStyle = '#fbffff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, 0, 13.5, 0, 7); ctx.stroke();
+      }
+      if (game.power > 0) { ctx.fillStyle = '#f8d56650'; ctx.beginPath(); ctx.arc(0, 0, 16, 0, 7); ctx.fill(); }
+      ctx.rotate(Math.atan2(d.y, d.x));
+      ctx.fillStyle = '#42736025'; ctx.beginPath(); ctx.ellipse(1, 3, 13, 10, 0, 0, 7); ctx.fill();
+      roundRect(ctx, -9, -10, 7, 5, 2, '#2f4f48'); roundRect(ctx, -9, 5, 7, 5, 2, '#2f4f48');
+      roundRect(ctx, 3, -10, 6, 5, 2, '#2f4f48'); roundRect(ctx, 3, 5, 6, 5, 2, '#2f4f48');
+      roundRect(ctx, -11, -7.5, 20, 15, 3, '#bc4c3c'); roundRect(ctx, -10, -7, 15, 12, 3, '#e26e49');
+      roundRect(ctx, -6, -5.5, 9, 11, 2, '#ffe4a1'); roundRect(ctx, -4, -4, 6, 8, 1.5, '#80bcc4');
+      ctx.fillStyle = '#def6f3'; ctx.fillRect(-3, -3, 1.5, 5);
+      ctx.fillStyle = '#f8c858'; ctx.beginPath(); ctx.arc(-6, 0, 2.5, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(8, -8); ctx.lineTo(14, -11); ctx.lineTo(14, 11); ctx.lineTo(8, 8); ctx.closePath();
+      ctx.fillStyle = '#fffdf3'; ctx.fill(); ctx.strokeStyle = '#749c9b'; ctx.lineWidth = 1.1; ctx.stroke();
+      ctx.restore();
+    }
+  }
+  function drawGhost(g) {
+    const p = game.position(g);
+    for (const offset of [-W, 0, W]) {
+      const x = (p.x + .5) * S + offset, y = (p.y + .5) * S;
+      if (x < -S || x > W + S) continue;
+      ctx.save(); ctx.translate(x, y);
+      if (g.wait > 0) ctx.globalAlpha = .45;
+      const frightened = game.power > 0 && g.wait <= 0;
+      const blink = frightened && game.power < 2 && !reducedMotion && Math.floor(visualTime * 6) % 2;
+      ctx.fillStyle = '#2d5f4820'; ctx.beginPath(); ctx.ellipse(0, 9, 10, 3, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = frightened ? (blink ? '#f7ecc3' : '#7197b2') : g.color;
+      ctx.beginPath(); ctx.arc(0, -1, 9, Math.PI, 0); ctx.lineTo(9, 9); ctx.lineTo(4, 6); ctx.lineTo(0, 9); ctx.lineTo(-4, 6); ctx.lineTo(-9, 9); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#fffaf1'; ctx.beginPath(); ctx.ellipse(-3.5, -1, 2.8, 3.2, 0, 0, 7); ctx.ellipse(3.5, -1, 2.8, 3.2, 0, 0, 7); ctx.fill();
+      const d = WINTER_DIRS[g.dir]; ctx.fillStyle = '#274b4a';
+      ctx.beginPath(); ctx.arc(-3.5 + d.x, -1 + d.y, 1.3, 0, 7); ctx.arc(3.5 + d.x, -1 + d.y, 1.3, 0, 7); ctx.fill();
+      ctx.fillStyle = frightened ? '#efddb5' : '#bf4a40'; ctx.beginPath(); ctx.moveTo(-9, -7); ctx.lineTo(2, -17); ctx.lineTo(8, -7); ctx.closePath(); ctx.fill();
+      roundRect(ctx, -10, -8, 19, 3.5, 2, '#fffbef'); ctx.fillStyle = '#fffbef'; ctx.beginPath(); ctx.arc(2, -16, 2.5, 0, 7); ctx.fill();
+      if (frightened) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-4, 5); ctx.lineTo(-2, 3); ctx.lineTo(0, 5); ctx.lineTo(2, 3); ctx.lineTo(4, 5); ctx.stroke(); }
+      ctx.restore();
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H); ctx.drawImage(terrain, 0, 0, W, H);
+    for (let y = 0; y < 21; y++) for (let x = 0; x < 19; x++) {
+      const tile = game.grid[y][x]; if (tile !== '.' && tile !== 'o') continue;
+      const px = (x + .5) * S, py = (y + .5) * S;
+      // Uncleared tiles cover the asphalt. Collecting a tile reveals the road
+      // already cached below it; progress is visible without reading the HUD.
+      ctx.fillStyle = (x + y) % 2 ? '#f2f8f7' : '#edf5f4';
+      ctx.fillRect(x * S, y * S, S, S);
+      ctx.strokeStyle = '#d6e6e5'; ctx.lineWidth = 1; ctx.beginPath();
+      ctx.moveTo(px - 10, py + 8); ctx.quadraticCurveTo(px - 6, py + 6, px - 3, py + 8); ctx.stroke();
+      if (tile === 'o') {
+        drawCone(px, py);
+      } else {
+        ctx.strokeStyle = '#8db5b7'; ctx.lineWidth = 1.1; ctx.beginPath();
+        for (let k = 0; k < 3; k++) { const a = k * Math.PI / 3; ctx.moveTo(px - Math.cos(a) * 3.3, py - Math.sin(a) * 3.3); ctx.lineTo(px + Math.cos(a) * 3.3, py + Math.sin(a) * 3.3); }
+        ctx.stroke(); ctx.fillStyle = '#fff'; ctx.fillRect(px - 1, py - 1, 2, 2);
+      }
+    }
+    ctx.fillStyle = '#438473'; ctx.font = 'bold 16px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('‹', 6, 10.5 * S); ctx.fillText('›', W - 6, 10.5 * S);
+    ctx.textBaseline = 'alphabetic';
+    game.ghosts.forEach(drawGhost); drawPlow();
+    for (const p of particles) {
+      ctx.globalAlpha = Math.max(0, p.life / p.max);
+      if (p.label) { ctx.fillStyle = '#276847'; ctx.font = 'bold 14px system-ui'; ctx.textAlign = 'center'; ctx.fillText(p.label, p.x, p.y); }
+      else { ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, 7); ctx.fill(); }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function burst(event) {
+    if (reducedMotion) return;
+    for (let i = 0; i < (event.type === 'power' ? 16 : 4); i++) {
+      const a = Math.random() * Math.PI * 2, speed = 12 + Math.random() * 36;
+      particles.push({x: (event.x + .5) * S, y: (event.y + .5) * S, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, life: .45, max: .45, color: event.type === 'power' ? '#e8b34b' : '#fff'});
+    }
+    if (particles.length > 120) particles.splice(0, particles.length - 120);
+  }
+  function processEvents() {
+    for (const e of game.events.splice(0)) {
+      if (e.type === 'collect') { burst(e); if (game.remaining % 3 === 0) tone(560 + game.remaining % 5 * 60, .035, .015); }
+      if (e.type === 'power') { burst(e); toast('Räum-Power! Jetzt die Wichtel fangen.'); tone(880, .23); }
+      if (e.type === 'ghost') {
+        tone(1000, .12); particles.push({x: (e.x + .5) * S, y: (e.y + .5) * S, vx: 0, vy: -22, life: 1, max: 1, label: '+' + e.points});
+      }
+      if (e.type === 'hit') { saveBest(); toast('Erwischt! Du hast noch ' + game.lives + ' Leben.'); tone(180, .25); }
+      if (['roundwon', 'won', 'gameover'].includes(e.type)) { saveBest(); tone(e.type === 'gameover' ? 180 : 780, .3); }
+      if (e.type === 'round') {
+        paintTerrain();
+        announce('Level ' + game.round + ': ' + game.level.name + '. Räume alle ' + game.total + ' Schneeflocken und Pylone.');
+      }
+    }
+  }
+  function hud() {
+    syncMusic();
+    text('score', game.score.toLocaleString('de-DE')); text('best', Math.max(best, game.score).toLocaleString('de-DE'));
+    const lifeLabel = game.lives + ' Leben';
+    if ($('lives').getAttribute('aria-label') !== lifeLabel) {
+      $('lives').setAttribute('aria-label', lifeLabel);
+      $('lives').innerHTML = Array.from({length: 3}, (_, i) => '<span' + (i >= game.lives ? ' class="lost"' : '') + '>♥</span>').join('');
+    }
+    if ($('round').dataset.round !== String(game.round)) { $('round').innerHTML = '<i></i>Level ' + game.round + '/3 · ' + game.level.name; $('round').dataset.round = game.round; }
+    text('progress-text', (game.total - game.remaining) + ' von ' + game.total + ' geräumt');
+    text('power-text', game.power > 0 ? '▲ Räum-Power · ' + Math.ceil(game.power) + ' s' : '▲ Pylone geben Räum-Power');
+    const progress = Math.round((game.total - game.remaining) / game.total * 100);
+    if ($('progress').getAttribute('aria-valuenow') !== String(progress)) { $('progress').setAttribute('aria-valuenow', progress); $('progress-fill').style.width = progress + '%'; }
+    $('power-bar').style.transform = 'scaleX(' + game.power / 8 + ')';
+    $('countdown').hidden = game.state !== 'countdown';
+    if (game.state === 'countdown') {
+      const label = String(Math.ceil(game.countdown));
+      if ($('countdown').dataset.label !== label) { $('countdown').innerHTML = label + '<small>Mach dich bereit!</small>'; $('countdown').dataset.label = label; }
+    }
+    $('pause').disabled = !['playing', 'countdown', 'paused'].includes(game.state);
+    if (game.state !== lastState) { syncOverlay(); lastState = game.state; }
+  }
+  function syncOverlay() {
+    const state = game.state, show = ['ready', 'paused', 'roundwon', 'won', 'gameover'].includes(state);
+    $('overlay').hidden = !show;
+    text('pause', state === 'paused' ? '▶' : 'Ⅱ'); $('pause').setAttribute('aria-label', state === 'paused' ? 'Spiel fortsetzen' : 'Spiel pausieren');
+    if (!show || state === 'ready') return;
+    $('restart').hidden = state !== 'paused'; $('result').hidden = state === 'paused';
+    text('card-icon', state === 'paused' ? 'Ⅱ' : state === 'gameover' ? '❄' : '✦');
+    text('card-kicker', state === 'paused' ? 'Zeit für einen warmen Kakao' : state === 'roundwon' ? 'Eine Schneeschicht geschafft' : state === 'won' ? 'Das ganze Dorf sagt Danke' : 'Feierabend für heute');
+    text('card-title', state === 'paused' ? 'Kleine Winterpause.' : state === 'roundwon' ? 'Die Wege sind frei!' : state === 'won' ? 'Winterdienst mit Bravour!' : 'Die Wichtel waren schneller.');
+    text('card-text', state === 'paused' ? 'Dein Räumfahrzeug wartet auf dich. Setze deine Fahrt fort, wenn du bereit bist.' : state === 'roundwon' ? '+500 Punkte fürs Räumen. Nächster Einsatz: ' + WINTER_LEVELS[game.round].name + '. Neues Labyrinth, schnellere Wichtel.' : state === 'won' ? 'Drei Runden geräumt! Der Weihnachtsmann hat freie Fahrt.' : 'Nutze die Pylone und die Seitentunnel. Beim nächsten Einsatz klappt es bestimmt!');
+    text('result', game.score.toLocaleString('de-DE') + ' Punkte');
+    text('start', state === 'paused' ? 'Weiterfahren →' : state === 'roundwon' ? 'Nächste Runde →' : 'Noch eine Partie ↻');
+    text('card-foot', state === 'paused' ? 'P oder Escape setzt die Fahrt fort.' : 'Dein Rekord: ' + best.toLocaleString('de-DE') + ' Punkte');
+    announce($('card-title').textContent + ' ' + (state === 'paused' ? '' : game.score + ' Punkte.'));
+    $('start').focus({preventScroll: true});
+  }
+  function running() { return game.state === 'playing' || game.state === 'countdown'; }
+  function loop(now) {
+    frame = null;
+    if (!running()) { last = 0; accumulator = 0; return; }
+    const dt = Math.min((now - last) / 1000, .1); last = now; accumulator += dt;
+    while (accumulator >= STEP && running()) { game.update(STEP); accumulator -= STEP; }
+    visualTime += dt;
+    for (const p of particles) { p.life -= dt; p.x += p.vx * dt; p.y += p.vy * dt; }
+    particles = particles.filter(p => p.life > 0);
+    toastTime = Math.max(0, toastTime - dt); if (!toastTime) $('toast').hidden = true;
+    processEvents(); hud(); draw();
+    if (running()) frame = requestAnimationFrame(loop);
+  }
+  function wake() {
+    if (frame !== null) cancelAnimationFrame(frame);
+    last = performance.now(); accumulator = 0; processEvents(); hud(); draw();
+    if (running()) frame = requestAnimationFrame(loop);
+  }
+  function primaryAction() {
+    if (game.state === 'paused') game.resume();
+    else if (game.state === 'roundwon') { game.nextRound(); particles = []; }
+    else if (['ready', 'won', 'gameover'].includes(game.state)) { game.start(); particles = []; toastTime = 0; $('toast').hidden = true; }
+    else return;
+    canvas.focus({preventScroll: true}); tone(480, .07); wake();
+  }
+  function togglePause() {
+    if (game.state === 'paused') { game.resume(); canvas.focus({preventScroll: true}); }
+    else game.pause();
+    wake();
+  }
+  function autoPause() { if (running()) { game.pause(); saveBest(); wake(); } }
+  $('start').addEventListener('click', primaryAction);
+  $('restart').addEventListener('click', () => { saveBest(); game.start(); particles = []; toastTime = 0; $('toast').hidden = true; canvas.focus({preventScroll: true}); wake(); });
+  $('pause').addEventListener('click', togglePause);
+  $('sound').addEventListener('click', () => {
+    soundOn = !soundOn; $('sound').setAttribute('aria-pressed', String(soundOn));
+    $('sound').setAttribute('aria-label', soundOn ? 'Ton ausschalten' : 'Ton einschalten');
+    $('sound').title = soundOn ? 'Ton ausschalten' : 'Ton einschalten'; text('sound', soundOn ? '♫' : '♪');
+    syncMusic(); tone(660);
+  });
+  const keys = {ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right'};
+  window.addEventListener('keydown', e => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.target.closest('a, input, select, textarea, [contenteditable="true"]')) return;
+    const dir = keys[e.key] || keys[e.key.toLowerCase()];
+    if (dir && running()) { e.preventDefault(); game.request(dir); }
+    if ((e.key.toLowerCase() === 'p' || e.key === 'Escape') && !e.repeat) { e.preventDefault(); togglePause(); }
+    // Native button activation takes precedence, preventing double starts.
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName !== 'BUTTON' && !e.repeat && !running()) { e.preventDefault(); primaryAction(); }
+  });
+  for (const button of document.querySelectorAll('[data-dir]')) {
+    button.addEventListener('pointerdown', e => { e.preventDefault(); game.request(button.dataset.dir); });
+    button.addEventListener('click', () => game.request(button.dataset.dir));
+  }
+  canvas.addEventListener('pointerdown', e => {
+    if (!running() || !e.isPrimary) return;
+    pointer = {id: e.pointerId, x: e.clientX, y: e.clientY}; canvas.setPointerCapture(e.pointerId);
+  });
+  function swipe(e) {
+    if (!pointer || pointer.id !== e.pointerId) return;
+    const dx = e.clientX - pointer.x, dy = e.clientY - pointer.y;
+    if (Math.max(Math.abs(dx), Math.abs(dy)) < 12) return;
+    game.request(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+    pointer.x = e.clientX; pointer.y = e.clientY;
+  }
+  canvas.addEventListener('pointermove', swipe);
+  canvas.addEventListener('pointerup', e => { if (pointer?.id === e.pointerId) { swipe(e); pointer = null; } });
+  canvas.addEventListener('pointercancel', e => { if (pointer?.id === e.pointerId) pointer = null; });
+  canvas.addEventListener('lostpointercapture', e => { if (pointer?.id === e.pointerId) pointer = null; });
+  window.addEventListener('blur', autoPause);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) autoPause(); });
+  window.addEventListener('pagehide', () => { if (game.score > 0) saveBest(); });
+  window.addEventListener('storage', e => { if (e.key === storageKey || e.key === null) { best = readBest(); hud(); } });
+  window.addEventListener('resize', resize);
+  resize(); hud();
+})();
+</script>
+</body>
+</html>

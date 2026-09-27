@@ -214,16 +214,14 @@ const ADVENT_CONTENT = {
     `
   },
   17: {
-    title: "Das Maßband-Rätsel",
-    emoji: "📏",
+    title: "Winterjäger",
+    emoji: "🎯",
     html: `
-      <p>Wie viele Meter Geschenkband bräuchte man ungefähr,
-      um einen typischen Büroraum einmal komplett zu umrunden?</p>
-      <div class="card">
-        <p><strong>Schätzung:</strong> 10 m, 20 m, 30 m oder mehr?</p>
-        <p>Die Aufgabe besteht nicht darin, es exakt zu wissen,
-        sondern möglichst gut zu schätzen.</p>
+      <p>Die Weihnachtsfreunde sausen durchs Winterland. Triff sie und sammle möglichst viele Punkte, bevor die Zeit abläuft!</p>
+      <div class="winter-jaeger-embed">
+        <iframe src="winterjaeger.html" title="Winterjäger" loading="lazy" allow="autoplay"></iframe>
       </div>
+      <p class="small">Klicken oder tippen zum Zielen · 6 Schneebälle pro Ladung · Highscore wird in der Liste gespeichert</p>
     `
   },
   18: {
@@ -265,12 +263,14 @@ const ADVENT_CONTENT = {
     `
   },
   21: {
-    title: "Das Winterrätsel",
-    emoji: "☃️",
+    title: "Winterräumer",
+    emoji: "🚜",
     html: `
-      <p>Was kann man im Winter sehen, aber nicht anfassen,
-      obwohl es überall sein kann?</p>
-      <div class="answer"><strong>Die Kälte.</strong> ❄️</div>
+      <p>Mach die Wege frei für den Weihnachtsmann! Räume die Schneeflocken ab, weiche den Wichteln aus und sammle Pylone für einen kurzen Räum-Power-Schub.</p>
+      <div class="winter-raeumer-embed">
+        <iframe src="winterraeumer.html" title="Winterräumer – Winter-Arcade-Spiel" loading="lazy" allow="autoplay"></iframe>
+      </div>
+      <p class="small">Pfeiltasten oder WASD · Mobil: wischen oder die Richtungstasten benutzen</p>
     `
   },
   22: {

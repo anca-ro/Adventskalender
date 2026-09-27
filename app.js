@@ -189,13 +189,15 @@ function renderHighscores() {
   if (!list) return;
   const names = {
     winterFrogger: "🐸 Winter Frogger",
-    snowflakeCatcher: "❄️ Schneeflocken-Fänger"
+    snowflakeCatcher: "❄️ Schneeflocken-Fänger",
+    winterJaeger: "🎯 Winterjäger"
   };
   const scores = getHighscores();
   // Den Schneeflocken-Fänger schon vor der ersten Runde in der Liste zeigen.
   if (scores.snowflakeCatcher == null) scores.snowflakeCatcher = 0;
+  if (scores.winterJaeger == null) scores.winterJaeger = 0;
   const entries = Object.entries(scores).filter(([game, score]) =>
-    Number(score) > 0 || game === "snowflakeCatcher"
+    Number(score) > 0 || game === "snowflakeCatcher" || game === "winterJaeger"
   );
   list.innerHTML = entries.length
     ? entries.sort((a, b) => Number(b[1]) - Number(a[1])).map(([game, score]) =>

@@ -228,6 +228,40 @@ footer { display:flex; justify-content:space-between; color:var(--muted); font-s
   border: 0;
 }
 
+.winter-jaeger-embed {
+  width: min(1000px, 100%);
+  height: clamp(480px, 76vh, 720px);
+  margin: 1rem auto;
+  overflow: hidden;
+  border: 2px solid #36506a;
+  border-radius: 14px;
+  background: #16284b;
+}
+
+.winter-jaeger-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.winter-raeumer-embed {
+  width: min(1000px, 100%);
+  height: clamp(760px, 92vh, 980px);
+  margin: 1rem auto;
+  overflow: hidden;
+  border: 2px solid #cbdacf;
+  border-radius: 14px;
+  background: #eaf2ed;
+}
+
+.winter-raeumer-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .sudoku-embed {
   width: min(700px, 100%);
   height: clamp(680px, 95vh, 880px);
