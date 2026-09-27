@@ -126,14 +126,18 @@ const ADVENT_CONTENT = {
   9: {
     title: "Team-Weihnachtsessen",
     emoji: "🍽️",
-    html: `
-      <p>Stellt euch vor, unser Team wäre ein Weihnachtsessen.</p>
-      <div class="card">
-        <p><strong>Welches Gericht wären wir – und warum?</strong></p>
-        <p>Glühwein zählt als Getränk und damit nicht als Ausweichantwort.</p>
-      </div>
-    `
+    
+    media: {
+    type: "youtube",
+    url: "https://www.youtube.com/watch?v=DEINE_VIDEO_ID",
+    title: "Unser Weihnachtslied",
+    caption: "Einmal zurücklehnen und anhören 🎄"
   },
+
+  content: `
+    <p>Welche Weihnachtsmusik darf im Dezember nicht fehlen?</p>
+  `
+},
   10: {
     title: "Geotechnik-Quiz",
     emoji: "🧪",
