@@ -129,7 +129,7 @@ const ADVENT_CONTENT = {
     
     media: {
     type: "youtube",
-    url: "https://www.youtube.com/watch?v=DEINE_VIDEO_ID",
+    url: "https://www.youtube.com/shorts/Z3y0qdkbPSM",
     title: "Unser Weihnachtslied",
     caption: "Einmal zurücklehnen und anhören 🎄"
   },
