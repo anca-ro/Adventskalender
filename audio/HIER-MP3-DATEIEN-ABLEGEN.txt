@@ -1,0 +1,2 @@
+Lege hier deine MP3-Dateien ab, z. B. weihnachtslied.mp3.
+Dann in content.js: src: "audio/weihnachtslied.mp3"

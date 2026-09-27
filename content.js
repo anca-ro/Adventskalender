@@ -41,13 +41,14 @@ const ADVENT_CONTENT = {
     `
   },
   3: {
-    title: "Das klassische Rätsel",
-    emoji: "🧩",
+    title: "Weihnachts-Sudoku",
+    emoji: "🎄",
     html: `
-      <p>Ich habe viele Nadeln, kann aber nicht nähen. Ich stehe im Wohnzimmer
-      und werde im Dezember besonders wichtig.</p>
-      <div class="answer"><strong>Was bin ich?</strong><br><br>
-      Ein Weihnachtsbaum. 🎄</div>
+      <p>Fülle das weihnachtliche Sudoku: Jedes Symbol darf in jeder Zeile, Spalte und jedem 3×3-Block genau einmal vorkommen.</p>
+      <div class="sudoku-embed">
+        <iframe src="mini-sudoku.html" title="Weihnachts-Sudoku" loading="lazy"></iframe>
+      </div>
+      <p class="small">Tippe ein leeres Feld und wähle anschließend unten das passende Symbol. Mit „Lösung prüfen“ kontrollierst du dein Rätsel.</p>
     `
   },
   4: {
@@ -95,19 +96,14 @@ const ADVENT_CONTENT = {
     `
   },
   7: {
-    title: "Schätz mal!",
-    emoji: "🔢",
+    title: "Winter Frogger",
+    emoji: "🐸",
     html: `
-      <p>Wie viel Kaffee wird wohl in einem Büro mit 10 Personen
-      während einer normalen Arbeitswoche getrunken?</p>
-      <div class="estimate">
-        <div>☕ <strong>1 Liter</strong></div>
-        <div>☕☕ <strong>5 Liter</strong></div>
-        <div>☕☕☕ <strong>10 Liter</strong></div>
-        <div>☕☕☕☕ <strong>20+ Liter</strong></div>
+      <p>Überquere die verschneite Autobahn und erreiche alle drei Weihnachtsnester!</p>
+      <div class="frogger-embed">
+        <iframe src="frogger.html" title="Winter Frogger" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Es gibt heute keine falsche Antwort – nur interessante
-      Begründungen. 😄</p>
+      <p class="small">Steuerung: Pfeiltasten oder WASD · Mobil: Steuerkreuz · P = Pause · M = Sound</p>
     `
   },
   8: {
@@ -126,35 +122,23 @@ const ADVENT_CONTENT = {
   9: {
     title: "Team-Weihnachtsessen",
     emoji: "🍽️",
-    
-    media: {
-    type: "youtube",
-    url: "https://www.youtube.com/shorts/Z3y0qdkbPSM",
-    title: "Unser Weihnachtslied",
-    caption: "Einmal zurücklehnen und anhören 🎄"
-  },
-
-  content: `
-    <p>Welche Weihnachtsmusik darf im Dezember nicht fehlen?</p>
-  `
-},
-  10: {
-    title: "Geotechnik-Quiz",
-    emoji: "🧪",
     html: `
-      <p>Heute wird es fachlich.</p>
-      <div class="quiz">
-        <p><strong>Welche Information ist für die Beurteilung eines Baugrunds besonders wichtig?</strong></p>
-        <button onclick="reveal(this,'A')">A – Nur die Bodenfarbe</button>
-        <button onclick="reveal(this,'B')">B – Aufbau, Eigenschaften und Grundwasserverhältnisse</button>
-        <button onclick="reveal(this,'C')">C – Nur das Baujahr des Nachbargebäudes</button>
-        <div class="quiz-result hidden"></div>
+      <p>Stellt euch vor, unser Team wäre ein Weihnachtsessen.</p>
+      <div class="card">
+        <p><strong>Welches Gericht wären wir – und warum?</strong></p>
+        <p>Glühwein zählt als Getränk und damit nicht als Ausweichantwort.</p>
       </div>
-      <div class="answer hidden" id="answer-10">
-        <strong>Richtig ist B. 🎯</strong><br>
-        Für Planung und Bemessung sind die relevanten Boden-/Felseigenschaften
-        und die Wasserverhältnisse entscheidend.
+    `
+  },
+  10: {
+    title: "Schneeflocken-Fänger",
+    emoji: "❄️",
+    html: `
+      <p>Fang die Schneeflocken und weich den Kohlestücken aus. Wie viele Punkte schaffst du?</p>
+      <div class="snow-catcher-embed">
+        <iframe src="schneeflocken-faenger.html" title="Schneeflocken-Fänger" loading="lazy" allow="autoplay"></iframe>
       </div>
+      <p class="small">Steuerung: Pfeiltasten ← → oder Maus/Finger · P = Pause · Ton über ♫ an/aus</p>
     `
   },
   11: {
@@ -195,16 +179,14 @@ const ADVENT_CONTENT = {
     `
   },
   14: {
-    title: "Winterwissen",
+    title: "Schneeballschlacht",
     emoji: "❄️",
     html: `
-      <p>Warum fühlt sich Metall im Winter oft kälter an als Holz,
-      obwohl beide Gegenstände dieselbe Temperatur haben können?</p>
-      <div class="fact">
-        <span>💡</span>
-        <div>Metall leitet Wärme wesentlich besser. Es entzieht deiner Hand
-        die Wärme schneller – dadurch fühlt es sich kälter an.</div>
+      <p>Zwei Teams, sechs Wichtel und ein sehr frostiges Duell. Wechselt euch ab und bringt das gegnerische Team mit Schneebällen, Geschenkbomben und Zuckerstangen-Schüssen ins Wanken!</p>
+      <div class="artillery-embed">
+        <iframe src="schneeballschlacht.html" title="Schneeballschlacht" loading="lazy" allow="autoplay"></iframe>
       </div>
+      <p class="small">Steuerung: ← → laufen · ↑ ↓ zielen · Leertaste halten und loslassen · 1–3 Waffen wechseln</p>
     `
   },
   15: {

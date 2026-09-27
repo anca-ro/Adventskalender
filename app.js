@@ -11,8 +11,10 @@ function berlinDateParts() {
 }
 
 function getAdventState() {
-  return { state: "during", day: 10, year: 2026 };
+  const d = berlinDateParts();
+  return { state: "after", day: END_DAY, year: d.year };
 }
+
 
 function escapeHtml(value) {
   return String(value)
@@ -168,4 +170,53 @@ function showDoor(day, scroll = true) {
   if (scroll) section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+const highscoreStorageKey = "adventMiniGameHighscores";
+const legacyFroggerKey = "winterFroggerHighscore";
+
+function getHighscores() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(highscoreStorageKey) || "{}");
+    const froggerBest = Number(localStorage.getItem(legacyFroggerKey) || 0);
+    if (froggerBest > Number(stored.winterFrogger || 0)) stored.winterFrogger = froggerBest;
+    return stored;
+  } catch (_) {
+    return { winterFrogger: Number(localStorage.getItem(legacyFroggerKey) || 0) };
+  }
+}
+
+function renderHighscores() {
+  const list = document.getElementById("highscoresList");
+  if (!list) return;
+  const names = {
+    winterFrogger: "🐸 Winter Frogger",
+    snowflakeCatcher: "❄️ Schneeflocken-Fänger"
+  };
+  const scores = getHighscores();
+  // Den Schneeflocken-Fänger schon vor der ersten Runde in der Liste zeigen.
+  if (scores.snowflakeCatcher == null) scores.snowflakeCatcher = 0;
+  const entries = Object.entries(scores).filter(([game, score]) =>
+    Number(score) > 0 || game === "snowflakeCatcher"
+  );
+  list.innerHTML = entries.length
+    ? entries.sort((a, b) => Number(b[1]) - Number(a[1])).map(([game, score]) =>
+      `<li><span class="highscore-game">${escapeHtml(names[game] || game)}</span><span class="highscore-score">${Number(score) > 0 ? `${escapeHtml(score)} Punkte` : "Noch kein Bestwert"}</span></li>`
+    ).join("")
+    : '<li><span class="highscore-game">Noch keine Bestwerte</span><span>Spiele ein Minispiel!</span></li>';
+}
+
+window.addEventListener("message", event => {
+  if (event.origin !== window.location.origin || event.data?.type !== "advent-minigame-highscore") return;
+  const scores = getHighscores();
+  scores[event.data.game] = Math.max(Number(scores[event.data.game] || 0), Number(event.data.score) || 0);
+  localStorage.setItem(highscoreStorageKey, JSON.stringify(scores));
+  renderHighscores();
+});
+
+document.getElementById("resetHighscores")?.addEventListener("click", () => {
+  localStorage.removeItem(highscoreStorageKey);
+  localStorage.removeItem(legacyFroggerKey);
+  renderHighscores();
+});
+
 render();
+renderHighscores();

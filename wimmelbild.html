@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153d37">
+  <title>Weihnachts-Wimmelbild an der Autobahn</title>
+  <style>
+    :root { color-scheme: light; --pine:#174b3d; --deep:#123b32; --red:#b83b42; --cream:#fffaf0; --ink:#25352e }
+    * { box-sizing:border-box }
+    body { margin:0; min-height:100vh; padding:22px 14px; color:var(--ink); background:radial-gradient(ellipse at top,#eff5e8,#dce9dc 52%,#c7dbcf); font-family:system-ui,-apple-system,"Segoe UI",sans-serif }
+    main { width:min(100%,1100px); margin:auto; padding:clamp(18px,4vw,36px); border:1px solid #e9dfc8; border-radius:24px; background:var(--cream); box-shadow:0 18px 55px #173c3022 }
+    header { text-align:center }
+    .eyebrow { margin:0 0 7px; color:var(--red); font-size:.76rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase }
+    h1 { margin:0; color:var(--deep); font:clamp(1.8rem,5vw,2.8rem)/1.1 Georgia,serif }
+    .intro { max-width:65ch; margin:12px auto 20px; line-height:1.55 }
+    .progress { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:8px 18px; margin:0 0 14px; font-weight:700 }
+    #count { color:var(--pine) }
+    .scene-wrap { overflow:hidden; border:3px solid #174b3d; border-radius:16px; background:#cfe8f1 }
+    svg { display:block; width:100%; height:auto; touch-action:manipulation }
+    .target { cursor:pointer; transition:filter .15s,opacity .2s }
+    .target:hover { filter:drop-shadow(0 0 5px #ffd766) }
+    .target:focus { outline:none; filter:drop-shadow(0 0 6px #fff200) }
+    .target.found { opacity:.24; filter:grayscale(1); pointer-events:none }
+    .target .hit { fill:transparent; stroke:transparent; stroke-width:5 }
+    .legend { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:8px; margin:15px 0 0; padding:0; list-style:none }
+    .legend li { display:flex; align-items:center; gap:9px; min-height:42px; padding:8px 11px; border:1px solid #dce4d7; border-radius:11px; background:#fff }
+    .legend li.found { color:#64746b; text-decoration:line-through; background:#edf3e9 }
+    .legend li span { font-size:1.2rem }
+    #message { min-height:1.5em; margin:14px 0 0; color:var(--pine); font-weight:700; text-align:center }
+    .actions { display:flex; justify-content:center; gap:9px; margin-top:8px }
+    button { padding:9px 16px; border:1px solid #cbd8ce; border-radius:999px; background:#fff; color:var(--deep); font:inherit; font-weight:700; cursor:pointer }
+    button:hover { border-color:#e6b957 }
+    button:focus-visible { outline:3px solid #d08d30; outline-offset:2px }
+    @media (max-width:600px) { body { padding:10px 7px } main { padding:17px 11px; border-radius:17px } .scene-wrap { border-width:2px; border-radius:10px } .legend { grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px } .legend li { gap:5px; padding:7px; font-size:.88rem } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { transition-duration:.01ms!important } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Türchen 7 · Winterdienst im Einsatz</p>
+    <h1>Weihnachtszauber auf der Autobahn</h1>
+    <p class="intro">Auf der winterlichen Autobahn ist einiges durcheinandergeraten. Hilf dem Team der Autobahn GmbH des Bundes: Tippe die acht gesuchten Dinge in der Szene an!</p>
+    <div class="progress"><span id="count" aria-live="polite">0 von 8 gefunden</span><span>🔎 Schau genau hin!</span></div>
+  </header>
+  <div class="scene-wrap">
+  <svg viewBox="0 0 1200 680" role="img" aria-labelledby="scene-title scene-desc" xmlns="http://www.w3.org/2000/svg">
+    <title id="scene-title">Verschneite Autobahn-Betriebsstelle in der Weihnachtszeit</title>
+    <desc id="scene-desc">Eine winterliche Autobahn mit Räumfahrzeug, Tunnel, Betriebshof, Tannen und vielen kleinen Details.</desc>
+    <defs>
+      <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#a8d5e8"/><stop offset="1" stop-color="#edf7f5"/></linearGradient>
+      <linearGradient id="road" x2="0" y2="1"><stop stop-color="#56616a"/><stop offset="1" stop-color="#323f49"/></linearGradient>
+      <pattern id="snow" width="70" height="54" patternUnits="userSpaceOnUse"><circle cx="8" cy="10" r="2" fill="#fff" opacity=".8"/><circle cx="45" cy="34" r="1.6" fill="#fff" opacity=".65"/><circle cx="64" cy="7" r="1" fill="#fff" opacity=".8"/></pattern>
+    </defs>
+    <!-- Winter sky, distant hills and snow -->
+    <rect width="1200" height="680" fill="url(#sky)"/>
+    <circle cx="1040" cy="82" r="43" fill="#fff3bd" opacity=".9"/>
+    <path d="M0 270L130 154l96 103 119-143 158 156 122-121 133 121 115-146 152 153 95-93 80 69v160H0Z" fill="#b7d4d5"/>
+    <path d="m130 154 40 43-41-17-33 28Zm215-40 49 62-50-22-38 27Zm280 35 35 41-35-16-26 20Zm248-9 48 54-50-22-37 20Zm247 40 34 33-35-13-26 18Z" fill="#f7fbf5"/>
+    <rect y="260" width="1200" height="420" fill="#eaf1e6"/><rect y="260" width="1200" height="420" fill="url(#snow)"/>
+    <!-- trees -->
+    <g fill="#245643"><path d="m47 270 41-83 42 83h-25l39 68H30l40-68Z"/><path d="m240 272 29-63 33 63h-19l31 53h-87l31-53Z"/><path d="m1060 280 43-89 45 89h-28l40 66h-112l40-66Z"/><path d="m1150 260 28-60 30 60h-18l28 49h-76l28-49Z"/></g>
+    <g fill="#fff"><path d="m88 187 16 32-18-8-14 10Z"/><path d="m269 209 12 24-14-6-10 8Z"/><path d="m1103 191 18 36-20-9-14 10Z"/></g>
+    <!-- operations depot -->
+    <path d="M73 342 180 278l114 64v111H73Z" fill="#f0d9ae" stroke="#765e45" stroke-width="5"/>
+    <path d="M60 347 180 270l127 77-13 15-114-68-108 68Z" fill="#b83b42" stroke="#7f2b35" stroke-width="4"/>
+    <rect x="105" y="373" width="150" height="80" rx="4" fill="#54746e"/><path d="M180 373v80" stroke="#e7eee0" stroke-width="5"/><path d="M123 400h40m54 0h22" stroke="#fff" stroke-width="5"/>
+    <text x="180" y="335" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#174b3d">AUTOBAHN-MEISTEREI</text>
+    <rect x="87" y="458" width="196" height="15" rx="7" fill="#fff"/>
+    <!-- distant tunnel and road -->
+    <path d="M682 367a125 125 0 0 1 250 0v60H682Z" fill="#7d8786"/>
+    <path d="M710 367a97 97 0 0 1 194 0v60H710Z" fill="#293740"/>
+    <path d="M710 413h194v14H710Z" fill="#eaf1e6"/>
+    <path d="M0 550Q335 492 640 543T1200 518v162H0Z" fill="url(#road)"/>
+    <path d="M0 550Q335 492 640 543T1200 518" fill="none" stroke="#fff" stroke-width="9"/>
+    <path d="M0 632Q330 575 640 623T1200 598" fill="none" stroke="#f8f4d9" stroke-width="7" stroke-dasharray="55 40"/>
+    <!-- guardrail -->
+    <path d="M0 492h1200" stroke="#9aa5a4" stroke-width="12"/><path d="M0 487h1200" stroke="#e5ece8" stroke-width="4"/>
+    <g fill="#707d7d"><path d="M75 490h10v42H75zM240 490h10v29h-10zM420 490h10v30h-10zM1020 490h10v30h-10z"/></g>
+    <!-- small traffic sign -->
+    <path d="M1000 349h9v136h-9z" fill="#707b77"/><rect x="951" y="333" width="107" height="64" rx="5" fill="#17684d" stroke="#fff" stroke-width="4"/>
+    <text x="1004" y="359" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="white">A 7</text><text x="1004" y="382" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="white">NORD</text>
+    <!-- snow plow truck -->
+    <g id="truck" transform="translate(406 433)">
+      <path d="M22 39 54 8h126l41 31 31 8v59H4V53Z" fill="#f4c735" stroke="#384b4a" stroke-width="5"/>
+      <path d="M57 14h62v42H29Z" fill="#b9e1ec" stroke="#384b4a" stroke-width="4"/><path d="M127 14h47l37 37v5h-84Z" fill="#b9e1ec" stroke="#384b4a" stroke-width="4"/>
+      <path d="M127 62h115v30H127Z" fill="#df3e3b"/><path d="M13 88h227v17H13Z" fill="#f8f5dc"/>
+      <circle cx="60" cy="106" r="20" fill="#28363d"/><circle cx="60" cy="106" r="9" fill="#c8d1cb"/><circle cx="199" cy="106" r="20" fill="#28363d"/><circle cx="199" cy="106" r="9" fill="#c8d1cb"/>
+      <path d="m-11 77 30-8-13 62-32-5Z" fill="#e74939" stroke="#773c35" stroke-width="4"/><path d="m-18 119 38-2-4 10-39 4Z" fill="#f3d06b"/>
+      <rect x="87" y="0" width="24" height="9" rx="4" fill="#ff573e"/><path d="M86 0q12-16 25 0" fill="#ffe983"/>
+      <text x="164" y="83" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="800" fill="white">WINTERDIENST</text>
+    </g>
+    <!-- snowman / worker -->
+    <g id="snowman" transform="translate(315 353)">
+      <circle cx="41" cy="85" r="36" fill="#fff" stroke="#9db9bd" stroke-width="3"/><circle cx="41" cy="35" r="25" fill="#fff" stroke="#9db9bd" stroke-width="3"/>
+      <path d="m41 36 26 6-26 7Z" fill="#ed8a39"/><circle cx="33" cy="29" r="3"/><circle cx="49" cy="29" r="3"/><path d="M34 52q8 9 16 0" fill="none" stroke="#333" stroke-width="2"/>
+      <path d="M16 12h50l-6-19H23Z" fill="#f4c735" stroke="#405148" stroke-width="3"/><path d="M17 7h49" stroke="#e68723" stroke-width="5"/>
+      <path d="M15 68q26 17 52 0" fill="none" stroke="#b83b42" stroke-width="11"/><circle cx="41" cy="80" r="3"/><circle cx="41" cy="95" r="3"/>
+    </g>
+    <!-- christmas tree by depot -->
+    <g id="tree" transform="translate(295 292)">
+      <path d="m40 0 30 48H57l31 42H57l35 44H0l35-44H7l31-42H25Z" fill="#176044" stroke="#104832" stroke-width="3"/><path d="M35 134h20v28H35Z" fill="#805638"/>
+      <circle cx="39" cy="48" r="5" fill="#f4d24a"/><circle cx="61" cy="76" r="5" fill="#dd5148"/><circle cx="35" cy="102" r="5" fill="#9edaf0"/><path d="m40 0 5-12 6 12 12 1-9 8 3 12-12-6-10 6 2-12-9-8Z" fill="#ffdb62"/>
+    </g>
+    <!-- roadside help phone -->
+    <g id="phone" transform="translate(920 408)">
+      <path d="M13 0h39v72H13Z" fill="#f8c834" stroke="#42544d" stroke-width="4"/><path d="M20 12h25v28H20Z" fill="#184e40"/><path d="M27 50q7-10 15 0M27 56q7-10 15 0" fill="none" stroke="#fff" stroke-width="3"/><path d="M10 74h45" stroke="#42544d" stroke-width="5"/>
+    </g>
+    <!-- decorated roadside lamp -->
+    <g id="lamp" transform="translate(573 318)">
+      <path d="M23 0v205M22 10h39" stroke="#485d59" stroke-width="8"/><path d="M58 10q18 0 15 16v8" fill="none" stroke="#485d59" stroke-width="6"/><path d="M73 34c-24 5 11 17-9 24s15 19-7 27 14 17-8 26" fill="none" stroke="#d14542" stroke-width="6"/>
+      <circle cx="58" cy="54" r="6" fill="#f5d055"/><circle cx="63" cy="81" r="6" fill="#8ac6e2"/><circle cx="50" cy="104" r="6" fill="#f5d055"/><path d="M9 205h28" stroke="#485d59" stroke-width="8"/>
+    </g>
+    <!-- FINDABLE OBJECTS; broad transparent hit areas keep tapping easy -->
+    <g class="target" data-item="schneepflug" tabindex="0" role="button" aria-label="Schneepflug finden"><rect class="hit" x="382" y="420" width="280" height="150"/><rect x="382" y="420" width="280" height="150" fill="transparent"/></g>
+    <g class="target" data-item="schneemann" tabindex="0" role="button" aria-label="Schneemann mit Bauhelm finden"><rect class="hit" x="305" y="325" width="110" height="170"/><rect x="305" y="325" width="110" height="170" fill="transparent"/></g>
+    <g class="target" data-item="weihnachtsbaum" tabindex="0" role="button" aria-label="Weihnachtsbaum finden"><rect class="hit" x="286" y="270" width="110" height="200"/><rect x="286" y="270" width="110" height="200" fill="transparent"/></g>
+    <g class="target" data-item="notrufsaule" tabindex="0" role="button" aria-label="Notrufsäule finden"><rect class="hit" x="906" y="395" width="85" height="110"/><rect x="906" y="395" width="85" height="110" fill="transparent"/></g>
+    <g class="target" data-item="lichterkette" tabindex="0" role="button" aria-label="Lichterkette am Laternenmast finden"><rect class="hit" x="570" y="310" width="105" height="220"/><rect x="570" y="310" width="105" height="220" fill="transparent"/></g>
+    <!-- extra camouflaged items: cone, thermos, salt sack -->
+    <g id="cone"><path d="m785 510 18-52 19 52Z" fill="#ef713b" stroke="#963c2d" stroke-width="3"/><path d="m792 491 23 1-4 9h-23Z" fill="#fff4d8"/><path d="M779 511h51" stroke="#f7e8cd" stroke-width="8"/></g>
+    <g id="thermos"><rect x="852" y="448" width="19" height="47" rx="7" fill="#b83b42" stroke="#603b34" stroke-width="3"/><rect x="856" y="442" width="11" height="8" rx="2" fill="#e3c78c"/><path d="M857 462h9" stroke="#fff" stroke-width="3"/></g>
+    <g id="salt"><path d="M735 468h45l-5 42h-38Z" fill="#f5e7c4" stroke="#8e836d" stroke-width="3"/><path d="M741 482h34v13h-34Z" fill="#d6ad5b"/><text x="758" y="492" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="700" fill="#fff">STREUSALZ</text></g>
+    <g class="target" data-item="leitkegel" tabindex="0" role="button" aria-label="Leitkegel finden"><rect class="hit" x="772" y="448" width="68" height="77"/><rect x="772" y="448" width="68" height="77" fill="transparent"/></g>
+    <g class="target" data-item="thermoskanne" tabindex="0" role="button" aria-label="Thermoskanne finden"><rect class="hit" x="841" y="435" width="48" height="76"/><rect x="841" y="435" width="48" height="76" fill="transparent"/></g>
+    <g class="target" data-item="streusalz" tabindex="0" role="button" aria-label="Streusalz finden"><rect class="hit" x="724" y="458" width="64" height="65"/><rect x="724" y="458" width="64" height="65" fill="transparent"/></g>
+    <!-- snow banks in foreground -->
+    <path d="M0 665q60-47 136-13 70-50 157 0 57-32 129 14 86-49 158-6 70-36 142 6 76-47 150-2 92-53 174 0 80-38 154 1v15H0Z" fill="#fff"/>
+    <!-- light snowfall -->
+    <g fill="#fff" opacity=".85"><circle cx="168" cy="90" r="3"/><circle cx="411" cy="102" r="2"/><circle cx="621" cy="70" r="3"/><circle cx="793" cy="133" r="2"/><circle cx="944" cy="206" r="3"/><circle cx="518" cy="227" r="2"/><circle cx="1114" cy="115" r="2"/></g>
+  </svg>
+  </div>
+  <ul class="legend" id="legend" aria-label="Gesuchte Dinge">
+    <li data-label="schneepflug"><span>🚛</span>Schneepflug</li><li data-label="schneemann"><span>⛄</span>Schneemann mit Bauhelm</li>
+    <li data-label="weihnachtsbaum"><span>🎄</span>Weihnachtsbaum</li><li data-label="notrufsaule"><span>📞</span>Notrufsäule</li>
+    <li data-label="lichterkette"><span>💡</span>Lichterkette</li><li data-label="leitkegel"><span>🚧</span>Leitkegel</li>
+    <li data-label="thermoskanne"><span>☕</span>Thermoskanne</li><li data-label="streusalz"><span>🧂</span>Streusalz</li>
+  </ul>
+  <p id="message" role="status" aria-live="polite">Viel Erfolg bei der Suche!</p>
+  <div class="actions"><button id="reset" type="button">Nochmal suchen</button></div>
+</main>
+<script>
+(() => {
+  const targets = [...document.querySelectorAll('.target')];
+  const found = new Set();
+  const count = document.querySelector('#count');
+  const message = document.querySelector('#message');
+  const legend = document.querySelector('#legend');
+  const label = { schneepflug:'Schneepflug', schneemann:'Schneemann mit Bauhelm', weihnachtsbaum:'Weihnachtsbaum', notrufsaule:'Notrufsäule', lichterkette:'Lichterkette', leitkegel:'Leitkegel', thermoskanne:'Thermoskanne', streusalz:'Streusalz' };
+  function find(el) {
+    const item = el.dataset.item;
+    if (found.has(item)) return;
+    found.add(item); el.classList.add('found');
+    legend.querySelector(`[data-label="${item}"]`)?.classList.add('found');
+    count.textContent = `${found.size} von ${targets.length} gefunden`;
+    if (found.size === targets.length) message.textContent = '🎉 Alles gefunden! Danke für euren Einsatz – frohe Weihnachten vom Winterdienst!';
+    else message.textContent = `🎄 ${label[item]} entdeckt! Weiter geht die Suche.`;
+  }
+  targets.forEach(el => {
+    el.addEventListener('click', () => find(el));
+    el.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); find(el); } });
+  });
+  document.querySelector('#reset').addEventListener('click', () => {
+    found.clear(); targets.forEach(el => el.classList.remove('found'));
+    legend.querySelectorAll('li').forEach(el => el.classList.remove('found'));
+    count.textContent = `0 von ${targets.length} gefunden`; message.textContent = 'Viel Erfolg bei der Suche!';
+  });
+})();
+</script>
+</body>
+</html>

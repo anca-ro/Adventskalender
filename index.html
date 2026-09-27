@@ -20,6 +20,18 @@
 
     <section id="calendar" class="calendar" aria-label="Adventskalender"></section>
 
+    <section class="highscores" aria-labelledby="highscoresTitle">
+      <div class="highscores-heading">
+        <div>
+          <p class="eyebrow">DEINE BESTEN RUNDE</p>
+          <h2 id="highscoresTitle">🏆 Minispiel-Highscores</h2>
+        </div>
+        <button id="resetHighscores" class="reset-highscores" type="button">Zurücksetzen</button>
+      </div>
+      <ol id="highscoresList" class="highscores-list" aria-live="polite"></ol>
+      <p class="highscores-note">Highscores werden in diesem Browser gespeichert.</p>
+    </section>
+
     <section id="today" class="today hidden" aria-live="polite">
       <div class="today-inner">
         <div class="today-top">
