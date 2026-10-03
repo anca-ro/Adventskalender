@@ -222,6 +222,7 @@ const ADVENT_CONTENT = {
         <iframe src="winter-asteroids.html" title="Winter Asteroids" loading="lazy" allow="autoplay"></iframe>
       </div>
       <p class="small">← → drehen · ↑ Schub · Leertaste feuern · P = Pause · M = Ton</p>
+      <p><a href="winter-asteroids.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   18: {
