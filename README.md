@@ -6,6 +6,7 @@
 - `style.css` – responsives Design
 - `content.js` – komplett ausgearbeitete 24 Türchen
 - `app.js` – Datumslogik
+- `keep-talking-weihnachten.html` – eigenständiges, offline spielbares Entschärfungs-Minispiel (Türchen 18)
 - `README.md` – Anleitung
 
 ## Funktionsweise

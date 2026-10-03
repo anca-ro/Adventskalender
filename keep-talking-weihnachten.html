@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10251e">
+<meta name="description" content="Entschärfe das verdächtige Geschenk mit dem festen Wichtel-Handbuch.">
+<title>Verdächtiges Geschenk</title>
+<style>
+:root{color-scheme:dark;--pine:#123c2c;--pine2:#1c5a3e;--wine:#7e2637;--gold:#ffd879;--ice:#b9efff;--snow:#f7f5e9;--ink:#13231e;--paper:#eee2c2;--paper-ink:#2d2a21;--muted:#b9c9c0;--panel:#11251feF;--line:#ffffff24;--danger:#ff6474;--green:#67e6a2;--shadow:0 18px 50px #020c0a99}
+*{box-sizing:border-box}html{min-width:320px;scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--snow);font:500 15px/1.5 "Trebuchet MS",Arial,sans-serif;background:radial-gradient(ellipse at 50% -20%,#315b50 0,#182b27 45%,#081611 100%);overflow-x:hidden}
+button,input,select{font:inherit}button{color:inherit;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+#snow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}.app{position:relative;z-index:1;width:min(1440px,100%);margin:auto;padding:16px clamp(10px,2vw,24px) 40px}
+.lights{height:25px;position:relative;margin:0 4px 8px;display:flex;justify-content:space-around;align-items:flex-start}.lights:before{content:"";position:absolute;left:0;right:0;top:3px;height:12px;border-top:2px solid #648276;border-radius:50%}.bulb{position:relative;z-index:1;width:9px;height:12px;border-radius:50% 50% 45% 45%;background:#ffd36a;box-shadow:0 0 11px #ffd36a99;animation:glow 2s ease-in-out infinite alternate}.bulb:nth-child(3n){background:#ff6072;box-shadow:0 0 11px #ff607299;animation-delay:.4s}.bulb:nth-child(4n){background:#7be7b1;box-shadow:0 0 11px #7be7b199;animation-delay:.9s}.bulb:nth-child(5n){background:#7adfff;box-shadow:0 0 11px #7adfff99;animation-delay:1.4s}
+@keyframes glow{to{opacity:.5;filter:brightness(.8)}}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 15px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.04em;font-size:clamp(19px,3vw,28px)}.brand .seal{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#297044,#103925 72%);border:2px solid #c9a855;color:var(--gold);box-shadow:0 0 20px #dfbd5540}.brand em{font-style:normal;color:var(--gold)}.hud{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.pill{display:flex;align-items:center;gap:7px;padding:7px 12px;border:1px solid #ffffff28;background:#07140fc4;border-radius:999px;color:#e4eee6;font-size:13px;font-weight:800;white-space:nowrap}.clock-pill{border-color:#e4bf5f88;box-shadow:inset 0 0 0 2px #dfc36d15}.clock-face{font:900 22px/1 "Courier New",monospace;letter-spacing:.05em;color:var(--gold);min-width:67px;text-align:center;text-shadow:0 0 9px #ffdb6e55}.clock-face.urgent{color:#ff6474;animation:clockblink .48s steps(2,end) infinite}@keyframes clockblink{to{opacity:.35}}.ornaments{display:flex;gap:4px;align-items:center}.ornament{font-size:17px;filter:drop-shadow(0 1px 4px #ffc55735);opacity:.42;transition:.25s;line-height:1}.ornament.broken{opacity:1;filter:grayscale(.85);transform:rotate(18deg) scale(1.14)}.small-button,.secondary,.primary,.icon-button{border:1px solid #ffffff3a;background:#ffffff13;border-radius:11px;padding:8px 12px;font-weight:800;transition:background .15s,transform .15s,border .15s}.small-button:hover,.secondary:hover,.icon-button:hover{background:#ffffff24;transform:translateY(-1px)}.primary{border:0;color:#13241a;background:linear-gradient(135deg,#ffe398,#d5ae50);box-shadow:0 6px 20px #d7ae4933;padding:11px 18px}.primary:hover{filter:brightness(1.07);transform:translateY(-1px)}.danger-button{border-color:#ff647466;background:#ff647419}.icon-button{min-width:42px}
+.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.85fr);gap:16px;align-items:start}.bomb-pane,.book-pane{min-width:0}.case{position:relative;padding:16px;border:1px solid #d5b95775;border-radius:20px;background:linear-gradient(155deg,#273d31,#142a22 54%,#10241d);box-shadow:var(--shadow);overflow:hidden}.case:before{content:"";position:absolute;inset:7px;border:1px solid #e3c86b35;border-radius:14px;pointer-events:none}.case-top{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}.case-title{margin:0;color:var(--gold);font-size:18px}.case-caption{margin:2px 0 0;color:#c6d3c8;font-size:12px}.serial{min-width:120px;text-align:center;padding:7px 11px;border:1px solid #ffffff28;border-radius:10px;background:#07120ed9;color:#fff4cc;font:800 17px/1.2 "Courier New",monospace;letter-spacing:.15em}.case-facts{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:10px;margin-bottom:15px}.fact{padding:9px 11px;border:1px solid #ffffff20;border-radius:12px;background:#07140e77;min-width:0}.fact-label{display:block;margin-bottom:3px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a9beb0;font-weight:900}.candles{font-size:19px;letter-spacing:2px;color:#ffda74}.candle-count{font-size:12px;color:#f4e7bb;margin-left:5px}.indicators{display:flex;flex-wrap:wrap;gap:5px}.indicator{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:999px;border:1px solid #ffffff25;font-size:10px;font-weight:900;letter-spacing:.03em;color:#aab8ac;background:#07120a55}.indicator.on{color:#ffe99d;border-color:#ffda7788;background:#f2bd301b;box-shadow:0 0 10px #f4c74a20}.indicator.on:before{content:"●";font-size:8px;color:#ffe070;filter:drop-shadow(0 0 4px #fff17c)}
+.modules-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 9px}.modules-heading h2{font-size:15px;margin:0}.progress-label{font-size:12px;color:#c3d0c5}.module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.module-card{position:relative;min-width:0;padding:12px;border:1px solid #ffffff25;border-radius:14px;background:linear-gradient(145deg,#18372a,#10251c);box-shadow:0 6px 18px #020c0860;overflow:hidden}.module-card.solved{border-color:#77e3a6a8;box-shadow:inset 0 0 0 1px #4cd78625,0 0 18px #42d1801c}.module-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}.module-head h3{margin:0;font-size:15px;color:#f8edce}.module-state{color:#b6c6bb;font-size:10px;text-transform:uppercase;font-weight:900;letter-spacing:.08em}.solved .module-state{color:#84f0ae}.module-content{min-height:97px}.module-hint{margin:8px 0 0;color:#c1d0c5;font-size:12px;min-height:18px}.module-content button{touch-action:manipulation}
+.wire-row{display:flex;align-items:center;justify-content:center;gap:7px;padding:8px 0}.wire-button{display:grid;justify-items:center;align-content:center;gap:3px;min-width:46px;min-height:58px;padding:5px 7px;border-radius:10px;border:1px solid #ffffff30;background:#07130e}.wire-line{display:block;width:22px;height:6px;border-radius:99px;box-shadow:0 1px 4px #0008}.wire-line.red{background:#f35a62}.wire-line.green{background:#55dc92}.wire-line.gold{background:#ffd45b}.wire-line.white{background:#f1f3e9;border:1px solid #819087}.wire-line.blue{background:#65c8ff}.wire-code{font-size:10px;font-weight:900;color:#f2f4e8}.wire-button:hover:not(:disabled){border-color:var(--gold);transform:translateY(-2px)}.wire-button:disabled{opacity:.35;cursor:default;text-decoration:line-through}.colorblind .wire-button{background-image:repeating-linear-gradient(135deg,#ffffff0b 0 4px,transparent 4px 8px)}.wire-button:nth-child(3n+1) .wire-line{border-radius:1px}.wire-button:nth-child(3n+2) .wire-line{background-image:repeating-linear-gradient(90deg,#0000 0 4px,#0005 4px 6px)}
+.button-module{display:grid;place-items:center;gap:7px}.bell-button{width:min(170px,100%);min-height:61px;border:3px solid #d6b85e;border-radius:18px;background:radial-gradient(circle at 35% 25%,#c64d56,#791d34 72%);font-size:15px;font-weight:1000;letter-spacing:.05em;box-shadow:inset 0 -7px #250b14a8,0 6px 14px #0005;touch-action:none;user-select:none}.bell-button.blue{background:radial-gradient(circle at 35% 25%,#57c7dc,#126579 72%)}.bell-button.green{background:radial-gradient(circle at 35% 25%,#5dd68b,#126342 72%)}.bell-button.gold{background:radial-gradient(circle at 35% 25%,#f2ca61,#8e6323 72%)}.bell-button.pressed{transform:translateY(4px);box-shadow:inset 0 -2px #250b14a8,0 2px 8px #0005}.timer-strip{width:130px;height:8px;border-radius:999px;border:1px solid #ffffff5a;background:#999;box-shadow:0 0 13px currentColor}.timer-strip.red{background:#ff5365;color:#ff5365}.timer-strip.green{background:#72ec9c;color:#72ec9c}.timer-strip.gold{background:#ffda65;color:#ffda65}.timer-strip.white{background:#eff7f1;color:#eff7f1}.timer-strip.blue{background:#65ceff;color:#65ceff}.action-note{margin:0;font-size:11px;color:#c1d0c5;text-align:center}
+.symbol-picks{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}.symbol-pick{width:46px;height:47px;padding:4px;border-radius:10px;background:#091810;border:1px solid #ffffff2b;font-size:23px}.symbol-pick:hover:not(:disabled){border-color:var(--gold);transform:translateY(-2px)}.symbol-pick:disabled{opacity:.25}.symbol-pick.used{opacity:.34}
+.simon-wrap{display:grid;gap:8px;justify-items:center}.simon-grid{width:min(190px,100%);display:grid;grid-template-columns:repeat(2,1fr);gap:6px}.simon-key{min-height:47px;border:2px solid #ffffff3a;border-radius:11px;font-size:11px;font-weight:900;opacity:.85}.simon-key.red{background:#821e31}.simon-key.green{background:#1c7044}.simon-key.gold{background:#8a631d}.simon-key.blue{background:#17557d}.simon-key.lit{opacity:1;filter:brightness(1.8);box-shadow:0 0 19px currentColor,inset 0 0 12px #fff8}.simon-key:disabled{cursor:wait;opacity:.55}.simon-status{min-height:17px;text-align:center;color:#cfddce;font-size:11px}.tiny-button{padding:5px 9px;font-size:11px;border-radius:9px}
+.password-fields{display:flex;justify-content:center;gap:5px}.letter-wheel{display:grid;justify-items:center;gap:3px}.letter-wheel button{width:34px;height:26px;padding:0;border-radius:7px;font-weight:900;font-size:13px}.letter-wheel output{display:grid;place-items:center;width:36px;height:38px;border:1px solid #dfc36a7a;border-radius:8px;background:#0a160f;color:#fff0b3;font:900 23px/1 "Courier New",monospace}.pw-submit{display:block;margin:8px auto 0;padding:6px 14px;font-size:11px}
+.book{position:sticky;top:12px;padding:14px;border-radius:17px;color:var(--paper-ink);background:repeating-linear-gradient(0deg,#efe3c8,#efe3c8 27px,#e8dbbd 28px,#e8dbbd 29px);border:3px solid #8a6033;box-shadow:inset 0 0 0 3px #f5ebd5,0 14px 35px #020b0999;max-height:calc(100vh - 24px);overflow:auto}.book:before{content:"";position:absolute;top:0;bottom:0;left:10px;width:2px;background:#c8a87655}.book-header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 3px 9px 12px;border-bottom:2px solid #9a7b4e66}.book-title{margin:0;font:900 17px/1.2 Georgia,"Times New Roman",serif;color:#344d39}.book-subtitle{margin:2px 0 0;font-size:10px;color:#6e624c}.book-icon{font-size:24px}.book-search{display:flex;gap:6px;margin:10px 0 7px;padding-left:8px}.book-search input{min-width:0;width:100%;padding:7px 9px;border:1px solid #977b54;border-radius:8px;background:#fff9e7;color:#302b20}.book-tabs{display:flex;gap:5px;overflow-x:auto;padding:0 2px 8px 8px;scrollbar-width:thin}.book-tab{flex:0 0 auto;padding:5px 8px;border:1px solid #987c56;border-radius:8px;background:#eadbbb;color:#403724;font-size:10px;font-weight:900}.book-tab.active{background:#315d3d;color:#fff8df;border-color:#26482e}.book-page{padding:7px 6px 10px 12px;font:13px/1.5 Georgia,"Times New Roman",serif}.book-page h3{margin:4px 0 6px;color:#31503a;font-size:16px}.book-page h4{margin:10px 0 4px;color:#704b2a;font-size:13px}.book-page p{margin:5px 0}.book-page ul,.book-page ol{padding-left:20px;margin:5px 0}.book-page li{margin:3px 0}.rule-list{list-style:none;padding:0!important;counter-reset:rule}.rule-list li{counter-increment:rule;display:grid;grid-template-columns:22px 1fr;gap:5px;border-bottom:1px dashed #987c564d;padding:4px 0}.rule-list li:before{content:counter(rule) ".";font-weight:900;color:#76572d}.table-scroll{overflow:auto}.book-table{border-collapse:collapse;width:100%;font-size:11px;min-width:340px}.book-table th,.book-table td{border:1px solid #9c835c;padding:4px 5px;text-align:left;vertical-align:top}.book-table th{background:#d9c7a5;color:#354631}.book-table td:first-child{font-weight:900}.color-name{white-space:nowrap;font-weight:900}.swatch{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;border:1px solid #544b38}.swatch.red{background:#c93748}.swatch.green{background:#20804b}.swatch.gold{background:#d5a126}.swatch.white{background:#fff;border-color:#817961}.swatch.blue{background:#2798d0}.symbol-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.symbol-column{padding:5px;border:1px solid #a48b61;border-radius:8px;background:#f7edd5;text-align:center}.symbol-column strong{display:block;border-bottom:1px solid #c4ad82;margin-bottom:3px}.symbol-line{font-size:17px;letter-spacing:2px}.word-bank{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 7px;padding-left:20px!important;font-weight:800;letter-spacing:.06em}.book-note{padding:7px 8px;border-left:3px solid #ab873e;background:#e2d2ad;font-size:11px}.no-results{padding:10px;color:#56472f}
+.mobile-switch{display:none;gap:7px;margin-bottom:10px}.mobile-switch button{flex:1}.mobile-switch .active{background:#bf9850;color:#13231e;border-color:var(--gold)}
+.start-overlay,.end-overlay{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:18px;background:#07120ed9;backdrop-filter:blur(7px)}.start-overlay[hidden],.end-overlay[hidden]{display:none}.modal{width:min(600px,100%);max-height:min(92vh,850px);overflow:auto;padding:clamp(18px,4vw,30px);border:1px solid #dfc06c80;border-radius:23px;background:linear-gradient(150deg,#1d4533,#10271f 68%,#0d2019);box-shadow:0 24px 80px #000b;text-align:center}.modal .eyebrow{margin:0 0 6px;color:#d7bd69;font-size:11px;font-weight:1000;letter-spacing:.2em;text-transform:uppercase}.modal h1{margin:0 auto 8px;max-width:530px;color:#ffe193;font:900 clamp(29px,7vw,46px)/1.05 Georgia,"Times New Roman",serif}.modal .intro-copy{max-width:490px;margin:0 auto 14px;color:#e1ebe2}.gift-emoji{font-size:51px;line-height:1.2;filter:drop-shadow(0 6px 12px #0005)}.difficulty-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0 10px}.difficulty-card{min-height:85px;padding:9px 6px;border:1px solid #ffffff34;border-radius:12px;background:#08161070;text-align:center;cursor:pointer}.difficulty-card:has(input:checked){border-color:var(--gold);background:#d0a8411c;box-shadow:inset 0 0 0 1px #d4b25155}.difficulty-card input{accent-color:#e1bc5c}.difficulty-card strong{display:block;margin-top:4px;color:#ffdf89}.difficulty-card span{display:block;font-size:11px;color:#c7d4c9}.seed-line{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:9px;margin:12px 0;text-align:left;font-size:12px;color:#d3ded2}.seed-line input{width:100%;min-width:0;padding:9px 10px;border:1px solid #ffffff38;border-radius:9px;color:white;background:#091910}.toggle-line{display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0;color:#e1e9df;font-size:12px}.toggle-line input{accent-color:#d8b751}.rules-summary{margin:13px auto 16px;padding:10px 12px;border-radius:12px;background:#06130e72;color:#ced9ce;font-size:12px;text-align:left}.rules-summary strong{color:#ffe293}.modal-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.modal .fine{margin:13px 0 0;color:#9eafa1;font-size:10px}.result-stars{margin:4px 0;color:var(--gold);font-size:32px;letter-spacing:4px;text-shadow:0 0 20px #ffd76855}.result-title{margin:0 0 8px!important}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.result-stat{padding:9px;border:1px solid #ffffff24;border-radius:10px;background:#06150e7a}.result-stat strong{display:block;color:#ffe193;font-size:18px}.result-stat span{font-size:10px;color:#c5d2c7;text-transform:uppercase;letter-spacing:.07em}.result-explain{padding:10px;border-radius:10px;background:#06150e78;text-align:left;color:#dee8dc;font-size:13px}.result-explain strong{color:#ffe193}.end-actions{margin-top:14px}
+.gift-open .case{animation:openGift .8s ease-in-out forwards}@keyframes openGift{50%{transform:rotateX(-10deg) translateY(-8px);filter:brightness(1.7)}100%{transform:translateY(-3px);box-shadow:0 0 45px #ffe36b66,var(--shadow)}}.confetti{position:fixed;inset:0;pointer-events:none;z-index:9;overflow:hidden}.confetti i{position:absolute;top:-14px;width:8px;height:13px;border-radius:2px;animation:fall 3.5s linear forwards}.confetti i:nth-child(4n){border-radius:50%;width:9px;height:9px}.@keyframes fall{to{transform:translate3d(var(--drift),105vh,0) rotate(800deg);opacity:.8}}
+.status-line{min-height:22px;margin:10px 2px 0;color:#c1d3c5;font-size:12px}.status-line.error{color:#ff9ba6}.status-line.success{color:#98f0b8}.kbd{display:inline-block;padding:1px 5px;border:1px solid #ffffff44;border-bottom-width:2px;border-radius:5px;background:#06150e77;font-size:10px}
+@media(max-width:1000px){.layout{grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr)}.module-grid{grid-template-columns:1fr}.module-content{min-height:82px}.book{top:8px;max-height:calc(100vh - 16px)}}
+@media(max-width:760px){.app{padding-top:8px}.topbar{align-items:flex-start;flex-wrap:wrap}.brand{font-size:20px}.hud{flex:1}.mobile-switch{display:flex}.layout{display:block}.bomb-pane,.book-pane{display:none}.layout.show-box .bomb-pane{display:block}.layout.show-book .book-pane{display:block}.book{position:static;max-height:none}.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.case{padding:13px}.case-facts{gap:7px}.fact{padding:7px}.case-top{align-items:center}.serial{min-width:102px;font-size:15px}}
+@media(max-width:480px){.topbar{gap:8px}.brand{font-size:17px}.brand .seal{width:36px;height:36px}.hud{gap:5px}.pill{padding:6px 8px;font-size:11px}.clock-face{font-size:19px;min-width:58px}.small-button{padding:7px 9px;font-size:11px}.ornament{font-size:14px}.module-grid{grid-template-columns:1fr}.module-card{padding:10px}.module-content{min-height:75px}.case-title{font-size:16px}.case-caption{max-width:200px;font-size:10px}.case-facts{grid-template-columns:1fr 1fr}.difficulty-row{gap:5px}.difficulty-card{font-size:12px;min-height:78px}.seed-line{grid-template-columns:1fr;gap:4px}.result-stats{gap:5px}.result-stat{padding:7px 3px}.result-stat strong{font-size:16px}.symbol-columns{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+<style>
+.serial-block{flex:0 0 142px;text-align:center}.serial{width:100%}.serial-traits{margin:4px 0 0;color:#d6e1d5;font-size:9px;font-weight:800;letter-spacing:.02em}
+.gift-exploded .case{animation:explodeGift .75s ease-out forwards}@keyframes explodeGift{0%{transform:scale(1)}16%{transform:translate(-5px,2px) rotate(-1.4deg)}33%{transform:translate(5px,-3px) rotate(1.6deg) scale(1.035);filter:brightness(1.7)}56%{transform:translate(-3px,1px) rotate(-1deg) scale(.985)}100%{transform:translateY(2px) rotate(.4deg);filter:brightness(.65) saturate(.7)}}
+@media(max-width:480px){.serial-block{flex-basis:112px}.serial{font-size:14px}.serial-traits{font-size:8px}}
+body:after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.38;background-image:radial-gradient(circle at 8% 16%,#fff8 0 1px,transparent 1.8px),radial-gradient(circle at 22% 63%,#fff8 0 1px,transparent 1.8px),radial-gradient(circle at 38% 28%,#fff8 0 1.1px,transparent 2px),radial-gradient(circle at 61% 13%,#fff8 0 1px,transparent 1.8px),radial-gradient(circle at 79% 42%,#fff8 0 1px,transparent 1.8px),radial-gradient(circle at 93% 21%,#fff8 0 1.1px,transparent 2px),radial-gradient(circle at 70% 78%,#fff8 0 1px,transparent 1.8px)}
+#snow{z-index:1}.app{z-index:2}
+.role-badge{padding:7px 12px;border:1px solid #e6c97599;border-radius:999px;background:#06140fe8;color:#ffe69a;font-weight:1000;font-size:12px;letter-spacing:.04em;white-space:nowrap}
+.mode-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:13px 0}.mode-card{display:grid;align-content:start;gap:3px;min-height:104px;padding:9px 8px;border:1px solid #ffffff3b;border-radius:12px;background:#08161070;text-align:left;cursor:pointer}.mode-card:has(input:checked){border-color:var(--gold);background:#d0a8411c;box-shadow:inset 0 0 0 1px #d4b25155}.mode-card input{accent-color:#e1bc5c}.mode-card strong{color:#ffe293;font-size:13px}.mode-card small{color:#c7d4c9;font-size:10px;line-height:1.35}.menu-mode-note{min-height:38px;margin:4px auto 10px;color:#dbe5da;font-size:12px}.config-fields{padding-top:2px}.config-fields[hidden],.mode-card[hidden],.manual-tip[hidden]{display:none!important}.manual-tip{margin:12px 0;padding:12px;border-radius:11px;background:#07130d9c;color:#e5ecdf;text-align:left;font-size:13px}
+.manual-ask{margin:12px 0 4px!important;padding:9px 10px;border-left:4px solid #9b773b;background:#dfd0ad;font-size:14px}.manual-ask strong{color:#374c36}
+body.mode-solo .layout{grid-template-columns:minmax(0,1.45fr) minmax(320px,.85fr)}
+body.mode-bomb .layout{display:block}
+body.mode-bomb #manualHost{display:none}
+body.mode-manual .layout{display:block}
+body.mode-manual #bombHost{display:none}
+body.mode-manual #manualHost{display:block}
+body.mode-manual .book{position:static;max-height:none;overflow:visible}
+body.mode-manual .book-tabs{position:sticky;top:0;z-index:3;padding-top:7px;padding-bottom:8px;background:#eee2c2ed}
+body.mode-manual .book-page{font-size:17px;line-height:1.65}
+body.mode-manual .book-page h3{font-size:22px}
+body.mode-manual .book-page h4{font-size:18px}
+body.mode-manual .book-page li{margin:7px 0}
+@media(max-width:760px){.mode-row{grid-template-columns:1fr}.mode-card{min-height:0}.role-badge{font-size:10px;padding:6px 8px}body.mode-solo .book-tabs{position:sticky;top:0;z-index:3;background:#eee2c2ed}}
+@media print{
+  @page{margin:16mm}
+  html,body{min-width:0;background:#fff!important;color:#000!important;overflow:visible!important}
+  body:after,#snow,.lights,.topbar,.mobile-switch,.bomb-pane,.start-overlay,.end-overlay,.confetti{display:none!important}
+  #app{width:100%;margin:0;padding:0;color:#000;z-index:auto}
+  .layout,body.mode-solo .layout,body.mode-manual .layout{display:block!important}
+  #manualHost,body.mode-solo #manualHost,body.mode-manual #manualHost{display:block!important;position:static!important}
+  .book{position:static!important;max-height:none!important;overflow:visible!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important;color:#000!important;box-shadow:none!important}
+  .book.printing>*{display:none!important}.book.printing>.print-book{display:block!important}
+  .book:before{display:none}.book-header{border-color:#777}.book-title,.book-page h3,.book-page h4,.book-page,.book-subtitle{color:#000!important}
+  .book-tabs{position:static!important;display:flex!important;flex-wrap:wrap;background:#fff!important}
+  .book-tab{color:#000!important;background:#fff!important;border-color:#777!important}
+  .book-page{font-size:12pt!important;line-height:1.45!important}
+  .book-page [hidden]{display:list-item!important}
+  .book-note,.manual-ask,.symbol-column,.book-table th{background:#fff!important;color:#000!important}
+  .book-table th,.book-table td,.symbol-column{border-color:#555!important}
+  .book-search input{border:1px solid #777;background:#fff;color:#000}
+  .book-page button{display:none}
+  .print-book{color:#000!important;background:#fff!important;font:12pt/1.45 Georgia,"Times New Roman",serif}
+  .print-book h1,.print-book h2,.print-book h3,.print-book h4,.print-book p,.print-book li,.print-book th,.print-book td{color:#000!important;background:#fff!important}
+  .print-book section{break-before:page;page-break-before:always}.print-book section:first-of-type{break-before:auto;page-break-before:auto}
+  .print-book .book-table{min-width:0}.print-book a{color:#000!important;text-decoration:none}
+}
+.print-book{display:none}
+</style>
+</head>
+<body>
+<canvas id="snow" aria-hidden="true"></canvas>
+<audio id="backgroundMusic" loop preload="auto"><source src="audio/Ein%20Geschenk%20ist%20nicht%20genug.mp3" type="audio/mpeg"></audio>
+<div class="app" id="app"></div>
+<section class="start-overlay" id="startOverlay" aria-modal="true" role="dialog" hidden></section>
+<section class="end-overlay" id="endOverlay" aria-modal="true" role="dialog" hidden></section>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+<script>
+(()=>{"use strict";
+// Round data lives in state; rule records below drive both handbook text and decisions.
+const $=s=>document.querySelector(s);
+const COLOR_NAMES={red:"Rot",green:"Grün",gold:"Gold",white:"Weiß",blue:"Blau"};
+const COLOR_CODES={red:"R",green:"G",gold:"Au",white:"W",blue:"B"};
+const WIRE_RULES={
+  3:[
+    {id:"two-red",text:"Wenn mindestens zwei rote Kabel vorhanden sind: das letzte rote Kabel schneiden.",test:(w)=>w.filter(x=>x==="red").length>=2,choose:(w)=>w.lastIndexOf("red")},
+    {id:"last-white",text:"Sonst, wenn das letzte Kabel weiß ist: das mittlere Kabel schneiden.",test:(w)=>w[w.length-1]==="white",choose:(w)=>1},
+    {id:"one-blue",text:"Sonst, wenn genau ein blaues Kabel vorhanden ist: dieses blaue Kabel schneiden.",test:(w)=>w.filter(x=>x==="blue").length===1,choose:(w)=>w.indexOf("blue")},
+    {id:"fallback",text:"Sonst: das letzte Kabel schneiden.",test:()=>true,choose:(w)=>w.length-1}
+  ],
+  4:[
+    {id:"no-red-odd",text:"Wenn kein rotes Kabel vorhanden ist und die letzte Seriennummer-Ziffer ungerade ist: das erste Kabel schneiden.",test:(w,c)=>!w.includes("red")&&c.odd,choose:()=>0},
+    {id:"one-gold",text:"Sonst, wenn genau ein goldenes Kabel vorhanden ist: das letzte goldene Kabel schneiden.",test:(w)=>w.filter(x=>x==="gold").length===1,choose:(w)=>w.lastIndexOf("gold")},
+    {id:"last-green",text:"Sonst, wenn das letzte Kabel grün ist: das erste grüne Kabel schneiden.",test:(w)=>w[w.length-1]==="green",choose:(w)=>w.indexOf("green")},
+    {id:"fallback",text:"Sonst: das zweite Kabel schneiden.",test:()=>true,choose:()=>1}
+  ],
+  5:[
+    {id:"blue-odd",text:"Wenn das letzte Kabel blau ist und die letzte Seriennummer-Ziffer ungerade ist: das vierte Kabel schneiden.",test:(w,c)=>w[4]==="blue"&&c.odd,choose:()=>3},
+    {id:"red-whites",text:"Sonst, wenn genau ein rotes und mindestens zwei weiße Kabel vorhanden sind: das rote Kabel schneiden.",test:(w)=>w.filter(x=>x==="red").length===1&&w.filter(x=>x==="white").length>=2,choose:(w)=>w.indexOf("red")},
+    {id:"no-gold",text:"Sonst, wenn kein goldenes Kabel vorhanden ist: das zweite Kabel schneiden.",test:(w)=>!w.includes("gold"),choose:()=>1},
+    {id:"first-green",text:"Sonst, wenn das erste Kabel grün ist: das letzte grüne Kabel schneiden.",test:(w)=>w[0]==="green",choose:(w)=>w.lastIndexOf("green")},
+    {id:"fallback",text:"Sonst: das dritte Kabel schneiden.",test:()=>true,choose:()=>2}
+  ],
+  6:[
+    {id:"no-blue",text:"Wenn kein blaues Kabel vorhanden ist: das letzte Kabel schneiden.",test:(w)=>!w.includes("blue"),choose:(w)=>w.length-1},
+    {id:"one-red-vowel",text:"Sonst, wenn genau ein rotes Kabel vorhanden ist und die Seriennummer einen Vokal enthält: das rote Kabel schneiden.",test:(w,c)=>w.filter(x=>x==="red").length===1&&c.vowel,choose:(w)=>w.indexOf("red")},
+    {id:"even-gold",text:"Sonst, wenn die letzte Seriennummer-Ziffer gerade ist und mindestens zwei goldene Kabel vorhanden sind: das letzte goldene Kabel schneiden.",test:(w,c)=>!c.odd&&w.filter(x=>x==="gold").length>=2,choose:(w)=>w.lastIndexOf("gold")},
+    {id:"last-white",text:"Sonst, wenn das letzte Kabel weiß ist: das erste weiße Kabel schneiden.",test:(w)=>w[w.length-1]==="white",choose:(w)=>w.indexOf("white")},
+    {id:"fallback",text:"Sonst: das vorletzte Kabel schneiden.",test:()=>true,choose:(w)=>w.length-2}
+  ]
+};
+const BUTTON_RULES=[
+  {id:"halt",text:"Wenn die Aufschrift HALT lautet: kurz drücken und sofort loslassen.",test:(m)=>m.label==="HALT",action:"tap"},
+  {id:"star-lights",text:"Sonst, wenn die Anzeige STERN leuchtet und mindestens zwei Kerzen-Batterien vorhanden sind: gedrückt halten.",test:(m,c)=>c.indicators.STERN&&c.batteries>=2,action:"hold"},
+  {id:"blue-vowel",text:"Sonst, wenn die Seriennummer einen Vokal enthält und der Knopf blau ist: gedrückt halten.",test:(m,c)=>c.vowel&&m.color==="blue",action:"hold"},
+  {id:"quiet-empty",text:"Sonst, wenn keine Kerzen-Batterie vorhanden ist und die Aufschrift STILLE lautet: kurz drücken und sofort loslassen.",test:(m,c)=>c.batteries===0&&m.label==="STILLE",action:"tap"},
+  {id:"bell-gold",text:"Sonst, wenn die Anzeige GLOCKE leuchtet und der Knopf golden ist: kurz drücken und sofort loslassen.",test:(m,c)=>c.indicators.GLOCKE&&m.color==="gold",action:"tap"},
+  {id:"default",text:"Sonst: gedrückt halten.",test:()=>true,action:"hold"}
+];
+const MODULE_META={
+  wires:{title:"Lichterkette",icon:"〰️"},
+  button:{title:"Glockenknopf",icon:"🔔"},
+  symbols:{title:"Weihnachtsrunen",icon:"ᛟ"},
+  simon:{title:"Lichterbaum",icon:"🎄"},
+  password:{title:"Wunschzettel",icon:"✉️"}
+};
+const DIFFICULTIES={
+  easy:{label:"Leicht",count:3,soloSeconds:300,bombSeconds:330},
+  medium:{label:"Mittel",count:4,soloSeconds:240,bombSeconds:300},
+  hard:{label:"Schwer",count:5,soloSeconds:210,bombSeconds:270}
+};
+const SYMBOL_COLUMNS=[
+  ["❄️","🎄","⭐","🔔","🦌","🎁","🕯️"],
+  ["🧦","⛄","🍪","🍬","🛷","🧤","🧣"],
+  ["🌟","🎅","🤶","🧝","🧑‍🎄","🦉","🐻"],
+  ["🦊","🐧","🌲","🌨️","☃️","🍊","🥛"],
+  ["🥨","🍫","🪵","🔥","🏠","🌙","🔑"],
+  ["🪄","🧸","🎀","🪽","🫎","🪅","🪇"]
+];
+const PASSWORD_WORDS=["STERN","KERZE","ENGEL","KRANZ","KUGEL","TANNE","NACHT","GABEN","KAKAO","ELCHE","KARTE","FROST","LICHT","LEISE","KAMIN"];
+const SIMON_MAPS={
+  yes:{
+    0:{red:"blue",green:"red",gold:"green",blue:"gold"},
+    1:{red:"green",green:"gold",gold:"blue",blue:"red"},
+    2:{red:"gold",green:"blue",gold:"red",blue:"green"}
+  },
+  no:{
+    0:{red:"gold",green:"blue",gold:"red",blue:"green"},
+    1:{red:"blue",green:"gold",gold:"red",blue:"green"},
+    2:{red:"green",green:"red",gold:"blue",blue:"gold"}
+  }
+};
+// This single, fixed rule source feeds both the handbook and module validation.
+const rules={
+  wires:WIRE_RULES,
+  button:BUTTON_RULES,
+  timerDigits:{red:1,green:3,gold:5,white:7,blue:9},
+  symbolColumns:SYMBOL_COLUMNS,
+  passwordWords:PASSWORD_WORDS,
+  simonMaps:SIMON_MAPS
+};
+const state={phase:"menu",difficulty:"medium",seed:"",seedSpecified:false,rng:null,caseInfo:null,modules:[],strikes:null,remaining:null,totalTime:null,manualPage:null,lastTick:null,lastFrame:0,generation:0,colorblind:false,lastIncident:null};
+let mode="solo",audioContext=null,muted=false,snowFrameId=0,gameFrameId=0,keyboardHoldId=null;
+const moduleMap={
+  wires:{
+    init(){const n=randInt(3,6);return{wires:Array.from({length:n},()=>pick(["red","green","gold","white","blue"])),feedback:"Schneide genau das Kabel, das die erste zutreffende Handbuchregel nennt."}},
+    render(m){return'<div class="wire-row">'+m.wires.map((c,i)=>'<button class="wire-button" type="button" data-action="wire-cut" data-index="'+i+'" aria-label="Kabel '+(i+1)+", "+COLOR_NAMES[c]+'"><span class="wire-line '+c+'"></span><span class="wire-code">'+(state.colorblind?COLOR_CODES[c]:COLOR_CODES[c])+'</span></button>').join("")+'</div><p class="action-note">'+m.wires.length+' Kabel · Kürzel helfen beim Erkennen</p>'},
+    input(m,a,d){if(a!=="wire-cut"||m.solved)return;const rule=wireRule(m),index=Number(d.index);if(index===rule.choose(m.wires)){solveModule(m,"Die richtige Stelle der Lichterkette ist durchtrennt.");return}strike("Ein falsches Kabel wurde durchgeschnitten.",rule.text,m);},
+    solved(m){return!!m.solved}
+  },
+  button:{
+    init(){return{color:pick(["red","green","gold","blue"]),label:pick(["LÄUTEN","STILLE","HALT","HO-HO"]),holding:false,strip:pick(["red","green","gold","white","blue"]),feedback:"Knopf-Regel im Handbuch nachschlagen. Zum Halten Maus/Finger gedrückt lassen."}},
+    render(m){const holding=m.holding;return'<div class="button-module"><button class="bell-button '+m.color+(holding?" pressed":"")+'" type="button" data-action="bell-press" aria-label="'+m.label+" "+COLOR_NAMES[m.color]+(holding?", gedrückt halten":", kurz drücken")+'">'+m.label+'</button><span class="timer-strip '+m.strip+'" style="'+(holding?"opacity:1":"opacity:.25")+'" aria-label="Farbstreifen '+COLOR_NAMES[m.strip]+'"></span><p class="action-note">'+(holding?"Loslassen, wenn die Ziffer "+rules.timerDigits[m.strip]+" im Countdown steht.":"Knopf: "+COLOR_NAMES[m.color]+" · Aufschrift: "+m.label)+'</p></div>'},
+    input(m,a){if(a!=="bell-press"||m.solved)return;if(state.phase!=="playing")return;const rule=buttonRule(m);if(rule.action==="tap"){solveModule(m,"Der Knopf wurde nach der Kurzdrück-Regel sofort losgelassen.");return}if(!m.holding){m.holding=true;m.feedback="Gedrückt halten. Warte, bis die Ziffer "+rules.timerDigits[m.strip]+" im Countdown erscheint, dann loslassen.";renderModules();setStatus("Knopf gehalten – Timer läuft weiter. Loslassen beim passenden Ziffern-Treffer.");return}const digit=rules.timerDigits[m.strip],digits=formatTime(state.remaining).replace(":","");m.holding=false;if(digits.includes(String(digit))){solveModule(m,"Der Knopf wurde beim richtigen Ziffern-Treffer losgelassen.");return}strike("Der Knopf wurde beim falschen Ziffernstand losgelassen.",'Der Farbstreifen '+COLOR_NAMES[m.strip]+' verlangt die Ziffer '+digit+'. Warte, bis sie in mm:ss sichtbar ist.',m);},
+    solved(m){return!!m.solved}
+  },
+  symbols:{
+    init(){const colIndex=randInt(0,5),column=rules.symbolColumns[colIndex],positions=shuffle([0,1,2,3,4,5,6]).slice(0,4),display=shuffle(positions.slice()).map(i=>column[i]),correct=positions.slice().sort((a,b)=>a-b).map(i=>column[i]);return{column:colIndex,display,correct,progress:0,used:[],feedback:"Finde die gemeinsame Handbuchspalte und tippe ihre vier Runen von oben nach unten."}},
+    render(m){return'<div class="symbol-picks">'+m.display.map((s,i)=>'<button class="symbol-pick '+(m.used.includes(i)?"used":"")+'" type="button" data-action="symbol-pick" data-index="'+i+'" '+(m.used.includes(i)?"disabled":"")+' aria-label="Rune '+s+'">'+s+'</button>').join("")+'</div><p class="action-note">Runen gewählt: '+m.progress+' / 4</p>'},
+    input(m,a,d){if(a!=="symbol-pick"||m.solved)return;const idx=Number(d.index),symbol=m.display[idx];if(symbol===m.correct[m.progress]){m.used.push(idx);m.progress++;if(m.progress>=4){solveModule(m,"Alle vier Runen kamen in der Handbuchreihenfolge.");return}m.feedback="Richtig. Weiter mit der nächsten Rune der Spalte.";renderModules();playClick();return}m.progress=0;m.used=[];strike("Die Runen wurden nicht in der passenden Handbuchreihenfolge gedrückt.",'Finde die eine Spalte, die alle vier Runen enthält, und wähle sie von oben nach unten.',m);},
+    solved(m){return m.progress>=4}
+  },
+  simon:{
+    init(){return{sequence:Array.from({length:4},()=>pick(["red","green","gold","blue"])),stage:1,inputIndex:0,flash:null,playing:false,feedback:"Sieh dir das Signal an. Die Regel richtet sich nach Seriennummer-Vokal und aktuellen Fehlern."}},
+    render(m){return'<div class="simon-wrap"><div class="simon-grid">'+["red","green","gold","blue"].map(c=>'<button class="simon-key '+c+(m.flash===c?" lit":"")+'" type="button" data-action="simon-color" data-value="'+c+'" '+(m.playing?"disabled":"")+' aria-label="'+COLOR_NAMES[c]+'">'+COLOR_NAMES[c]+'</button>').join("")+'</div><div class="simon-status">'+(m.playing?"Signal läuft …":"Stufe "+Math.min(4,m.stage)+" · Eingabe "+m.inputIndex+" / "+Math.min(4,m.stage))+'</div><button class="secondary tiny-button" type="button" data-action="simon-replay" '+(m.playing?"disabled":"")+'>'+ (m.playing?"Signal läuft":"🔁 Signal wiederholen")+'</button></div>'},
+    input(m,a,d,id){if(a==="simon-replay"){if(!m.playing)playSimon(id,m);return}if(a!=="simon-color"||m.solved||m.playing)return;const expected=translatedSimon(m.sequence[m.inputIndex],state.strikes,state.caseInfo.vowel);if(d.value!==expected){m.stage=1;m.inputIndex=0;m.feedback="Fehler. Ab Stufe 1 wiederholen; die Farbübersetzung richtet sich jetzt nach "+state.strikes+" Fehlern.";strike("Ein falsches Licht wurde im Lichterbaum gedrückt.",simonHint(state.strikes,state.caseInfo.vowel),m);if(state.phase==="playing")playSimon(id,m);return}m.inputIndex++;if(m.inputIndex>=Math.min(4,m.stage)){m.stage++;m.inputIndex=0;if(m.stage>4){solveModule(m,"Alle vier Signalstufen wurden richtig übersetzt.");return}m.feedback="Stufe geschafft. Die nächste Signalfolge wird länger.";renderModules();playSimon(id,m);return}m.feedback="Richtiges Licht. Folge weiter dem übersetzten Signal.";renderModules();playClick();},
+    solved(m){return m.stage>4}
+  },
+  password:{
+    init(){const words=rules.passwordWords,target=pick(words),alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ",wheels=[];for(let i=0;i<5;i++){const forbidden=new Set(words.filter(w=>w!==target).map(w=>w[i]));forbidden.add(target[i]);const decoys=shuffle(alphabet.split("").filter(ch=>!forbidden.has(ch))).slice(0,5);wheels.push(shuffle([target[i],...decoys]))}return{target,wheels,indexes:wheels.map((w,i)=>w.indexOf(target[i])),feedback:"Finde das eine Wort, das in der Wortliste steht. Die Pfeile drehen jede Buchstabenscheibe."}},
+    render(m){return'<div class="password-fields">'+m.wheels.map((w,i)=>'<div class="letter-wheel" aria-label="Buchstabenstelle '+(i+1)+'"><button class="secondary" type="button" data-action="pw-up" data-index="'+i+'" aria-label="Buchstabe nach oben">▲</button><output>'+w[m.indexes[i]]+'</output><button class="secondary" type="button" data-action="pw-down" data-index="'+i+'" aria-label="Buchstabe nach unten">▼</button></div>').join("")+'</div><button class="primary pw-submit" type="button" data-action="pw-submit">Absenden</button>'},
+    input(m,a,d){const i=Number(d.index);if(a==="pw-up"||a==="pw-down"){m.indexes[i]=(m.indexes[i]+(a==="pw-up"?1:5))%6;renderModules();playClick();return}if(a!=="pw-submit"||m.solved)return;const word=m.wheels.map((w,j)=>w[m.indexes[j]]).join("");if(word===m.target){solveModule(m,"Das gesuchte Wort aus der Wichtel-Wortliste ist eingestellt.");return}strike('"'+word+'" steht nicht als passendes Lösungswort im Handbuch.',"Stelle ein Wort aus der fünfzehn Wörter umfassenden Liste ein.",m);},
+    solved(m){return m.solved===true}
+  }
+};
+const PAGE_NAMES={intro:"Übersicht",wires:"Lichterkette",button:"Knopf",symbols:"Runen",simon:"Lichterbaum",password:"Wunschzettel"};
+
+function hashSeed(value){let h=2166136261;for(let i=0;i<value.length;i++){h^=value.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function mulberry32(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function rand(){return state.rng()}function randInt(min,max){return Math.floor(rand()*(max-min+1))+min}function pick(a){return a[Math.floor(rand()*a.length)]}
+function shuffle(list){const a=list.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function formatTime(seconds){const n=Math.max(0,Math.ceil(seconds)),m=Math.floor(n/60),s=n%60;return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function makeCase(){const alphabet="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",serial=Array.from({length:5},()=>alphabet[Math.floor(rand()*alphabet.length)]).join("")+String(randInt(0,9));const vowel=/[AEIOU]/.test(serial);const last=Number(serial[serial.length-1]);const indicators={STERN:rand()<.5,GLOCKE:rand()<.5,ENGEL:rand()<.5};return{serial,vowel,odd:last%2===1,batteries:randInt(0,4),indicators,last}}
+function serialInfo(){return{serial:state.caseInfo.serial,vowel:state.caseInfo.vowel,odd:state.caseInfo.odd,batteries:state.caseInfo.batteries,indicators:state.caseInfo.indicators}}
+function wireRule(m){const list=rules.wires[m.wires.length];return list.find(r=>r.test(m.wires,serialInfo()))}
+function buttonRule(m){return rules.button.find(r=>r.test(m,serialInfo()))}
+function translatedSimon(signal,strikes,vowel){return rules.simonMaps[vowel?"yes":"no"][Math.min(2,strikes)][signal]}
+function simonHint(strikes,vowel){const map=rules.simonMaps[vowel?"yes":"no"][Math.min(2,strikes)];return"Die aktuelle Tabelle: Rot→"+COLOR_NAMES[map.red]+", Grün→"+COLOR_NAMES[map.green]+", Gold→"+COLOR_NAMES[map.gold]+", Blau→"+COLOR_NAMES[map.blue]+". Seriennummer-Vokal: "+(vowel?"ja":"nein")+"."}
+function createLights(){const host=document.querySelector(".lights");for(let i=0;i<18;i++){const b=document.createElement("i");b.className="bulb";host.appendChild(b)}}
+function createManualTabs(){const host=$("#bookTabs");Object.entries(PAGE_NAMES).forEach(([id,name])=>{const b=document.createElement("button");b.className="book-tab";b.type="button";b.dataset.page=id;b.textContent=name;host.appendChild(b)})}
+function createOrnaments(){const host=$("#ornaments");host.innerHTML="";for(let i=0;i<3;i++){const s=document.createElement("span");s.className="ornament";s.textContent="🔴";s.setAttribute("aria-hidden","true");host.appendChild(s)}}
+function syncCase(){const c=state.caseInfo;$("#serial").textContent=c.serial;$("#serial").setAttribute("aria-label","Seriennummer "+c.serial+", letzte Ziffer "+c.last+", "+(c.odd?"ungerade":"gerade")+", Vokal "+(c.vowel?"vorhanden":"nicht vorhanden"));$("#serialTraits").textContent="letzte Ziffer "+(c.odd?"ungerade":"gerade")+" · Vokal: "+(c.vowel?"ja":"nein");$("#candles").innerHTML=(c.batteries?"🕯️".repeat(c.batteries):"—")+' <span class="candle-count">'+c.batteries+'</span>';$("#candles").setAttribute("aria-label",c.batteries+" Kerzen-Batterien");$("#indicators").innerHTML=Object.entries(c.indicators).map(([n,on])=>'<span class="indicator '+(on?"on":"")+'" aria-label="'+n+(on?", leuchtet":", aus")+'">'+n+'</span>').join("")}
+function prepareShell(){
+  $("#app").innerHTML='<div class="lights" aria-hidden="true"></div><header class="topbar"><div class="brand"><span class="seal">🎁</span><span>VERDÄCHTIGES <em>GESCHENK</em></span></div><div class="role-badge" id="roleBadge" hidden></div><div class="hud" id="headerControls"></div></header><div id="mobileSwitchHost"></div><main class="layout" id="layout"></main>';
+  $("#startOverlay").replaceChildren();$("#endOverlay").replaceChildren();$("#endOverlay").hidden=true;$("#confetti").replaceChildren();
+}
+function muteButtonMarkup(){return'<button class="icon-button" type="button" data-action="mute" id="muteButton" aria-label="'+(muted?"Ton einschalten":"Ton ausschalten")+'" title="Ton an/aus">'+(muted?"🔇":"🔊")+'</button>'}
+function renderHeader(){
+  const badge=$("#roleBadge"),controls=$("#headerControls");badge.hidden=state.phase==="menu";
+  if(state.phase==="menu"){badge.textContent="Ansicht auswählen";controls.innerHTML=muteButtonMarkup();return}
+  if(mode==="manual"){
+    badge.textContent="🎅 WEIHNACHTSMANN · NUR HANDBUCH";
+    controls.innerHTML='<button class="small-button" type="button" data-action="print-handbook">🖨️ Handbuch drucken / als PDF speichern</button>'+muteButtonMarkup()+'<button class="small-button" type="button" data-action="menu-back">Zurück zum Menü</button>';return;
+  }
+  badge.textContent=mode==="bomb"?"🧝 WICHTEL · NUR MODULE":"🎄 EINZELSPIELER · WICHTEL + WEIHNACHTSMANN";
+  controls.innerHTML='<div class="pill clock-pill"><span aria-hidden="true">🕯️</span><span class="clock-face" id="clock">04:00</span></div><div class="pill"><span>Fehler</span><span class="ornaments" id="ornaments"></span></div>'+(mode==="solo"?'<button class="small-button" type="button" data-action="print-handbook">🖨️ Handbuch drucken / als PDF speichern</button>':"")+muteButtonMarkup()+'<button class="small-button" type="button" data-action="menu-back">Zurück zum Menü</button>';
+  createOrnaments();
+}
+function renderBombShell(){
+  const layout=$("#layout");let host=$("#bombHost");if(!host){host=document.createElement("section");host.className="bomb-pane";host.id="bombHost";host.setAttribute("aria-label","Verhextes Geschenk");layout.appendChild(host)}
+  if(mode==="bomb")$("#manualHost")?.remove();
+  host.innerHTML='<div class="case"><div class="case-top"><div><h1 class="case-title">🎁 Verdächtiges Geschenk</h1><p class="case-caption">'+(mode==="bomb"?"Du bist der Wichtel. Beschreibe deine Hinweise laut, der Weihnachtsmann liest dir die Regeln vor.":"Es muss vor Mitternacht geöffnet werden. Lies die Gehäuse-Infos und schlag die Regeln nach.")+'</p></div><div class="serial-block"><div class="serial" id="serial" aria-label="Seriennummer"></div><div class="serial-traits" id="serialTraits"></div></div></div><div class="case-facts"><div class="fact"><span class="fact-label">Kerzen-Batterien</span><div id="candles" class="candles"></div></div><div class="fact"><span class="fact-label">Lichter-Anzeigen · an leuchtet</span><div class="indicators" id="indicators"></div></div></div><div class="modules-heading"><h2>Module</h2><span class="progress-label" id="progress"></span></div><div class="module-grid" id="moduleGrid"></div><p class="status-line" id="statusLine" aria-live="polite"></p></div>';
+}
+function renderBookShell(){
+  let host=$("#manualHost");if(!host){host=document.createElement("aside");host.className="book-pane";host.id="manualHost";host.setAttribute("aria-label","Wichtel-Handbuch");$("#layout").appendChild(host)}
+  host.innerHTML='<div class="book"><div class="book-header"><div><h2 class="book-title">📖 Wichtel-Handbuch</h2><p class="book-subtitle">Nordpol-Ausgabe · feste Feldregeln</p></div><button class="small-button" type="button" data-action="print-handbook">🖨️ Drucken / PDF</button></div><label class="book-search"><span aria-hidden="true">🔎</span><input type="search" id="manualSearch" placeholder="Modul oder Regel suchen…" aria-label="Handbuch durchsuchen"></label><nav class="book-tabs" id="bookTabs" aria-label="Handbuch-Inhaltsverzeichnis"></nav><article class="book-page" id="bookPage" aria-live="polite"></article></div>';
+  createManualTabs();
+}
+function renderMobileSwitch(){
+  const host=$("#mobileSwitchHost");if(mode!=="solo"){host.replaceChildren();return}
+  host.innerHTML='<div class="mobile-switch" aria-label="Ansicht wechseln"><button class="secondary active" id="boxTab" type="button" data-action="show-box">🎁 Geschenk</button><button class="secondary" id="bookTab" type="button" data-action="show-book">📖 Handbuch</button></div>';
+}
+function createEndOverlay(){
+  $("#endOverlay").innerHTML='<div class="modal"><div class="gift-emoji" id="endEmoji" aria-hidden="true">🎁✨</div><p class="eyebrow" id="endEyebrow">Nordpol-Einsatz beendet</p><div class="result-stars" id="resultStars" aria-label="Bewertung"></div><h2 class="result-title" id="endTitle">Frohe Weihnachten!</h2><p class="intro-copy" id="endCopy"></p><div class="result-stats"><div class="result-stat"><strong id="resultTime">—</strong><span>Restzeit</span></div><div class="result-stat"><strong id="resultStrikes">0</strong><span>Fehler</span></div><div class="result-stat"><strong id="resultSolved">0/0</strong><span>Module</span></div></div><div class="result-explain" id="resultExplain"></div><div class="modal-actions end-actions"><button class="primary" id="againButton" type="button" data-action="again">↻ Nochmal spielen</button><button class="secondary" id="menuButton" type="button" data-action="menu-back">Zurück zum Menü</button></div></div>';
+}
+function updateMenuMode(){
+  const cfg=$("#configFields"),tip=$("#manualTip"),start=$("#startButton"),note=$("#modeNote");if(!cfg||!start)return;
+  const manual=mode==="manual",bomb=mode==="bomb";cfg.hidden=manual;tip.hidden=!manual;start.textContent=manual?"📖 Handbuch öffnen":bomb?"🧝 Wichtel-Ansicht starten":"🎄 Einzelspieler starten";
+  $("#seedLabel").textContent=bomb?"Seed (optional, nur für die Bombe)": "Runden-Seed (optional)";
+  note.textContent=manual?"Nur Handbuch: feste Regeln, keine Bombe und kein Countdown.":bomb?"Nur Module: der Wichtel sieht die Bombe. Der Weihnachtsmann öffnet dieselbe Datei separat als Handbuch.":"Einzelspieler: Bombe und Handbuch bleiben in einer Ansicht.";
+  document.querySelectorAll("#difficultyCards .difficulty-card").forEach(label=>{const d=DIFFICULTIES[label.querySelector("input").value],secs=bomb?d.bombSeconds:d.soloSeconds;label.querySelector("span").textContent=d.count+" Module · "+formatTime(secs)});
+}
+function renderStartMenu(){
+  const start=$("#startOverlay");start.innerHTML='<div class="modal"><div class="gift-emoji" aria-hidden="true">🎁❄️</div><p class="eyebrow">Wichtelwerkstatt · 24. Dezember</p><h1 id="startTitle">Verdächtiges Geschenk</h1><div class="mode-row" role="radiogroup" aria-label="Ansicht"><label class="mode-card"><input type="radio" name="mode" value="solo"><strong>🎄 Einzelspieler</strong><small>Bombe und Handbuch in einer Ansicht.</small></label><label class="mode-card"><input type="radio" name="mode" value="bomb"><strong>🧝 Nur Module</strong><small>Wichtel-Ansicht. Beschreibe die Hinweise mündlich.</small></label><label class="mode-card"><input type="radio" name="mode" value="manual"><strong>🎅 Nur Handbuch</strong><small>Weihnachtsmann-Ansicht. Feste Regeln zum Vorlesen.</small></label></div><p class="menu-mode-note" id="modeNote"></p><div class="config-fields" id="configFields"><div class="difficulty-row" id="difficultyCards" role="radiogroup" aria-label="Schwierigkeit"><label class="difficulty-card"><input type="radio" name="difficulty" value="easy"><strong>Leicht</strong><span></span></label><label class="difficulty-card"><input type="radio" name="difficulty" value="medium"><strong>Mittel</strong><span></span></label><label class="difficulty-card"><input type="radio" name="difficulty" value="hard"><strong>Schwer</strong><span></span></label></div><label class="seed-line"><span id="seedLabel">Runden-Seed (optional)</span><input id="seedInput" type="text" maxlength="32" placeholder="leer lassen für Zufall"></label><label class="toggle-line"><input id="colorblindToggle" type="checkbox"> Farbenblind-Modus für Kabelmuster</label><div class="rules-summary"><strong>Fehler:</strong> Drei zerbrochene Kugeln beenden die Runde. Jeder Fehler lässt den Countdown 25&nbsp;% schneller laufen. Das Handbuch ist im Einzelspielermodus jederzeit erreichbar.</div></div><div class="manual-tip" id="manualTip" hidden>Beide Personen öffnen dieselbe HTML-Datei. Wählt getrennte Ansichten: eine Person startet „Nur Module“, die andere „Nur Handbuch“. Sprecht über Voice-Chat, Telefon oder im selben Raum miteinander.</div><div class="modal-actions"><button class="primary" id="startButton" data-action="start" type="button">Start</button></div><p class="fine">Eine Datei · offline spielbar · keine Verbindung zwischen den Ansichten</p></div>';
+  start.hidden=false;
+  const modeRadio=start.querySelector('input[name="mode"][value="'+mode+'"]')||start.querySelector('input[name="mode"][value="solo"]');modeRadio.checked=true;mode=modeRadio.value;
+  const diff=start.querySelector('input[name="difficulty"][value="'+state.difficulty+'"]')||start.querySelector('input[name="difficulty"][value="medium"]');diff.checked=true;
+  $("#seedInput").value=state.seedSpecified?state.seed:"";$("#colorblindToggle").checked=state.colorblind;
+  start.querySelectorAll('input[name="mode"]').forEach(r=>r.addEventListener("change",()=>{mode=r.value;updateMenuMode()}));
+  start.querySelectorAll('input[name="difficulty"]').forEach(r=>r.addEventListener("change",()=>{state.difficulty=r.value;updateMenuMode()}));
+  updateMenuMode();
+}
+function showMenu(){
+  state.generation++;state.phase="menu";state.rng=null;state.caseInfo=null;state.modules=[];state.strikes=null;state.remaining=null;state.totalTime=null;state.manualPage=null;state.lastIncident=null;keyboardHoldId=null;
+  if(gameFrameId){cancelAnimationFrame(gameFrameId);gameFrameId=0}
+  document.body.classList.remove("mode-solo","mode-bomb","mode-manual","gift-open","gift-exploded");
+  $("#bombHost")?.remove();$("#manualHost")?.remove();$("#mobileSwitchHost").replaceChildren();$("#layout").className="layout";$("#endOverlay").replaceChildren();$("#endOverlay").hidden=true;$("#confetti").replaceChildren();
+  renderHeader();renderStartMenu();
+}
+function enterManualMode(){
+  mode="manual";state.generation++;state.phase="manual";state.seed="";state.seedSpecified=false;state.difficulty=null;state.colorblind=false;state.rng=null;state.caseInfo=null;state.modules=[];state.strikes=null;state.remaining=null;state.totalTime=null;state.lastIncident=null;keyboardHoldId=null;state.manualPage="intro";
+  if(gameFrameId){cancelAnimationFrame(gameFrameId);gameFrameId=0}
+  $("#startOverlay").replaceChildren();$("#startOverlay").hidden=true;$("#endOverlay").replaceChildren();$("#endOverlay").hidden=true;$("#confetti").replaceChildren();
+  $("#bombHost")?.remove();$("#mobileSwitchHost").replaceChildren();$("#layout").className="layout";document.body.classList.remove("mode-solo","mode-bomb","gift-open","gift-exploded");document.body.classList.add("mode-manual");
+  renderHeader();renderBookShell();renderManual();startBackgroundMusic();
+}function startGame(){
+  if(mode==="manual"){enterManualMode();return}
+  state.generation++;state.phase="playing";const difficultyInput=$("input[name=\"difficulty\"]:checked");state.difficulty=difficultyInput?difficultyInput.value:state.difficulty;
+  const difficulty=DIFFICULTIES[state.difficulty];const seedField=$("#seedInput");let seedText=seedField?seedField.value.trim():(state.seedSpecified?String(state.seed):"");state.seedSpecified=!!seedText;if(!seedText)seedText=String(Math.floor(Math.random()*4294967296));
+  state.seed=seedText;state.rng=mulberry32(hashSeed(seedText));state.caseInfo=makeCase();state.strikes=0;const colorToggle=$("#colorblindToggle");state.colorblind=colorToggle?colorToggle.checked:state.colorblind;
+  state.totalTime=mode==="bomb"?difficulty.bombSeconds:difficulty.soloSeconds;state.remaining=state.totalTime;state.lastIncident=null;state.lastTick=null;state.manualPage=mode==="solo"?"intro":null;state.modules=[];keyboardHoldId=null;
+  const all=shuffle(Object.keys(moduleMap)),selected=all.slice(0,difficulty.count);
+  for(const type of selected)state.modules.push({id:type,type,...moduleMap[type].init(),solved:false});
+  $("#startOverlay").replaceChildren();$("#startOverlay").hidden=true;$("#endOverlay").replaceChildren();$("#endOverlay").hidden=true;$("#confetti").replaceChildren();
+  document.body.classList.remove("mode-solo","mode-bomb","mode-manual","gift-open","gift-exploded");document.body.classList.add("mode-"+mode);$("#app").classList.toggle("colorblind",state.colorblind);
+  renderHeader();renderBombShell();renderMobileSwitch();
+  if(mode==="solo"){renderBookShell();renderManual();$("#layout").classList.add("show-box")}else{$("#manualHost")?.remove();$("#layout").classList.remove("show-book");$("#layout").classList.add("show-box")}
+  syncCase();renderModules();updateHud();ensureAudio();startBackgroundMusic();playClick();
+  setStatus((mode==="bomb"?"Wichtel-Runde ":"Einzelspieler-Runde ")+difficulty.label+" · Seed "+seedText+". "+(mode==="bomb"?"Beschreibe Hinweise deinem Weihnachtsmann.":"Das Handbuch bleibt erreichbar."));
+  state.lastFrame=performance.now();if(!gameFrameId)gameFrameId=requestAnimationFrame(gameFrame);
+}
+function renderModules(){const grid=$("#moduleGrid");grid.innerHTML="";for(const m of state.modules){const card=document.createElement("section");card.className="module-card"+(m.solved?" solved":"");card.dataset.module=m.id;card.setAttribute("aria-label",MODULE_META[m.type].title+(m.solved?", gelöst":""));card.innerHTML='<div class="module-head"><h3>'+MODULE_META[m.type].icon+" "+MODULE_META[m.type].title+'</h3><span class="module-state">'+(m.solved?"✓ Gelöst":"Offen")+'</span></div><div class="module-content">'+moduleMap[m.type].render(m)+'</div><p class="module-hint">'+(m.feedback||"")+'</p>';grid.appendChild(card)}$("#progress").textContent=state.modules.filter(m=>m.solved).length+" von "+state.modules.length+" gelöst"}
+function renderManual(){
+  const host=$("#bookPage");if(!host)return;
+  const tabs=document.querySelectorAll(".book-tab");tabs.forEach(b=>b.classList.toggle("active",b.dataset.page===state.manualPage));
+  const page=state.manualPage;let html="";
+  if(page==="intro"){
+    html='<h3>Wichtel-Handbuch · feste Regeln</h3><p>Dieses Handbuch bleibt in jeder Runde gleich. Der Wichtel beschreibt, was er am Geschenk sieht. Lies die Regel für das passende Modul vor.</p><div class="book-note"><strong>Gemeinsame Wörter:</strong> Kabel: R Rot, G Grün, Au Gold, W Weiß, B Blau. Kerzen sind Batterien. Eine Anzeige zählt nur, wenn sie leuchtet. Bei Kabel- und Knopfregeln gilt die erste passende Regel.</div><h4>Inhaltsverzeichnis</h4><ol>'+Object.entries(PAGE_NAMES).filter(x=>x[0]!=="intro").map(x=>'<li><button class="book-tab" data-page="'+x[0]+'" type="button">'+x[1]+'</button></li>').join("")+'</ol><p>Die Symbolspalten, Wortliste, Timerziffern und Farbübersetzungen sind fest. Sie ändern sich zwischen Runden nicht.</p>';
+    host.innerHTML=html;return;
+  }
+  if(page==="wires"){
+    html='<h3>〰️ Lichterkette · Kabel</h3><p>Lies die Zeilen für die Kabelanzahl von oben nach unten. Die erste passende Regel entscheidet.</p>';
+    for(const n of [3,4,5,6])html+='<h4>'+n+' Kabel</h4><ol class="rule-list">'+rules.wires[n].map(r=>'<li>'+r.text+'</li>').join("")+'</ol>';
+    html+='<p class="book-note"><strong>Kürzel:</strong> R = Rot · G = Grün · Au = Gold · W = Weiß · B = Blau.</p><p class="manual-ask"><strong>Frag den Wichtel nach:</strong> Seriennummer, Anzahl und Farben der Kabel. Bei fünf oder sechs Kabeln auch nach der Reihenfolge.</p>';
+  }
+  if(page==="button"){
+    html='<h3>🔔 Glockenknopf</h3><p>Lies die Regeln von oben nach unten. Die erste passende Regel gilt.</p><ol class="rule-list">'+rules.button.map(r=>'<li>'+r.text+'</li>').join("")+'</ol><h4>Farbstreifen beim Halten</h4><p>Lass los, sobald die zugeordnete Ziffer in der Anzeige mm:ss vorkommt.</p><div class="table-scroll"><table class="book-table"><thead><tr><th>Streifenfarbe</th><th>Timerziffer</th></tr></thead><tbody>'+Object.entries(rules.timerDigits).map(([c,d])=>'<tr><td><span class="swatch '+c+'"></span>'+COLOR_NAMES[c]+'</td><td><strong>'+d+'</strong></td></tr>').join("")+'</tbody></table></div><p class="manual-ask"><strong>Frag den Wichtel nach:</strong> Knopffarbe und Aufschrift, Kerzenanzahl, leuchtende Anzeigen STERN und GLOCKE sowie ob die Seriennummer einen Vokal enthält. Beim Halten: Farbstreifen und Timeranzeige.</p>';
+  }
+  if(page==="symbols"){
+    html='<h3>ᛟ Weihnachtsrunen · Symbole</h3><p>Finde die Spalte, die alle vier genannten Symbole enthält. Tippe sie in der Reihenfolge von oben nach unten.</p><div class="symbol-columns">'+rules.symbolColumns.map((col,i)=>'<div class="symbol-column"><strong>Spalte '+(i+1)+'</strong>'+col.map((s,j)=>'<div><small>'+String(j+1)+'.</small> <span class="symbol-line">'+s+'</span></div>').join("")+'</div>').join("")+'</div><p class="manual-ask"><strong>Frag den Wichtel nach:</strong> den vier Symbolen am Modul. Bitte ihn, sie zu benennen oder kurz zu beschreiben.</p>';
+  }
+  if(page==="simon"){
+    html='<h3>🎄 Lichterbaum · Signal übersetzen</h3><p>Merke dir die blinkenden Signalfarben. Drücke ihre übersetzten Farben in derselben Reihenfolge. Jede Stufe fügt ein Signal hinzu. Nach einem Fehler beginnt es wieder bei Stufe eins.</p><div class="table-scroll"><table class="book-table"><thead><tr><th>Fehler</th><th>Seriennummer-Vokal</th><th>Rot</th><th>Grün</th><th>Gold</th><th>Blau</th></tr></thead><tbody>';
+    for(let strikes=0;strikes<3;strikes++)for(const vowel of ["yes","no"]){const map=rules.simonMaps[vowel][strikes];html+='<tr><td>'+strikes+'</td><td>'+(vowel==="yes"?"Ja":"Nein")+'</td>'+["red","green","gold","blue"].map(c=>'<td>'+COLOR_NAMES[map[c]]+'</td>').join("")+'</tr>'}
+    html+='</tbody></table></div><p class="manual-ask"><strong>Frag den Wichtel nach:</strong> ob die Seriennummer einen Vokal enthält, wie viele Fehler er hat und welche Farben in welcher Reihenfolge blinken.</p>';
+  }
+  if(page==="password"){
+    html='<h3>✉️ Wunschzettel · Passwort</h3><p>Jede Scheibe zeigt sechs Buchstaben. Stelle ein Wort aus der Liste ein. Es gibt pro Runde genau ein mögliches Listenwort.</p><ol class="word-bank">'+rules.passwordWords.map(w=>'<li>'+w+'</li>').join("")+'</ol><p class="manual-ask"><strong>Frag den Wichtel nach:</strong> den fünf aktuell angezeigten Buchstaben, einen pro Scheibe.</p>';
+  }
+  host.innerHTML=html;if($("#manualSearch")&&$("#manualSearch").value.trim())filterManual($("#manualSearch").value.trim());
+}
+function setManualPage(page){if(!PAGE_NAMES[page])return;state.manualPage=page;const search=$("#manualSearch");if(search)search.value="";renderManual();if(mode==="solo"&&window.matchMedia("(max-width: 760px)").matches){$("#layout").classList.remove("show-box");$("#layout").classList.add("show-book");$("#bookTab").classList.add("active");$("#boxTab").classList.remove("active")}}
+function printHandbook(){
+  const book=document.querySelector(".book");if(!book)return;
+  const previousPage=state.manualPage,search=$("#manualSearch"),previousSearch=search?search.value:"";
+  if(search)search.value="";
+  let html='<div class="print-book"><h1>Wichtel-Handbuch · feste Regeln</h1><h2>Inhaltsverzeichnis</h2><ol>'+Object.entries(PAGE_NAMES).map(([id,name])=>'<li><a href="#print-'+id+'">'+name+'</a></li>').join("")+'</ol>';
+  for(const [id,name] of Object.entries(PAGE_NAMES)){
+    state.manualPage=id;renderManual();html+='<section id="print-'+id+'"><h2>'+name+'</h2>'+$("#bookPage").innerHTML+'</section>';
+  }
+  html+='</div>';const printable=document.createElement("div");printable.innerHTML=html;book.appendChild(printable.firstElementChild);
+  state.manualPage=previousPage;renderManual();if(search){search.value=previousSearch;if(previousSearch)filterManual(previousSearch)}
+  const oldTitle=document.title;document.title="Wichtel-Handbuch · feste Regeln";book.classList.add("printing");
+  const cleanup=()=>{book.classList.remove("printing");book.querySelector(".print-book")?.remove();document.title=oldTitle};
+  window.addEventListener("afterprint",cleanup,{once:true});window.print();
+}
+function filterManual(value){const q=value.toLowerCase();if(!q)return;const pages=Object.keys(PAGE_NAMES);const pageText={intro:"übersicht handbuch seriennummer kerzen anzeigen fehler",wires:"lichterkette kabel rot grün gold weiß blau schneiden seriennummer",button:"glockenknopf knopf läuten stille halt streifen timer batterie vokal",symbols:"runen symbole spalte reihenfolge",simon:"lichterbaum signal farben fehler seriennummer vokal",password:"wunschzettel passwort wort buchstaben absenden"};const match=pages.find(p=>pageText[p].includes(q))||pages.find(p=>PAGE_NAMES[p].toLowerCase().includes(q));if(match&&match!==state.manualPage){state.manualPage=match;renderManual();const search=$("#manualSearch");if(search)search.value=value;return}const page=$("#bookPage");if(page)page.querySelectorAll("li,p,h3,h4,td").forEach(el=>{el.hidden=!(el.textContent||"").toLowerCase().includes(q)})}function updateHud(){const clock=$("#clock");clock.textContent=formatTime(state.remaining);clock.classList.toggle("urgent",state.remaining<=30);document.querySelectorAll(".ornament").forEach((el,i)=>el.classList.toggle("broken",i<Math.min(state.strikes,3)));$("#ornaments").setAttribute("aria-label",Math.max(0,3-state.strikes)+" Kugeln intakt, "+state.strikes+" zerbrochen");$("#progress").textContent=state.modules.filter(m=>m.solved).length+" von "+state.modules.length+" gelöst"}
+function setStatus(text,kind){const line=$("#statusLine");line.textContent=text;line.className="status-line"+(kind?" "+kind:"")}
+function solveModule(m,message){if(state.phase!=="playing"||m.solved)return;m.solved=true;m.holding=false;m.feedback="✨ "+message;renderModules();playBell();setStatus(MODULE_META[m.type].title+" gelöst! "+message,"success");if(state.modules.every(x=>x.solved))finish(true)}
+function strike(reason,hint,m){if(state.phase!=="playing")return;state.strikes++;state.lastIncident={reason,hint,module:m?MODULE_META[m.type].title:"Modul"};if(m){m.feedback="❌ "+reason+" Lies die Regel noch einmal nach."}playGlass();updateHud();renderModules();setStatus(reason+" Der Countdown läuft jetzt "+(1+state.strikes*.25).toFixed(2).replace(".",",")+"× schneller.","error");if(state.strikes>=3){finish(false,"strike");return}}
+function solutionInstruction(m){
+  if(m.type==="wires"){const rule=wireRule(m),index=rule.choose(m.wires,serialInfo());return rule.text+" Lösung: Kabel "+(index+1)+" ("+COLOR_NAMES[m.wires[index]]+") schneiden."}
+  if(m.type==="button"){const rule=buttonRule(m);return rule.text+(rule.action==="tap"?" Lösung: kurz drücken und sofort loslassen.":" Lösung: gedrückt halten; beim Farbstreifen "+COLOR_NAMES[m.strip]+" loslassen, wenn die Ziffer "+rules.timerDigits[m.strip]+" in mm:ss erscheint.")}
+  if(m.type==="symbols")return"Lösung: "+m.correct.join(" · ")+" in dieser Reihenfolge tippen."
+  if(m.type==="simon"){const activeStrikes=Math.min(2,state.strikes),translated=m.sequence.map(signal=>COLOR_NAMES[translatedSimon(signal,activeStrikes,state.caseInfo.vowel)]);return"Lösung für "+(state.caseInfo.vowel?"Seriennummer mit Vokal":"Seriennummer ohne Vokal")+" und "+activeStrikes+" Fehler: "+translated.join(" → ")+"."}
+  if(m.type==="password")return"Lösung: "+m.target+" einstellen und absenden."
+  return"Folge der ersten passenden Regel im Handbuch."
+}
+function finish(won,why){if(state.phase!=="playing")return;state.phase=won?"won":"lost";state.generation++;const solved=state.modules.filter(m=>m.solved).length;const outstanding=state.modules.filter(m=>!m.solved).map(m=>MODULE_META[m.type].title);let stars=0,copy="",explain="";if(won){document.body.classList.add("gift-open");$("#endEmoji").textContent="🎁✨🎄";$("#endEyebrow").textContent="Geschenk geöffnet · Einsatz erfolgreich";$("#endTitle").textContent="Frohe Weihnachten!";copy="Das Geschenk öffnet sich, die Werkstatt erstrahlt im Lichterglanz – Weihnachten ist gerettet!";stars=state.strikes===0&&state.remaining/state.totalTime>=.5?3:state.strikes<=1?2:1;$("#resultStars").textContent="★".repeat(stars)+"☆".repeat(3-stars);explain="Alle Module gelöst. Gute Arbeit mit dem Handbuch!";makeConfetti()}else{$("#endEmoji").textContent=why==="strike"?"🔴💥🎁":"⏰❄️🎁";$("#endEyebrow").textContent="Nordpol-Einsatz beendet";$("#endTitle").textContent=why==="strike"?"Drei Kugeln zerbrochen":"Mitternacht ist da";copy=why==="strike"?"Das verhexte Geschenk ist in Glitzer zerplatzt.":"Der Countdown lief ab, bevor alle Module entschärft waren.";$("#resultStars").textContent="☆☆☆";if(why==="strike"&&state.lastIncident){explain="<strong>Letzter Fehler · "+state.lastIncident.module+":</strong> "+escapeHtml(state.lastIncident.reason)+"<br><strong>Handbuchhinweis:</strong> "+escapeHtml(state.lastIncident.hint)}else{explain="<strong>Noch offen:</strong> "+(outstanding.length?outstanding.map(escapeHtml).join(", "):"keine Module")+"<br><strong>Tipp:</strong> Nutze das Handbuch während der Runde. Jeder Fehler beschleunigt den Timer."}}$("#endCopy").textContent=copy;$("#resultTime").textContent=formatTime(state.remaining);$("#resultStrikes").textContent=state.strikes;$("#resultSolved").textContent=solved+"/"+state.modules.length;$("#resultExplain").innerHTML=explain;$("#endOverlay").hidden=false;$("#againButton").textContent="↻ Nochmal spielen";updateHud()}
+// Add the one-shot finale after the common result screen is prepared.
+const finishCore=finish;
+finish=function(won,why){if(state.phase!=="playing")return;createEndOverlay();finishCore(won,why);if(won)playWin();if(!won&&why==="time"){const hints=state.modules.filter(m=>!m.solved).map(m=>"<li><strong>"+escapeHtml(MODULE_META[m.type].title)+":</strong> "+escapeHtml(solutionInstruction(m))+"</li>").join("");$("#resultExplain").innerHTML="<strong>Noch offen:</strong> "+state.modules.filter(m=>!m.solved).map(m=>escapeHtml(MODULE_META[m.type].title)).join(", ")+"<br><strong>Regeln für die offenen Module:</strong><ul>"+hints+"</ul>"}if(!won&&why==="strike"){const module=state.modules.find(m=>MODULE_META[m.type].title===state.lastIncident?.module);if(module)$("#resultExplain").innerHTML+="<br><strong>Richtige Regel und Lösung:</strong> "+escapeHtml(solutionInstruction(module));document.body.classList.add("gift-exploded");playExplosion();makeConfetti()}};
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function makeConfetti(){const host=$("#confetti");host.innerHTML="";const palette=["#ffe07c","#fff9e9","#f26470","#69d99d","#7bdcff"];for(let i=0;i<90;i++){const p=document.createElement("i");p.style.left=(rand()*100)+"%";p.style.background=palette[i%palette.length];p.style.setProperty("--drift",((rand()-.5)*180)+"px");p.style.animationDelay=(rand()*1.4)+"s";p.style.animationDuration=(2.5+rand()*2)+"s";host.appendChild(p)}setTimeout(()=>{host.innerHTML=""},6500)}
+function abortToMenu(){if(state.phase==="playing"){state.phase="menu";state.generation++;$("#startOverlay").hidden=false;$("#endOverlay").hidden=true;$("#confetti").innerHTML="";document.body.classList.remove("gift-open");setStatus("Runde abgebrochen.","");}}
+function beginAgain(){startGame()}
+function gameFrame(now){
+  const dt=Math.max(0,now-state.lastFrame);state.lastFrame=now;
+  if(state.phase==="playing"){state.remaining-=dt/1000*(1+state.strikes*.25);if(state.remaining<=0){state.remaining=0;updateHud();finish(false,"time")}else{const quantum=state.remaining<=30?Math.floor(state.remaining*2):Math.floor(state.remaining);if(quantum!==state.lastTick){state.lastTick=quantum;if(!muted)playTick(state.remaining<=30);updateHud()}}}
+  if(state.phase==="playing")gameFrameId=requestAnimationFrame(gameFrame);else gameFrameId=0;
+}// Snow is drawn locally so the file has no external asset dependency.
+const snowCanvas=$("#snow"),snowCtx=snowCanvas.getContext("2d");let flakes=[];
+function resizeSnow(){const dpr=Math.min(2,window.devicePixelRatio||1);snowCanvas.width=Math.floor(innerWidth*dpr);snowCanvas.height=Math.floor(innerHeight*dpr);snowCanvas.style.width=innerWidth+"px";snowCanvas.style.height=innerHeight+"px";snowCtx.setTransform(dpr,0,0,dpr,0,0);flakes=Array.from({length:Math.min(130,Math.floor(innerWidth/9))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:.7+Math.random()*2,v:.35+Math.random()*1.1,drift:(Math.random()-.5)*.6}))}
+function updateSnow(dt){snowCtx.clearRect(0,0,innerWidth,innerHeight);for(const f of flakes){f.y+=f.v*dt/16;f.x+=f.drift*dt/16;if(f.y>innerHeight+5){f.y=-5;f.x=Math.random()*innerWidth}if(f.x<0)f.x=innerWidth;if(f.x>innerWidth)f.x=0;snowCtx.fillStyle="rgba(241,250,247,"+(.25+f.r*.12)+")";snowCtx.beginPath();snowCtx.arc(f.x,f.y,f.r,0,Math.PI*2);snowCtx.fill()}}
+function snowFrame(now){const dt=Math.min(80,Math.max(0,now-(snowFrame.last||now)));snowFrame.last=now;updateSnow(dt);snowFrameId=requestAnimationFrame(snowFrame)}
+
+function ensureAudio(){if(muted)return;try{audioContext??=new(window.AudioContext||window.webkitAudioContext)();if(audioContext.state==="suspended")audioContext.resume()}catch{}}
+function startBackgroundMusic(){const music=$("#backgroundMusic");if(!music||muted)return;music.volume=.24;music.muted=false;const playback=music.play();if(playback&&typeof playback.catch==="function")playback.catch(()=>{})}
+function tone(freq,duration,type,volume,delay){if(muted)return;try{ensureAudio();if(!audioContext)return;const start=audioContext.currentTime+(delay||0),osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type=type||"sine";osc.frequency.setValueAtTime(freq,start);gain.gain.setValueAtTime(volume||.035,start);gain.gain.exponentialRampToValueAtTime(.001,start+duration);osc.connect(gain);gain.connect(audioContext.destination);osc.start(start);osc.stop(start+duration)}catch{}}
+function playClick(){tone(820,.035,"square",.018)}
+function playTick(urgent){tone(urgent?1050:710,urgent?.055:.035,"sine",urgent?.024:.013)}
+function playGlass(){tone(1430,.32,"sine",.06);tone(920,.38,"triangle",.045,.04);tone(1860,.24,"sine",.025,.08)}
+function playBell(){tone(880,.55,"sine",.055);tone(1320,.6,"sine",.035,.08);tone(1760,.7,"sine",.022,.16)}
+function playExplosion(){if(muted)return;try{ensureAudio();if(!audioContext)return;const length=Math.floor(audioContext.sampleRate*.65),buffer=audioContext.createBuffer(1,length,audioContext.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<length;i++)data[i]=(Math.random()*2-1)*(1-i/length);const source=audioContext.createBufferSource(),filter=audioContext.createBiquadFilter(),gain=audioContext.createGain();source.buffer=buffer;filter.type="lowpass";filter.frequency.setValueAtTime(1700,audioContext.currentTime);filter.frequency.exponentialRampToValueAtTime(80,audioContext.currentTime+.62);gain.gain.setValueAtTime(.22,audioContext.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.65);source.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);source.start()}catch{}tone(110,.65,"sawtooth",.08)}
+function playWin(){[523,659,784,1047,784,1047].forEach((f,i)=>tone(f,.28,"sine",.035,i*.16))}
+let lastButtonPointer=null;
+function releaseHeldButton(m){
+  if(!m||!m.holding)return;
+  const digit=rules.timerDigits[m.strip],digits=formatTime(state.remaining).replace(":","");m.holding=false;
+  if(digits.includes(String(digit)))solveModule(m,"Der Knopf wurde beim richtigen Ziffern-Treffer losgelassen.");
+  else strike("Der Knopf wurde beim falschen Ziffernstand losgelassen.","Der Farbstreifen "+COLOR_NAMES[m.strip]+" verlangt die Ziffer "+digit+". Warte, bis sie in mm:ss sichtbar ist.",m);
+}
+document.addEventListener("pointerdown",e=>{
+  const button=e.target.closest('[data-action="bell-press"]');if(!button||state.phase!=="playing")return;
+  e.preventDefault();lastButtonPointer=button;const card=button.closest(".module-card"),m=state.modules.find(x=>x.id===card?.dataset.module);
+  if(m)moduleMap[m.type].input(m,"bell-press",{},m.id);
+  if(button.setPointerCapture&&e.pointerId!==undefined){try{button.setPointerCapture(e.pointerId)}catch{}}
+});
+document.addEventListener("pointerup",()=>{if(!lastButtonPointer)return;const card=lastButtonPointer.closest(".module-card"),m=state.modules.find(x=>x.id===card?.dataset.module);lastButtonPointer=null;releaseHeldButton(m)},true);
+document.addEventListener("pointercancel",()=>{if(!lastButtonPointer)return;const card=lastButtonPointer.closest(".module-card"),m=state.modules.find(x=>x.id===card?.dataset.module);if(m&&m.holding){m.holding=false;renderModules()}lastButtonPointer=null});function playSimon(id,m){if(state.phase!=="playing"||m.playing)return;const gen=state.generation,signals=m.sequence.slice(0,Math.min(4,m.stage));m.playing=true;m.feedback="Sieh dir die Signalfolge an und übersetze jede Farbe im Handbuch.";renderModules();let i=0;const step=()=>{if(state.phase!=="playing"||gen!==state.generation)return;if(i>=signals.length){m.flash=null;m.playing=false;renderModules();return}m.flash=signals[i];tone(({red:460,green:610,gold:790,blue:920})[signals[i]],.18,"sine",.025);renderModules();setTimeout(()=>{if(state.phase!=="playing"||gen!==state.generation)return;m.flash=null;renderModules();i++;setTimeout(step,180)},350)};setTimeout(step,450)}
+document.addEventListener("click",e=>{
+  const pageButton=e.target.closest("[data-page]");if(pageButton){playClick();setManualPage(pageButton.dataset.page);return}
+  const button=e.target.closest("[data-action]");if(!button)return;const action=button.dataset.action;
+  if(action==="start"){startGame();return}
+  
+  if(action==="menu-back"){showMenu();return}
+  if(action==="again"){beginAgain();return}
+  if(action==="mute"){muted=!muted;button.textContent=muted?"🔇":"🔊";button.setAttribute("aria-label",muted?"Ton einschalten":"Ton ausschalten");const music=$("#backgroundMusic");if(music)music.muted=muted;if(!muted){ensureAudio();startBackgroundMusic()}playClick();return}
+  if(action==="print-handbook"){playClick();printHandbook();return}
+  if(action==="show-book"||action==="show-box"){const layout=$("#layout");if(!layout)return;layout.classList.toggle("show-book",action==="show-book");layout.classList.toggle("show-box",action==="show-box");$("#bookTab").classList.toggle("active",action==="show-book");$("#boxTab").classList.toggle("active",action==="show-box");return}
+  if(action==="bell-press")return;
+  const card=button.closest(".module-card");if(!card||state.phase!=="playing")return;const m=state.modules.find(x=>x.id===card.dataset.module);if(!m)return;playClick();moduleMap[m.type].input(m,action,button.dataset,m.id);
+});
+document.addEventListener("input",e=>{if(e.target.id!=="manualSearch")return;const value=e.target.value.trim();if(value)filterManual(value);else renderManual()});
+document.addEventListener("keydown",e=>{
+  if((e.key!==" "&&e.key!=="Enter")||e.repeat)return;const button=e.target.closest('[data-action="bell-press"]');if(!button)return;
+  const card=button.closest(".module-card"),m=state.modules.find(x=>x.id===card?.dataset.module);if(!m||state.phase!=="playing")return;
+  e.preventDefault();keyboardHoldId=m.id;moduleMap[m.type].input(m,"bell-press",{},m.id);
+},true);
+document.addEventListener("keyup",e=>{
+  if(e.key!==" "&&e.key!=="Enter")return;const m=state.modules.find(x=>x.id===keyboardHoldId);keyboardHoldId=null;releaseHeldButton(m);
+},true);
+window.addEventListener("resize",resizeSnow);window.addEventListener("blur",()=>{if(lastButtonPointer){const card=lastButtonPointer.closest(".module-card"),m=state.modules.find(x=>x.id===card?.dataset.module);if(m&&m.holding){m.holding=false;renderModules()}lastButtonPointer=null}keyboardHoldId=null});
+prepareShell();createLights();resizeSnow();renderHeader();renderStartMenu();snowFrameId=requestAnimationFrame(snowFrame);
+})();
+</script>
+</body>
+</html>

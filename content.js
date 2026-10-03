@@ -41,14 +41,14 @@ const ADVENT_CONTENT = {
     `
   },
   3: {
-    title: "Weihnachts-Sudoku",
+    title: "Winter Frogger",
     emoji: "🎄",
     html: `
-      <p>Fülle das weihnachtliche Sudoku: Jedes Symbol darf in jeder Zeile, Spalte und jedem 3×3-Block genau einmal vorkommen.</p>
-      <div class="sudoku-embed">
-        <iframe src="mini-sudoku.html" title="Weihnachts-Sudoku" loading="lazy"></iframe>
+      <p>Überquere die verschneite Autobahn und erreiche alle drei Weihnachtsnester!</p>
+      <div class="frogger-embed">
+        <iframe src="frogger.html" title="Winter Frogger" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Tippe ein leeres Feld und wähle anschließend unten das passende Symbol. Mit „Lösung prüfen“ kontrollierst du dein Rätsel.</p>
+      <p class="small">Steuerung: Pfeiltasten oder WASD · Mobil: Steuerkreuz · P = Pause · M = Sound</p>
     `
   },
   4: {
@@ -96,14 +96,14 @@ const ADVENT_CONTENT = {
     `
   },
   7: {
-    title: "Winter Frogger",
+    title: "Schneeballschlacht",
     emoji: "🐸",
     html: `
-      <p>Überquere die verschneite Autobahn und erreiche alle drei Weihnachtsnester!</p>
-      <div class="frogger-embed">
-        <iframe src="frogger.html" title="Winter Frogger" loading="lazy" allow="autoplay"></iframe>
+      <p>Zwei Teams, sechs Wichtel und ein sehr frostiges Duell. Wechselt euch ab und bringt das gegnerische Team mit Schneebällen, Geschenkbomben und Zuckerstangen-Schüssen ins Wanken!</p>
+      <div class="artillery-embed">
+        <iframe src="schneeballschlacht.html" title="Schneeballschlacht" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Steuerung: Pfeiltasten oder WASD · Mobil: Steuerkreuz · P = Pause · M = Sound</p>
+      <p class="small">Steuerung: ← → laufen · ↑ ↓ zielen · Leertaste halten und loslassen · 1–3 Waffen wechseln</p>
     `
   },
   8: {
@@ -131,14 +131,14 @@ const ADVENT_CONTENT = {
     `
   },
   10: {
-    title: "Schneeflocken-Fänger",
-    emoji: "❄️",
+    title: "Winterjäger",
+    emoji: "🎯",
     html: `
-      <p>Fang die Schneeflocken und weich den Kohlestücken aus. Wie viele Punkte schaffst du?</p>
-      <div class="snow-catcher-embed">
-        <iframe src="schneeflocken-faenger.html" title="Schneeflocken-Fänger" loading="lazy" allow="autoplay"></iframe>
+      <p>Die Weihnachtsfreunde sausen durchs Winterland. Triff sie und sammle möglichst viele Punkte, bevor die Zeit abläuft!</p>
+      <div class="winter-jaeger-embed">
+        <iframe src="winterjaeger.html" title="Winterjäger" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Steuerung: Pfeiltasten ← → oder Maus/Finger · P = Pause · Ton über ♫ an/aus</p>
+      <p class="small">Klicken oder tippen zum Zielen · 6 Schneebälle pro Ladung · Highscore wird in der Liste gespeichert</p>
     `
   },
   11: {
@@ -179,14 +179,14 @@ const ADVENT_CONTENT = {
     `
   },
   14: {
-    title: "Schneeballschlacht",
+    title: "Winterräumer",
     emoji: "❄️",
     html: `
-      <p>Zwei Teams, sechs Wichtel und ein sehr frostiges Duell. Wechselt euch ab und bringt das gegnerische Team mit Schneebällen, Geschenkbomben und Zuckerstangen-Schüssen ins Wanken!</p>
-      <div class="artillery-embed">
-        <iframe src="schneeballschlacht.html" title="Schneeballschlacht" loading="lazy" allow="autoplay"></iframe>
+      <p>Mach die Wege frei für den Weihnachtsmann! Räume die Schneeflocken ab, weiche den Wichteln aus und sammle Pylone für einen kurzen Räum-Power-Schub.</p>
+      <div class="winter-raeumer-embed">
+        <iframe src="winterraeumer.html" title="Winterräumer – Winter-Arcade-Spiel" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Steuerung: ← → laufen · ↑ ↓ zielen · Leertaste halten und loslassen · 1–3 Waffen wechseln</p>
+      <p class="small">Pfeiltasten oder WASD · Mobil: wischen oder die Richtungstasten benutzen</p>
     `
   },
   15: {
@@ -214,28 +214,26 @@ const ADVENT_CONTENT = {
     `
   },
   17: {
-    title: "Winterjäger",
+    title: "Asteroids",
     emoji: "🎯",
     html: `
-      <p>Die Weihnachtsfreunde sausen durchs Winterland. Triff sie und sammle möglichst viele Punkte, bevor die Zeit abläuft!</p>
-      <div class="winter-jaeger-embed">
-        <iframe src="winterjaeger.html" title="Winterjäger" loading="lazy" allow="autoplay"></iframe>
+      <p>Zerlege die Christbaumkugeln im winterlichen Asteroids-Spiel und sammle möglichst viele Punkte!</p>
+      <div class="winter-asteroids-embed">
+        <iframe src="winter-asteroids.html" title="Winter Asteroids" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Klicken oder tippen zum Zielen · 6 Schneebälle pro Ladung · Highscore wird in der Liste gespeichert</p>
+      <p class="small">← → drehen · ↑ Schub · Leertaste feuern · P = Pause · M = Ton</p>
     `
   },
   18: {
-    title: "Advents-Bingo",
-    emoji: "🎲",
+    title: "Verdächtiges Geschenk",
+    emoji: "🎁",
     html: `
-      <p>Heute geht es ums Zuhören.</p>
-      <div class="bingo">
-        <div>„Wo ist der Kaffee?“</div>
-        <div>„Wie schnell Weihnachten wieder kommt!“</div>
-        <div>„Ich bin dieses Jahr schon fertig mit den Geschenken.“</div>
-        <div>„Das machen wir noch vor Weihnachten.“</div>
+      <p>Oh schön du hast ein Geschenk erhalten. Aber was tickt denn da so verdächtig? Lies die Hinweise am Gehäuse, schlage im Wichtel-Handbuch nach und löse alle Module, bevor deine Zeit abgelaufen ist.</p>
+      <div class="artillery-embed">
+        <iframe src="keep-talking-weihnachten.html" title="Verdächtiges Geschenk" loading="lazy"></iframe>
       </div>
-      <p><strong>Aufgabe:</strong> Wer hört heute zuerst drei dieser Sätze?</p>
+      <p class="small">Drei Schwierigkeitsstufen · fünf Module · solo oder zu zweit mit getrennten Ansichten. Auf dem Handy kannst du zwischen Geschenk und Handbuch wechseln.</p>
+      <p><a href="keep-talking-weihnachten.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   19: {
@@ -263,14 +261,15 @@ const ADVENT_CONTENT = {
     `
   },
   21: {
-    title: "Winterräumer",
+    title: "Verdächtiges Geschenk",
     emoji: "🚜",
     html: `
-      <p>Mach die Wege frei für den Weihnachtsmann! Räume die Schneeflocken ab, weiche den Wichteln aus und sammle Pylone für einen kurzen Räum-Power-Schub.</p>
-      <div class="winter-raeumer-embed">
-        <iframe src="winterraeumer.html" title="Winterräumer – Winter-Arcade-Spiel" loading="lazy" allow="autoplay"></iframe>
+      <p>Oh schön du hast ein Geschenk erhalten. Aber was tickt denn da so verdächtig? Lies die Hinweise am Gehäuse, schlage im Wichtel-Handbuch nach und löse alle Module, bevor deine Zeit abgelaufen ist.</p>
+      <div class="artillery-embed">
+        <iframe src="keep-talking-weihnachten.html" title="Verdächtiges Geschenk" loading="lazy"></iframe>
       </div>
-      <p class="small">Pfeiltasten oder WASD · Mobil: wischen oder die Richtungstasten benutzen</p>
+      <p class="small">Drei Schwierigkeitsstufen · fünf Module · solo oder zu zweit mit getrennten Ansichten. Auf dem Handy kannst du zwischen Geschenk und Handbuch wechseln.</p>
+      <p><a href="keep-talking-weihnachten.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   22: {
@@ -299,19 +298,14 @@ const ADVENT_CONTENT = {
     `
   },
   24: {
-    title: "Frohe Weihnachten!",
+    title: "Weihnachts-Sudoku",
     emoji: "🎁",
     html: `
-      <div class="christmas-final">
-        <div class="final-icon">🎄</div>
-        <h2>Geschafft!</h2>
-        <p>24 Türchen, Rätsel, Kaffee, Fachwissen und hoffentlich
-        ein paar gute Pausen liegen hinter euch.</p>
-        <p><strong>Vielen Dank fürs Mitmachen!</strong></p>
-        <p>Ich wünsche euch frohe Weihnachten, erholsame Feiertage
-        und einen guten Start ins neue Jahr.</p>
-        <div class="final-icons">🎅 ✨ 🎁 ✨ 🎄</div>
+      <p>Fülle das weihnachtliche Sudoku: Jedes Symbol darf in jeder Zeile, Spalte und jedem 3×3-Block genau einmal vorkommen.</p>
+      <div class="sudoku-embed">
+        <iframe src="mini-sudoku.html" title="Weihnachts-Sudoku" loading="lazy"></iframe>
       </div>
+      <p class="small">Tippe ein leeres Feld und wähle anschließend unten das passende Symbol. Mit „Lösung prüfen“ kontrollierst du dein Rätsel.</p>
     `
   }
 };
