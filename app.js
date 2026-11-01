@@ -1,5 +1,6 @@
 const TZ = "Europe/Berlin";
 const END_DAY = 24;
+const TEST_MODE = true; // Vor dem echten Einsatz wieder auf false setzen.
 
 function berlinDateParts() {
   const parts = new Intl.DateTimeFormat("de-DE", {
@@ -12,7 +13,16 @@ function berlinDateParts() {
 
 function getAdventState() {
   const d = berlinDateParts();
-  return { state: "after", day: END_DAY, year: d.year };
+  if (TEST_MODE) {
+    return { state: "after", day: END_DAY, year: d.year };
+  }
+  if (d.month === 12 && d.day <= END_DAY) {
+    return { state: "during", day: d.day, year: d.year };
+  }
+  if (d.month === 12 || d.month === 1) {
+    return { state: "after", day: END_DAY, year: d.year };
+  }
+  return { state: "before", day: 0, year: d.year };
 }
 
 
@@ -172,51 +182,91 @@ function showDoor(day, scroll = true) {
 
 const highscoreStorageKey = "adventMiniGameHighscores";
 const legacyFroggerKey = "winterFroggerHighscore";
+const highscoreGames = [
+  { id: "winterFrogger", door: 3, name: "🐸 Winter Frogger", unit: "Punkte" },
+  { id: "snowballBattle", door: 7, name: "❄️ Schneeballschlacht", unit: "Siegpunkte" },
+  { id: "winterJaeger", door: 10, name: "🎯 Winterjäger", unit: "Punkte" },
+  { id: "winterRaeumer", door: 14, name: "🚜 Winterräumer", unit: "Punkte" },
+  { id: "winterAsteroids", door: 17, name: "🌌 Winter Asteroids", unit: "Punkte" },
+  { id: "keepTalkingWeihnachten", door: 21, name: "🎁 Verdächtiges Geschenk", format: "remainingTime" },
+  { id: "winterSudoku", door: 24, name: "🧩 Weihnachts-Sudoku", format: "bestTime", lowerIsBetter: true }
+];
 
 function getHighscores() {
+  let stored = {};
   try {
-    const stored = JSON.parse(localStorage.getItem(highscoreStorageKey) || "{}");
-    const froggerBest = Number(localStorage.getItem(legacyFroggerKey) || 0);
-    if (froggerBest > Number(stored.winterFrogger || 0)) stored.winterFrogger = froggerBest;
-    return stored;
-  } catch (_) {
-    return { winterFrogger: Number(localStorage.getItem(legacyFroggerKey) || 0) };
+    const parsed = JSON.parse(localStorage.getItem(highscoreStorageKey) || "{}");
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) stored = parsed;
+  } catch (_) {}
+
+  const legacyKeys = { winterFrogger: legacyFroggerKey, winterJaeger: "winterjaeger-high" };
+  for (const [game, key] of Object.entries(legacyKeys)) {
+    try {
+      const legacy = Number(localStorage.getItem(key) || 0);
+      if (Number.isFinite(legacy) && legacy > Number(stored[game] || 0)) stored[game] = legacy;
+    } catch (_) {}
   }
+  return stored;
+}
+
+function formatHighscoreTime(value) {
+  const seconds = Math.max(0, Math.floor(Number(value) || 0));
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+}
+
+function formatHighscore(game, value) {
+  if (game.format === "remainingTime") return `Restzeit ${formatHighscoreTime(value)}`;
+  if (game.format === "bestTime") return `Bestzeit ${formatHighscoreTime(value)}`;
+  return `${Number(value).toLocaleString("de-DE")} ${game.unit}`;
 }
 
 function renderHighscores() {
   const list = document.getElementById("highscoresList");
   if (!list) return;
-  const names = {
-    winterFrogger: "🐸 Winter Frogger",
-    snowflakeCatcher: "❄️ Schneeflocken-Fänger",
-    winterJaeger: "🎯 Winterjäger"
-  };
   const scores = getHighscores();
-  // Den Schneeflocken-Fänger schon vor der ersten Runde in der Liste zeigen.
-  if (scores.snowflakeCatcher == null) scores.snowflakeCatcher = 0;
-  if (scores.winterJaeger == null) scores.winterJaeger = 0;
-  const entries = Object.entries(scores).filter(([game, score]) =>
-    Number(score) > 0 || game === "snowflakeCatcher" || game === "winterJaeger"
-  );
-  list.innerHTML = entries.length
-    ? entries.sort((a, b) => Number(b[1]) - Number(a[1])).map(([game, score]) =>
-      `<li><span class="highscore-game">${escapeHtml(names[game] || game)}</span><span class="highscore-score">${Number(score) > 0 ? `${escapeHtml(score)} Punkte` : "Noch kein Bestwert"}</span></li>`
-    ).join("")
-    : '<li><span class="highscore-game">Noch keine Bestwerte</span><span>Spiele ein Minispiel!</span></li>';
+  const state = getAdventState();
+  const unlockedThrough = state.state === "after" ? END_DAY : state.day;
+  const visibleGames = highscoreGames.filter(game => game.door <= unlockedThrough);
+  if (!visibleGames.length) {
+    list.innerHTML = '<li class="highscores-empty">Die Minispiel-Highscores erscheinen mit dem ersten geöffneten Spieltürchen.</li>';
+    return;
+  }
+  list.innerHTML = visibleGames.map(game => {
+    const score = Number(scores[game.id] || 0);
+    const label = score > 0 ? formatHighscore(game, score) : "Noch kein Bestwert";
+    return `<li><span class="highscore-game">${escapeHtml(game.name)}</span><span class="highscore-score">${escapeHtml(label)}</span></li>`;
+  }).join("");
 }
+
+const toggleHighscores = document.getElementById("toggleHighscores");
+const highscoresPanel = document.getElementById("highscoresPanel");
+toggleHighscores?.addEventListener("click", () => {
+  const expanded = toggleHighscores.getAttribute("aria-expanded") === "true";
+  toggleHighscores.setAttribute("aria-expanded", String(!expanded));
+  if (highscoresPanel) highscoresPanel.hidden = expanded;
+});
 
 window.addEventListener("message", event => {
   if (event.origin !== window.location.origin || event.data?.type !== "advent-minigame-highscore") return;
+  const game = highscoreGames.find(item => item.id === event.data.game);
+  const score = Number(event.data.score);
+  if (!game || !Number.isFinite(score) || score <= 0) return;
   const scores = getHighscores();
-  scores[event.data.game] = Math.max(Number(scores[event.data.game] || 0), Number(event.data.score) || 0);
+  const current = Number(scores[game.id] || 0);
+  const improved = game.lowerIsBetter ? current === 0 || score < current : score > current;
+  if (improved) scores[game.id] = Math.floor(score);
   localStorage.setItem(highscoreStorageKey, JSON.stringify(scores));
   renderHighscores();
+});
+
+window.addEventListener("storage", event => {
+  if ([highscoreStorageKey, legacyFroggerKey, "winterjaeger-high", null].includes(event.key)) renderHighscores();
 });
 
 document.getElementById("resetHighscores")?.addEventListener("click", () => {
   localStorage.removeItem(highscoreStorageKey);
   localStorage.removeItem(legacyFroggerKey);
+  localStorage.removeItem("winterjaeger-high");
   renderHighscores();
 });
 

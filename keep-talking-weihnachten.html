@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#10251e">
 <meta name="description" content="Entschärfe das verdächtige Geschenk mit dem festen Wichtel-Handbuch.">
 <title>Verdächtiges Geschenk</title>
+<script>if(window.self!==window.top)document.documentElement.classList.add("embedded")</script>
 <style>
 :root{color-scheme:dark;--pine:#123c2c;--pine2:#1c5a3e;--wine:#7e2637;--gold:#ffd879;--ice:#b9efff;--snow:#f7f5e9;--ink:#13231e;--paper:#eee2c2;--paper-ink:#2d2a21;--muted:#b9c9c0;--panel:#11251feF;--line:#ffffff24;--danger:#ff6474;--green:#67e6a2;--shadow:0 18px 50px #020c0a99}
 *{box-sizing:border-box}html{min-width:320px;scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--snow);font:500 15px/1.5 "Trebuchet MS",Arial,sans-serif;background:radial-gradient(ellipse at 50% -20%,#315b50 0,#182b27 45%,#081611 100%);overflow-x:hidden}
@@ -78,6 +79,53 @@ body.mode-manual .book-page li{margin:7px 0}
 }
 .print-book{display:none}
 </style>
+<style>
+html.embedded,html.embedded body{width:100%;height:100%;min-height:0;overflow:hidden}
+html.embedded .app{height:100%;min-height:0;display:flex;flex-direction:column;padding:5px 10px}
+html.embedded .lights{display:none}
+html.embedded .topbar{flex:0 0 auto;gap:8px;margin:0 0 6px}
+html.embedded .layout{flex:1;min-height:0;align-items:stretch;overflow:hidden}
+html.embedded .bomb-pane,html.embedded .book-pane{min-height:0}
+html.embedded .case{height:100%;display:flex;flex-direction:column;padding:9px}
+html.embedded .case-top{gap:8px;margin-bottom:6px}
+html.embedded .case-facts{gap:6px;margin-bottom:7px}
+html.embedded .fact{padding:6px 8px}
+html.embedded .modules-heading{flex:0 0 auto;margin-bottom:4px}
+html.embedded .module-grid{flex:1;min-height:0;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(0,1fr);gap:5px}
+html.embedded .module-card{display:flex;min-height:0;flex-direction:column;padding:6px}
+html.embedded .module-head{margin-bottom:3px}
+html.embedded .module-head h3{font-size:13px}
+html.embedded .module-content{flex:1;min-height:0;display:grid;align-content:center}
+html.embedded .module-hint{display:none}
+html.embedded .status-line{flex:0 0 auto;min-height:16px;margin:4px 2px 0;font-size:11px}
+html.embedded .book-pane{height:100%}
+html.embedded .book,html.embedded body.mode-manual .book{height:100%;max-height:none;overflow:auto}
+html.embedded .wire-row{gap:3px;padding:3px 0}
+html.embedded .wire-button{min-width:32px;min-height:42px;padding:3px}
+html.embedded .action-note{display:none}
+html.embedded .bell-button{min-height:46px}
+html.embedded .simon-wrap{gap:4px}
+html.embedded .simon-grid{width:min(155px,100%);gap:4px}
+html.embedded .simon-key{min-height:25px;font-size:9px}
+html.embedded .simon-status{min-height:13px;font-size:9px}
+html.embedded .tiny-button{padding:3px 7px;font-size:10px}
+html.embedded .symbol-picks{gap:3px}
+html.embedded .symbol-pick{width:34px;height:34px;padding:2px;font-size:18px}
+html.embedded .letter-wheel{gap:2px}
+html.embedded .letter-wheel button{width:30px;height:19px}
+html.embedded .letter-wheel output{width:31px;height:25px;font-size:17px}
+html.embedded .pw-submit{margin:4px auto 0;padding:4px 10px}
+@media(max-width:760px){
+  html.embedded .app{padding:5px 7px}
+  html.embedded .mobile-switch{flex:0 0 auto;margin-bottom:5px}
+  html.embedded .layout{height:0}
+  html.embedded .layout.show-box .bomb-pane,html.embedded .layout.show-book .book-pane{height:100%}
+  html.embedded .layout.show-box .case{height:100%}
+  html.embedded .module-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(0,1fr)}
+  html.embedded .module-card{padding:5px}
+  html.embedded .module-hint{font-size:9px}
+}
+</style>
 </head>
 <body>
 <canvas id="snow" aria-hidden="true"></canvas>
@@ -86,6 +134,7 @@ body.mode-manual .book-page li{margin:7px 0}
 <section class="start-overlay" id="startOverlay" aria-modal="true" role="dialog" hidden></section>
 <section class="end-overlay" id="endOverlay" aria-modal="true" role="dialog" hidden></section>
 <div class="confetti" id="confetti" aria-hidden="true"></div>
+<script src="minigame-highscores.js"></script>
 <script>
 (()=>{"use strict";
 // Round data lives in state; rule records below drive both handbook text and decisions.
@@ -198,7 +247,7 @@ const moduleMap={
     solved(m){return m.stage>4}
   },
   password:{
-    init(){const words=rules.passwordWords,target=pick(words),alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ",wheels=[];for(let i=0;i<5;i++){const forbidden=new Set(words.filter(w=>w!==target).map(w=>w[i]));forbidden.add(target[i]);const decoys=shuffle(alphabet.split("").filter(ch=>!forbidden.has(ch))).slice(0,5);wheels.push(shuffle([target[i],...decoys]))}return{target,wheels,indexes:wheels.map((w,i)=>w.indexOf(target[i])),feedback:"Finde das eine Wort, das in der Wortliste steht. Die Pfeile drehen jede Buchstabenscheibe."}},
+    init(){const words=rules.passwordWords,target=pick(words),alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ",wheels=[];for(let i=0;i<5;i++){const forbidden=new Set(words.filter(w=>w!==target).map(w=>w[i]));forbidden.add(target[i]);const decoys=shuffle(alphabet.split("").filter(ch=>!forbidden.has(ch))).slice(0,5);wheels.push(shuffle([target[i],...decoys]))}const indexes=wheels.map((w,i)=>{const correct=w.indexOf(target[i]);let index=randInt(0,w.length-2);if(index>=correct)index++;return index});return{target,wheels,indexes,feedback:"Finde das eine Wort, das in der Wortliste steht. Die Pfeile drehen jede Buchstabenscheibe."}},
     render(m){return'<div class="password-fields">'+m.wheels.map((w,i)=>'<div class="letter-wheel" aria-label="Buchstabenstelle '+(i+1)+'"><button class="secondary" type="button" data-action="pw-up" data-index="'+i+'" aria-label="Buchstabe nach oben">▲</button><output>'+w[m.indexes[i]]+'</output><button class="secondary" type="button" data-action="pw-down" data-index="'+i+'" aria-label="Buchstabe nach unten">▼</button></div>').join("")+'</div><button class="primary pw-submit" type="button" data-action="pw-submit">Absenden</button>'},
     input(m,a,d){const i=Number(d.index);if(a==="pw-up"||a==="pw-down"){m.indexes[i]=(m.indexes[i]+(a==="pw-up"?1:5))%6;renderModules();playClick();return}if(a!=="pw-submit"||m.solved)return;const word=m.wheels.map((w,j)=>w[m.indexes[j]]).join("");if(word===m.target){solveModule(m,"Das gesuchte Wort aus der Wichtel-Wortliste ist eingestellt.");return}strike('"'+word+'" steht nicht als passendes Lösungswort im Handbuch.',"Stelle ein Wort aus der fünfzehn Wörter umfassenden Liste ein.",m);},
     solved(m){return m.solved===true}
@@ -423,6 +472,23 @@ document.addEventListener("keyup",e=>{
 },true);
 window.addEventListener("resize",resizeSnow);window.addEventListener("blur",()=>{if(lastButtonPointer){const card=lastButtonPointer.closest(".module-card"),m=state.modules.find(x=>x.id===card?.dataset.module);if(m&&m.holding){m.holding=false;renderModules()}lastButtonPointer=null}keyboardHoldId=null});
 prepareShell();createLights();resizeSnow();renderHeader();renderStartMenu();snowFrameId=requestAnimationFrame(snowFrame);
+})();
+</script>
+<script>
+(() => {
+  let reported = false;
+  const captureHighscore = () => {
+    const overlay = document.getElementById("endOverlay");
+    if (!overlay || overlay.hidden) { reported = false; return; }
+    if (reported || document.getElementById("endTitle")?.textContent !== "Frohe Weihnachten!") return;
+    const [minutes, seconds] = (document.getElementById("resultTime")?.textContent || "0:00").split(":").map(Number);
+    const remaining = Math.max(1, Math.floor((minutes || 0) * 60 + (seconds || 0)));
+    reported = true;
+    window.recordAdventMiniGameHighscore("keepTalkingWeihnachten", remaining);
+  };
+  new MutationObserver(captureHighscore).observe(document.body, {
+    attributes: true, characterData: true, childList: true, subtree: true
+  });
 })();
 </script>
 </body>

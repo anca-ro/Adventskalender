@@ -22,14 +22,19 @@
 
     <section class="highscores" aria-labelledby="highscoresTitle">
       <div class="highscores-heading">
-        <div>
-          <p class="eyebrow">DEINE BESTEN RUNDE</p>
-          <h2 id="highscoresTitle">🏆 Minispiel-Highscores</h2>
-        </div>
+        <button id="toggleHighscores" class="highscores-toggle" type="button" aria-expanded="true" aria-controls="highscoresPanel">
+          <span>
+            <span class="eyebrow">DEINE BESTEN RUNDEN</span>
+            <span id="highscoresTitle" class="highscores-title" role="heading" aria-level="2">🏆 Minispiel-Highscores</span>
+          </span>
+          <span class="highscores-chevron" aria-hidden="true">⌄</span>
+        </button>
         <button id="resetHighscores" class="reset-highscores" type="button">Zurücksetzen</button>
       </div>
-      <ol id="highscoresList" class="highscores-list" aria-live="polite"></ol>
-      <p class="highscores-note">Highscores werden in diesem Browser gespeichert.</p>
+      <div id="highscoresPanel">
+        <ol id="highscoresList" class="highscores-list" aria-live="polite"></ol>
+        <p class="highscores-note">Highscores werden in diesem Browser gespeichert.</p>
+      </div>
     </section>
 
     <section id="today" class="today hidden" aria-live="polite">

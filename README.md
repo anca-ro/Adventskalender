@@ -6,6 +6,7 @@
 - `style.css` – responsives Design
 - `content.js` – komplett ausgearbeitete 24 Türchen
 - `app.js` – Datumslogik
+- `minigame-highscores.js` – gemeinsamer Speicher für die Minispiel-Bestwerte
 - `keep-talking-weihnachten.html` – eigenständiges, offline spielbares Entschärfungs-Minispiel (Türchen 18)
 - `README.md` – Anleitung
 
@@ -23,7 +24,7 @@ Der NFC-Tag enthält nur eine feste URL. Die Webseite verwendet `Europe/Berlin` 
 
 1. GitHub-Konto öffnen/anlegen.
 2. Neues Repository z. B. `adventskalender` erstellen.
-3. Alle vier Website-Dateien (`index.html`, `style.css`, `content.js`, `app.js`) hochladen.
+3. Alle Website- und Spiel-Dateien aus dem Projekt hochladen, insbesondere `index.html`, `style.css`, `content.js`, `app.js`, `minigame-highscores.js` und die eingebundenen Spiel-HTML-Dateien.
 4. Repository → Settings → Pages.
 5. Source: `Deploy from a branch`.
 6. Branch `main`, Ordner `/ (root)`.

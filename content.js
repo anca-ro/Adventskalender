@@ -14,85 +14,91 @@
  */
 const ADVENT_CONTENT = {
   1: {
-    title: "Der Startschuss",
+    title: "Willkommen im Advent!",
     emoji: "🎄",
     html: `
-      <p>Willkommen beim digitalen Adventskalender! Ab heute gibt es jeden Arbeitstag
-      ein kleines Türchen für die Pause.</p>
-      <div class="card">
-        <h3>Die erste Frage</h3>
-        <p>Was gehört für dich unbedingt zu einer guten Adventspause?</p>
-        <p class="small">Diskutiert kurz – die beste Antwort muss nicht die offensichtlichste sein. 😉</p>
+      <p><strong>Schön, dass du dabei bist!</strong></p>
+      <div class="big-message">
+        <strong>Der Adventskalender ist eröffnet.</strong>
+        <span>🎁</span>
       </div>
+      <p>Ab heute wartet hinter jedem Türchen eine kleine Überraschung. Also: kurz durchatmen, Türchen öffnen und ein bisschen Advent genießen. 🎄</p>
     `
   },
   2: {
-    title: "Advent – was heißt das eigentlich?",
-    emoji: "🕯️",
+    title: "Winterwissen: Schneeflocken",
+    emoji: "❄️",
     html: `
-      <p>„Advent“ kommt vom lateinischen <em>adventus</em> und bedeutet
-      <strong>Ankunft</strong>.</p>
       <div class="fact">
         <span>💡</span>
-        <div>Die vier Adventssonntage dienen traditionell als Zeit der Vorbereitung
-        auf Weihnachten.</div>
+        <div>Die Eiskristalle einer Schneeflocke wachsen meist mit <strong>sechs Armen</strong>. Das liegt an der sechseckigen Ordnung, in der sich Wassermoleküle beim Gefrieren anordnen.</div>
       </div>
-      <p>Damit wäre das heutige Türchen offiziell ein kleines Sprach- und Geschichtstürchen.</p>
+      <p>Auf ihrem Weg durch die Wolke verändern Temperatur und Feuchtigkeit das Wachstum – so entstehen immer neue Formen.</p>
+      <p class="small"><a href="https://www.noaa.gov/stories/how-do-snowflakes-form-science-behind-snow" target="_blank" rel="noopener">Mehr zur Entstehung von Schneeflocken</a></p>
     `
   },
   3: {
     title: "Winter Frogger",
     emoji: "🎄",
     html: `
-      <p>Überquere die verschneite Autobahn und erreiche alle drei Weihnachtsnester!</p>
       <div class="frogger-embed">
         <iframe src="frogger.html" title="Winter Frogger" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Steuerung: Pfeiltasten oder WASD · Mobil: Steuerkreuz · P = Pause · M = Sound</p>
     `
   },
   4: {
-    title: "Die Büro-Challenge",
-    emoji: "☕",
+    title: "Schoko-Crossies mit Weihnachtskick",
+    emoji: "🍫",
     html: `
-      <p>Heute gibt es keine Wissensfrage, sondern eine Mini-Challenge.</p>
-      <div class="challenge">
-        <strong>Schafft es als Team, innerhalb von 60 Sekunden drei Dinge zu finden,
-        die alle Anwesenden gerne essen.</strong>
+      <p><strong>10–15 Minuten Arbeit · ca. 25–30 Stück</strong></p>
+      <div class="card">
+        <h3>Montag ohne Kuchen?</h3>
+        <p>Der Montagskuchen hat bis zum <strong>11.01.2027</strong> Pause. Bitte organisiert euch im Dezember selbst. Zur Inspiration gibt’s hier ein einfaches Rezept.</p>
+        <p>Wer hat Lust, am Wochenende zu backen und übernimmt die Vertretung?</p>
       </div>
-      <p class="small">Kaffee zählt nicht. Kaffee ist außerhalb der Wertung. 😄</p>
+      <h3>Zutaten</h3>
+      <ul>
+        <li>200 g Schokolade oder Kuvertüre</li>
+        <li>60 g Cornflakes</li>
+        <li>50 g gehackte Mandeln</li>
+        <li>½ TL Zimt oder Spekulatiusgewürz</li>
+      </ul>
+      <h3>Zubereitung</h3>
+      <p>Schokolade im Wasserbad schmelzen. Mandeln, Cornflakes und Gewürz unterrühren. Mit zwei Teelöffeln kleine Häufchen auf Backpapier setzen und fest werden lassen. Fertig!</p>
     `
   },
   5: {
-    title: "Baugrund unter dem Weihnachtsbaum",
-    emoji: "🪨",
+    title: "Dänisches Weihnachtsbasteln",
+    emoji: "✂️",
     html: `
-      <p>Ein bisschen Fachwissen darf natürlich nicht fehlen.</p>
-      <div class="quiz">
-        <p><strong>Was beschreibt ein Homogenbereich im Straßenbau am ehesten?</strong></p>
-        <button onclick="reveal(this,'A')">A – Einen räumlich und bautechnisch ähnlich zu behandelnden Boden-/Felsbereich</button>
-        <button onclick="reveal(this,'B')">B – Ausschließlich einen Bereich gleicher Farbe</button>
-        <button onclick="reveal(this,'C')">C – Eine bestimmte Baustellenkolonne</button>
-        <div class="quiz-result hidden"></div>
+      <p>Heute gibt es zwei klassische Bastelideen aus Papier: das geflochtene Weihnachtsherz und einen gefalteten Papierstern.</p>
+      <div class="card">
+        <h3>Flecht-Weihnachtsherz · <em>julehjerte</em></h3>
+        <p><strong>Du brauchst:</strong> zwei Blätter Papier in verschiedenen Farben, Lineal, Bleistift, Schere und einen schmalen Papierstreifen für den Henkel.</p>
+        <ol>
+          <li>Schneide aus beiden Farben je einen Streifen von etwa 8 × 20 cm aus und falte ihn in der Mitte.</li>
+          <li>Runde die offenen Enden ab. Schneide vom Falz aus zwei parallele Schlitze hinein, ohne bis zum Rand durchzuschneiden.</li>
+          <li>Lege die gefalteten Stücke im rechten Winkel aneinander. Flechte die Streifen abwechselnd durch- und umeinander, bis ein Karomuster entsteht.</li>
+          <li>Klebe innen einen Papierstreifen als Henkel fest.</li>
+        </ol>
+        <p class="small"><a href="https://nordisk.de/blogs/artikel/weihnachtsherzen-flechten-anleitung" target="_blank" rel="noopener">Bildanleitung für das Flechtherz</a></p>
       </div>
-      <div class="answer hidden" id="answer-5">
-        <strong>Richtig ist A. 🎯</strong><br>
-        Homogenbereiche fassen Boden und Fels mit vergleichbaren Eigenschaften
-        für die jeweilige bautechnische Bearbeitung zusammen.
+      <div class="card">
+        <h3>Papierstern</h3>
+        <p><strong>Du brauchst:</strong> vier lange Papierstreifen und etwas Faden zum Aufhängen.</p>
+        <p>Falte die Streifen in der Mitte und verschränke sie zu einem kleinen Flechtquadrat. Falte die Streifen nacheinander über die Mitte, um die flachen Zacken zu formen. Wende den Stern, wiederhole die Schritte auf der Rückseite und kürze die Enden.</p>
+        <p class="small"><a href="https://www.spektrum.de/fm/976/Anleitung_Froebelsterne.pdf" target="_blank" rel="noopener">Bebilderte Anleitung für den Papierstern</a></p>
       </div>
     `
   },
   6: {
-    title: "Nikolaus-Spezial",
-    emoji: "🥾",
+    title: "Weihnachtsgeschichte 1/3: Der Stern im Schnee",
+    emoji: "📖",
     html: `
-      <p>Heute ist Nikolaus! 🎅</p>
-      <div class="card">
-        <h3>Die Nikolaus-Suche</h3>
-        <p>Schaut euch im Pausenraum um und findet etwas, das heute
-        möglichst überzeugend als Nikolausstiefel durchgehen könnte.</p>
-        <p>Foto machen erlaubt – öffentliche Bloßstellung nicht. 😉</p>
-      </div>
+      <p><strong>Der Stern, der den Heimweg fand · Kapitel 1</strong></p>
+      <p>Als Wichtel Lio am Morgen durch den frischen Schnee stapfte, blitzte etwas zwischen den Tannen. Es war ein kleiner goldener Stern, ganz kalt und ohne Glanz. An seiner Rückseite hing ein Zettel: <em>„Bring mich zum alten Glockenturm.“</em></p>
+      <p>„Der Turm steht seit Jahren leer“, sagte Flocke, der Fuchs, als Lio ihm den Fund zeigte. Da erklang aus der Ferne eine einzelne Glocke. Der Stern schimmerte für einen Augenblick – und aus dem Schnee führte eine Spur winziger goldener Punkte geradewegs in den Wald.</p>
+      <p>Lio steckte den Stern vorsichtig ein. „Dann finden wir heraus, wem er gehört.“ Gemeinsam machten sich die beiden auf den Weg.</p>
     `
   },
   7: {
@@ -107,27 +113,26 @@ const ADVENT_CONTENT = {
     `
   },
   8: {
-    title: "Der Weihnachtswitz",
-    emoji: "😂",
+    title: "Wichtel-Check: Geschenkpapier",
+    emoji: "🎁",
     html: `
-      <div class="joke">
-        <p>Warum können Weihnachtsbäume so schlecht stricken?</p>
-        <p><strong>Weil sie ständig Nadeln fallen lassen.</strong> 🌲</p>
+      <div class="card">
+        <h3>Ist noch Geschenkpapier da?</h3>
+        <p>Falls nicht: jetzt auf die Einkaufsliste setzen – zusammen mit Klebeband und Geschenkanhängern.</p>
+        <p class="small">Dein Zukunfts-Ich am 24. Dezember wird es dir danken. 😉</p>
       </div>
-      <p class="small">Ja. Das Niveau ist heute bewusst niedrig. Es ist schließlich Advent.</p>
     `
-    // Beispiel für dieses Türchen:
-    // ,media: { type: "youtube", url: "https://www.youtube.com/watch?v=VIDEO_ID", title: "Weihnachtsvideo" }
   },
   9: {
-    title: "Team-Weihnachtsessen",
-    emoji: "🍽️",
+    title: "Winterwissen: Atemwolken",
+    emoji: "🌬️",
     html: `
-      <p>Stellt euch vor, unser Team wäre ein Weihnachtsessen.</p>
-      <div class="card">
-        <p><strong>Welches Gericht wären wir – und warum?</strong></p>
-        <p>Glühwein zählt als Getränk und damit nicht als Ausweichantwort.</p>
+      <div class="fact">
+        <span>💡</span>
+        <div>Die weiße Wolke vor dem Mund ist kein Rauch. Die feuchte, warme Atemluft kühlt draußen ab; dabei kondensiert Wasserdampf zu winzigen Wassertröpfchen.</div>
       </div>
+      <p>Ähnlich entstehen kleine Wolken am Himmel – dort kühlt feuchte Luft ebenfalls ab.</p>
+      <p class="small"><a href="https://www.loc.gov/everyday-mysteries/categories/meteorology-climatology/item/why-do-i-see-my-breath-when-its-cold-outside/" target="_blank" rel="noopener">Die Erklärung der Library of Congress</a></p>
     `
   },
   10: {
@@ -142,40 +147,53 @@ const ADVENT_CONTENT = {
     `
   },
   11: {
-    title: "Weihnachtsmusik",
-    emoji: "🎵",
+    title: "Saftiger Gewürzkuchen",
+    emoji: "🍰",
     html: `
-      <p>Heute ist die musikalische Tür.</p>
+      <p><strong>15 Minuten Vorbereitung · ca. 35 Minuten Backzeit</strong></p>
       <div class="card">
-        <p><strong>Jede Person darf ein Weihnachtslied nennen, das sie freiwillig
-        den ganzen Dezember hören würde.</strong></p>
-        <p>Und anschließend eines, das sie definitiv nicht mehr hören kann.</p>
+        <h3>Die zweite Montags-Kuchen-Krise ist fast da! 😅</h3>
+        <p>Ich habe gehört, Kuchen sei im Dezember ein unverzichtbarer Bestandteil der betrieblichen Gesundheitsförderung. Deshalb gibt es heute wenigstens das Rezept. Für die Umsetzung seid ihr selbst verantwortlich.</p>
       </div>
+      <h3>Zutaten</h3>
+      <ul>
+        <li>250 g Mehl</li>
+        <li>150 g Zucker</li>
+        <li>2 Eier</li>
+        <li>125 g weiche Butter</li>
+        <li>150 ml Milch</li>
+        <li>1 Päckchen Backpulver</li>
+        <li>2 TL Lebkuchen- oder Spekulatiusgewürz</li>
+        <li>2 EL Backkakao</li>
+      </ul>
+      <h3>Zubereitung</h3>
+      <p>Backofen auf 180 °C Ober-/Unterhitze vorheizen. Butter, Zucker und Eier verrühren. Mehl, Backpulver, Gewürz und Kakao mischen und zusammen mit der Milch unterrühren. In eine gefettete kleine rechteckige Form geben und etwa 30–35 Minuten backen. Stäbchenprobe machen. Nach dem Abkühlen nach Wunsch mit Puderzucker bestäuben.</p>
     `
-    // Beispiel für eine eigene MP3-Datei im Unterordner audio:
-    // ,media: { type: "audio", src: "audio/weihnachtslied.mp3", caption: "Kopfhörer auf oder gemeinsam anhören." }
   },
   12: {
-    title: "Halbzeit!",
-    emoji: "⭐",
+    title: "Basteln: Weihnachtsanhänger aus Pappe",
+    emoji: "🎄",
     html: `
-      <p>12 von 24 Türchen sind geschafft.</p>
+      <p>Aus Verpackungskarton wird ein persönlicher Baumschmuck.</p>
       <div class="card">
-        <h3>Halbzeitfrage</h3>
-        <p>Welches Türchen war bisher euer Favorit?</p>
-        <p>Und was sollte in den verbleibenden 12 Türchen unbedingt noch vorkommen?</p>
+        <p><strong>Du brauchst:</strong> ein Stück dünne Pappe, Schere, Stift, Wolle oder Schnur und Stifte oder Papierreste zum Verzieren.</p>
+        <ol>
+          <li>Zeichne einen Stern, Baum oder eine Glocke auf die Pappe und schneide die Form aus.</li>
+          <li>Verziere den Anhänger mit Farben, Papierstücken oder darum gewickelter Wolle.</li>
+          <li>Stich oben vorsichtig ein Loch hinein und ziehe einen Faden zum Aufhängen hindurch.</li>
+        </ol>
+        <p class="small">Tipp: Alte Versandkartons eignen sich prima als Bastelpappe.</p>
       </div>
     `
   },
   13: {
-    title: "Das Loch-Rätsel",
-    emoji: "🔎",
+    title: "Weihnachtsgeschichte 2/3: Der alte Glockenturm",
+    emoji: "📖",
     html: `
-      <p>Was wird größer, je mehr man davon wegnimmt?</p>
-      <div class="answer">
-        <strong>Ein Loch.</strong> 🕳️
-      </div>
-      <p class="small">Ein Rätsel, das erstaunlich gut in die Welt von Baugruben passt.</p>
+      <p><strong>Der Stern, der den Heimweg fand · Kapitel 2</strong></p>
+      <p>Lio und Flocke folgten den goldenen Punkten bis zum alten Glockenturm. Oben fanden sie eine leere Halterung in Form eines Sterns. Der Fund passte genau hinein – aber er blieb dunkel.</p>
+      <p>Auf dem steinernen Fensterbrett entdeckte Flocke eine eingeritzte Zeile: <em>„Ein Licht wird heller, wenn man es teilt.“</em> Die beiden blickten hinunter ins Dorf. Hinter den Fenstern war es schon dämmrig. Vielleicht brauchte der Stern viele Lichter, um wieder zu leuchten.</p>
+      <p>Sie machten sich auf den Rückweg, um die Dorfbewohner um Hilfe zu bitten. Doch ein Schneesturm zog auf und deckte ihre Spur zu. Bald wussten Lio und Flocke nicht mehr, welcher Weg ins Dorf führte.</p>
     `
   },
   14: {
@@ -190,27 +208,25 @@ const ADVENT_CONTENT = {
     `
   },
   15: {
-    title: "60-Sekunden-Teamchallenge",
-    emoji: "🏆",
+    title: "Wichtel-Check: Pakete",
+    emoji: "📦",
     html: `
-      <div class="challenge">
-        <h3>Auf die Plätze, fertig, los!</h3>
-        <p>Ihr habt <strong>60 Sekunden</strong>, um gemeinsam fünf Dinge zu nennen,
-        die mit „Weihnachten“ beginnen oder enden.</p>
-        <p class="small">Beispiele zählen natürlich nicht.</p>
+      <div class="card">
+        <h3>Müssen noch Geschenke verschickt werden?</h3>
+        <p>Jetzt einpacken, Adresse prüfen und zur Post bringen. Die Weihnachtswichtel sind fleißig – aber leider kein Expressdienst. 😉</p>
       </div>
     `
   },
   16: {
-    title: "Das kleine Türchen",
-    emoji: "✨",
+    title: "Winterwissen: Tiere im Winter",
+    emoji: "🦔",
     html: `
-      <p>Heute gibt es bewusst keine Aufgabe.</p>
-      <div class="big-message">
-        <strong>Mach einfach fünf Minuten Pause.</strong>
-        <span>☕</span>
+      <div class="fact">
+        <span>🐾</span>
+        <div>Tiere kommen auf verschiedene Weise durch den Winter: Igel halten Winterschlaf, manche Zugvögel ziehen in wärmere Gegenden und andere Tiere bleiben aktiv.</div>
       </div>
-      <p>Ohne Mails. Ohne Teams. Ohne Excel. Einfach Pause.</p>
+      <p>Ein Spaziergang im Schnee kann ihre Spuren sichtbar machen – zum Beispiel kleine Pfotenabdrücke oder Vogelspuren.</p>
+      <p class="small"><a href="https://www.nabu-aachen-land.de/mitteilung/von-frostschutz-bis-winterschlaf-tierische-ueberwinterungsstrategien" target="_blank" rel="noopener">Mehr zu Überwinterungsstrategien</a></p>
     `
   },
   17: {
@@ -226,87 +242,93 @@ const ADVENT_CONTENT = {
     `
   },
   18: {
-    title: "Verdächtiges Geschenk",
-    emoji: "🎁",
+    title: "Kokosmakronen mit Schokoverzierung",
+    emoji: "🥥",
     html: `
-      <p>Oh schön du hast ein Geschenk erhalten. Aber was tickt denn da so verdächtig? Lies die Hinweise am Gehäuse, schlage im Wichtel-Handbuch nach und löse alle Module, bevor deine Zeit abgelaufen ist.</p>
-      <div class="artillery-embed">
-        <iframe src="keep-talking-weihnachten.html" title="Verdächtiges Geschenk" loading="lazy"></iframe>
+      <p><strong>10 Minuten Vorbereitung · 15 Minuten Backzeit · ca. 20 Stück</strong></p>
+      <div class="card">
+        <h3>Letzter Kuchenmontag vor Weihnachten! 😅</h3>
+        <p>Drei Montage, drei Rezepte, 3 Montagskuchen – und kein einziges Mal musste ich dafür ins Büro. Ich nenne das moderne Arbeitsorganisation.</p>
+        <p>Falls jemand fragt, ob es nächstes Jahr wieder Montagskuchen gibt: Die Machbarkeit im Rahmen der Ressourcenplanung wird gerade geprüft.</p>
       </div>
-      <p class="small">Drei Schwierigkeitsstufen · fünf Module · solo oder zu zweit mit getrennten Ansichten. Auf dem Handy kannst du zwischen Geschenk und Handbuch wechseln.</p>
-      <p><a href="keep-talking-weihnachten.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
+      <h3>Zutaten</h3>
+      <ul>
+        <li>2 Eiweiß</li>
+        <li>100 g Zucker</li>
+        <li>150 g Kokosraspel</li>
+        <li>1 Prise Salz</li>
+        <li>Optional: 50 g Zartbitterschokolade</li>
+      </ul>
+      <h3>Zubereitung</h3>
+      <p>Backofen auf 160 °C Ober-/Unterhitze vorheizen. Eiweiß mit Salz steif schlagen, Zucker einrieseln lassen und Kokosraspel unterheben. Mit zwei Teelöffeln kleine Häufchen auf Backpapier setzen. Etwa 12–15 Minuten backen, bis die Spitzen leicht goldbraun sind. Abkühlen lassen und nach Wunsch mit geschmolzener Schokolade verzieren.</p>
     `
   },
   19: {
-    title: "Baustellenhumor",
-    emoji: "🚧",
+    title: "Basteln: Geschenktüte aus Packpapier",
+    emoji: "🎁",
     html: `
-      <p>Was ist der Unterschied zwischen einem Weihnachtswunsch
-      und einer Planungsänderung?</p>
-      <div class="answer">
-        <strong>Beim Weihnachtswunsch weiß man wenigstens,
-        dass er nicht immer erfüllt wird.</strong> 😄
+      <p>Eine kleine Tüte für ein Geschenk oder ein paar Plätzchen – aus altem Packpapier oder einer aufgefalteten Papiertüte.</p>
+      <div class="card">
+        <p><strong>Du brauchst:</strong> Papier, Schere, Klebeband oder Klebestift, Schnur und optional Stifte.</p>
+        <ol>
+          <li>Rolle das Papier zu einem Schlauch und klebe die lange Kante mit einer kleinen Überlappung fest.</li>
+          <li>Falte das untere Ende nach oben, klappe es wie einen Briefumschlag auf und klebe die entstandenen Bodenlaschen fest.</li>
+          <li>Öffne die Tüte, falte den oberen Rand um und verziere sie nach Wunsch.</li>
+          <li>Für einen Henkel kannst du zwei Löcher in den oberen Rand stechen und Schnur durchziehen.</li>
+        </ol>
       </div>
     `
   },
   20: {
-    title: "Das wichtigste Türchen",
-    emoji: "🧘",
+    title: "Weihnachtsgeschichte 3/3: Das Licht findet heim",
+    emoji: "📖",
     html: `
-      <div class="big-message">
-        <strong>Heute musst du nichts lösen.</strong>
-        <span>☕</span>
-      </div>
-      <p>Setz dich hin. Trink etwas. Rede mit den Kollegen.
-      Und lass die Arbeit für fünf Minuten Arbeit sein.</p>
+      <p><strong>Der Stern, der den Heimweg fand · Kapitel 3</strong></p>
+      <p>Der Sturm hatte die goldene Spur zugedeckt. Lio und Flocke wussten nicht mehr, welcher Weg ins Dorf führte. Da ging im ersten Haus ein Licht an. Dann im nächsten. Nach und nach leuchteten Fenster und Laternen auf – bis der ganze Weg durch den Schnee zu sehen war.</p>
+      <p>Gemeinsam trugen die beiden den Stern zum Turm und setzten ihn in seine Halterung. Das warme Licht aus dem Dorf spiegelte sich in seinen Zacken. Plötzlich begann der Stern selbst zu leuchten: hell genug, um den Heimweg zu zeigen.</p>
+      <p>Von da an stand er jedes Jahr im Turmfenster. Und wenn es draußen schneite, fanden alle sicher nach Hause.</p>
     `
   },
   21: {
     title: "Verdächtiges Geschenk",
     emoji: "🚜",
     html: `
-      <p>Oh schön du hast ein Geschenk erhalten. Aber was tickt denn da so verdächtig? Lies die Hinweise am Gehäuse, schlage im Wichtel-Handbuch nach und löse alle Module, bevor deine Zeit abgelaufen ist.</p>
-      <div class="artillery-embed">
+      <div class="gift-embed">
         <iframe src="keep-talking-weihnachten.html" title="Verdächtiges Geschenk" loading="lazy"></iframe>
       </div>
-      <p class="small">Drei Schwierigkeitsstufen · fünf Module · solo oder zu zweit mit getrennten Ansichten. Auf dem Handy kannst du zwischen Geschenk und Handbuch wechseln.</p>
       <p><a href="keep-talking-weihnachten.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   22: {
-    title: "Jahresrückblick",
-    emoji: "📸",
+    title: "Wichtel-Check: Abwesenheitsnotiz",
+    emoji: "📨",
     html: `
-      <p>Es geht langsam Richtung Weihnachten.</p>
       <div class="card">
-        <h3>Eine Frage zum Jahresende</h3>
-        <p>Was war dein persönliches Highlight des Jahres?</p>
-        <p>Es darf beruflich, privat, lustig oder völlig unspektakulär sein.</p>
+        <h3>Weiß dein Postfach schon Bescheid?</h3>
+        <p>Falls du über die Feiertage nicht erreichbar bist: Abwesenheitsnotiz einrichten und Vertretung sowie Rückkehrdatum eintragen.</p>
+        <p class="small">Dann muss niemand mit einer Antwort zwischen den Jahren rechnen. Dein Postfach darf auch Weihnachten feiern. 🎄</p>
       </div>
     `
   },
   23: {
-    title: "Fast geschafft",
-    emoji: "🎅",
+    title: "Winterwissen: Kurze Tage",
+    emoji: "🌍",
     html: `
-      <p>Das vorletzte Türchen.</p>
-      <div class="big-message">
-        <strong>Stress runter.<br>Vorfreude hoch.</strong>
-        <span>🎄</span>
+      <div class="fact">
+        <span>☀️</span>
+        <div>Im Dezember ist die Nordhalbkugel von der Sonne weg geneigt. Dadurch steht die Sonne bei uns niedriger am Himmel und die Tage sind kürzer als im Sommer.</div>
       </div>
-      <p>Und falls noch fünf Dinge vor Weihnachten erledigt werden müssen:
-      Morgen sind es wahrscheinlich immer noch fünf. 😉</p>
+      <p>Rund um die Wintersonnenwende ist der Tag am kürzesten. Danach nimmt die Tageslänge langsam wieder zu.</p>
+      <p class="small"><a href="https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/" target="_blank" rel="noopener">NASA: Wie die Neigung der Erde die Jahreszeiten prägt</a></p>
     `
   },
   24: {
     title: "Weihnachts-Sudoku",
     emoji: "🎁",
     html: `
-      <p>Fülle das weihnachtliche Sudoku: Jedes Symbol darf in jeder Zeile, Spalte und jedem 3×3-Block genau einmal vorkommen.</p>
       <div class="sudoku-embed">
         <iframe src="mini-sudoku.html" title="Weihnachts-Sudoku" loading="lazy"></iframe>
       </div>
-      <p class="small">Tippe ein leeres Feld und wähle anschließend unten das passende Symbol. Mit „Lösung prüfen“ kontrollierst du dein Rätsel.</p>
     `
   }
 };

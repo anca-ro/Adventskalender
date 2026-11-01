@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#07152d">
+<meta name="description" content="Baue eine winterliche Brücke für den Weihnachtsschlitten.">
+<title>Nordlicht-Brückenbau – Winterliches Brückenspiel</title>
+<style>
+:root{color-scheme:dark;--ink:#f4f8ff;--muted:#b6cee5;--blue:#73d9f2;--gold:#ffd779;--panel:#0a1b35;--line:#bdeaff40;--green:#83e6b5;--red:#ff8a91}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#061128;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit}
+.shell{height:100dvh;min-height:320px;width:min(100%,1380px);margin:0 auto;padding:clamp(6px,1.2vw,14px);display:grid;grid-template-rows:auto minmax(150px,1fr) auto auto;gap:clamp(5px,1vw,10px)}
+.topbar{display:flex;align-items:center;gap:10px;min-height:50px}
+.brandmark{height:42px;width:42px;flex:0 0 42px;display:grid;place-items:center;border:1px solid #b8eaff55;border-radius:14px;background:linear-gradient(145deg,#173a58,#102541);font-size:23px;box-shadow:0 0 22px #78daff22}
+.title-area{min-width:0;flex:1}
+.eyebrow{margin:0;color:#a9dafa;font-size:10px;font-weight:850;letter-spacing:.18em;text-transform:uppercase}
+h1{margin:1px 0 0;font-size:clamp(17px,2vw,24px);line-height:1.15;color:#fff}
+#levelHint{margin:2px 0 0;color:#c6d9e9;font-size:clamp(10px,1.2vw,13px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn,.tool-btn,.mat-btn,.primary,.secondary,.level-card{border:1px solid #c7eaff48;background:linear-gradient(145deg,#142c49,#0b1e38);border-radius:13px;min-height:44px;cursor:pointer;box-shadow:0 3px 10px #0003;transition:transform .12s,border-color .12s,background .12s}
+.icon-btn{width:46px;flex:0 0 46px;font-size:19px}
+button:hover{border-color:#8ddffa;background-color:#163655}
+button:active{transform:translateY(1px)}
+button:focus-visible{outline:3px solid #ffdf83;outline-offset:2px}
+button:disabled{opacity:.38;cursor:not-allowed;filter:saturate(.5)}
+.arena{position:relative;overflow:hidden;min-height:0;border:1px solid #9ee5ff60;border-radius:19px;background:#07172e;box-shadow:0 10px 34px #0007,inset 0 0 35px #54b8ff12}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+.hud{position:absolute;z-index:1;inset:10px 12px auto;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
+.hud-group{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start}
+.pill{padding:6px 10px;border:1px solid #c8eaff49;border-radius:999px;background:#06162de8;color:#f4fbff;font-size:clamp(11px,1.3vw,14px);font-weight:780;text-shadow:0 1px 5px #000;box-shadow:0 3px 12px #0004}
+.pill strong{color:#ffdb7e}
+.toast{position:absolute;z-index:3;left:50%;bottom:12px;transform:translate(-50%,10px);max-width:min(92%,620px);padding:9px 15px;border:1px solid #fff5;border-radius:999px;background:#07152ded;color:white;font-size:13px;font-weight:750;text-align:center;box-shadow:0 6px 20px #0008;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.tool-group{display:flex;align-items:center;gap:5px;padding:4px;border:1px solid #9ddcff30;border-radius:15px;background:#08182e}
+.tool-label{padding:0 4px;color:#9dbbd4;font-size:10px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+.tool-btn{padding:0 11px;white-space:nowrap;font-size:12px;font-weight:750}
+.tool-btn[aria-pressed="true"],.mat-btn[aria-pressed="true"]{border-color:#ffd779;background:linear-gradient(145deg,#624c28,#382e25);box-shadow:0 0 0 1px #ffd77933,0 3px 12px #ffd77915}
+.mat-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:0 10px;min-width:48px;font-size:12px;font-weight:800;white-space:nowrap}
+.mat-btn .emoji{font-size:17px}
+.toolbar-spacer{flex:1}
+.primary,.secondary{padding:0 16px;white-space:nowrap;font-weight:850}
+.primary{border:0;background:linear-gradient(135deg,#fff0b5,#f3bd55);color:#30220b;box-shadow:0 4px 0 #a97126,0 6px 16px #0004}
+.primary:hover{background:linear-gradient(135deg,#fff5cf,#ffd36c);color:#30220b}
+.secondary{background:linear-gradient(145deg,#163955,#0b233b)}
+.statusline{min-height:17px;color:#b3cce0;font-size:11px;text-align:center}
+.overlay{position:fixed;z-index:10;inset:0;display:grid;place-items:center;padding:16px;background:radial-gradient(ellipse at 50% 38%,#0c2849d9,#020713ed)}
+.overlay[hidden]{display:none}
+.dialog{width:min(94vw,540px);max-height:min(90dvh,820px);overflow:auto;padding:clamp(20px,4vw,34px);border:1px solid #c7eaff70;border-radius:24px;background:linear-gradient(145deg,#122e4df5,#091a33f7);box-shadow:0 24px 80px #000b,0 0 44px #70d9ff1c;text-align:center}
+.dialog.wide{width:min(96vw,820px)}
+.ornament{color:#ffd779;font-size:22px;letter-spacing:.4em}
+.dialog h2{margin:10px 0 8px;font-size:clamp(24px,6vw,38px);line-height:1.06;color:white;text-shadow:0 0 24px #93dfff55}
+.dialog p{margin:10px auto;color:#d4e8f4;line-height:1.55}
+.dialog .small{font-size:12px;color:#afc8da}
+.dialog-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:18px}
+.dialog-actions button{min-width:116px;min-height:46px}
+.level-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:18px 0 4px}
+.level-card{min-height:92px;padding:9px 6px;text-align:left}
+.level-card .num{display:block;color:#ffd779;font-size:10px;font-weight:900;letter-spacing:.12em}
+.level-card .name{display:block;margin-top:3px;font-size:12px;font-weight:850;line-height:1.15}
+.level-card .stars{display:block;margin-top:5px;color:#ffe18a;font-size:12px}
+.level-card.locked{opacity:.48;cursor:not-allowed}
+.level-card.done{border-color:#f7d47580;background:linear-gradient(145deg,#3a3629,#10253a)}
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}
+.howto div{padding:12px 10px;border:1px solid #c4eaff31;border-radius:14px;background:#06182da8;font-size:12px;line-height:1.45}
+.howto b{display:block;margin-bottom:5px;color:#ffe18a}
+.hide{display:none!important}
+@media(max-width:650px){
+ .shell{padding:6px;grid-template-rows:auto minmax(140px,1fr) auto auto;gap:5px}
+ .topbar{min-height:44px;gap:6px}.brandmark{width:36px;height:36px;flex-basis:36px;border-radius:12px;font-size:20px}
+ #levelHint{font-size:10px}.icon-btn{width:42px;flex-basis:42px;min-height:42px}
+ .arena{border-radius:13px}.hud{inset:6px 6px auto;gap:4px}.hud-group{gap:4px}.pill{padding:5px 8px;font-size:10px}
+ .toolbar{gap:4px}.tool-group{gap:3px;padding:3px;border-radius:12px}.tool-label{font-size:8px;padding:0 2px}
+ .tool-btn{padding:0 8px;min-height:44px;font-size:11px}.mat-btn{min-height:44px;padding:0 7px;font-size:10px;gap:3px}
+ .primary,.secondary{min-height:44px;padding:0 12px;font-size:12px}.statusline{font-size:10px;min-height:14px}
+ .level-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.level-card{min-height:74px}
+ .howto{grid-template-columns:1fr;gap:6px}.howto div{text-align:left}
+}
+@media(max-width:390px){.tool-label{display:none}.tool-btn{padding:0 7px}.mat-btn{padding:0 6px}.toolbar-spacer{display:none}.toolbar{justify-content:center}}
+@media(orientation:landscape) and (max-height:520px){
+ .shell{padding:5px;gap:4px;grid-template-rows:auto minmax(120px,1fr) auto auto}
+ .topbar{min-height:38px}.brandmark{height:34px;width:34px;flex-basis:34px}.icon-btn{min-height:38px;width:40px;flex-basis:40px}
+ .arena{border-radius:11px}.toolbar{gap:3px}.tool-btn,.mat-btn,.primary,.secondary{min-height:40px}
+ .statusline{display:none}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+ <header class="topbar">
+  <div class="brandmark" aria-hidden="true">🌉</div>
+  <div class="title-area"><p class="eyebrow" id="stateLabel">NORDLICHT-BRÜCKENBAU</p><h1 id="levelTitle">Eine Brücke für den Schlitten</h1><p id="levelHint">Baue eine sichere Strecke durch den Schnee.</p></div>
+  <button id="tipBtn" class="icon-btn" type="button" aria-label="Tipp zum Level" title="Tipp">💡</button>
+  <button id="soundBtn" class="icon-btn" type="button" aria-label="Ton ein- oder ausschalten" title="Ton">🔔</button>
+  <button id="menuBtn" class="icon-btn" type="button" aria-label="Levelmenü öffnen" title="Menü">☰</button>
+ </header>
+ <main class="arena" id="arena">
+  <canvas id="canvas" aria-label="Winterliche Brückenbaustelle. Ziehe von einem Knoten zu einem Punkt, um einen Stab zu bauen."></canvas>
+  <div id="hud" class="hud hide" aria-live="polite">
+   <div class="hud-group"><div class="pill" id="hudLevel">Level 1/8</div><div class="pill">Budget: <strong id="hudBudget">0 / 0 ✦</strong></div></div>
+   <div class="hud-group"><div class="pill" id="hudMode">Bauen</div><div class="pill" id="hudLoad">Brücke bereit</div></div>
+  </div>
+  <div id="toast" class="toast" aria-live="assertive"></div>
+ </main>
+ <nav id="toolbar" class="toolbar" aria-label="Brückenbau-Werkzeuge">
+  <div class="tool-group" aria-label="Werkzeug">
+   <span class="tool-label">Werkzeug</span>
+   <button id="buildTool" class="tool-btn" type="button" aria-pressed="true">🛠️ Bauen</button>
+   <button id="deleteTool" class="tool-btn" type="button" aria-pressed="false">🧹 Löschen</button>
+  </div>
+  <div class="tool-group" aria-label="Material">
+   <span class="tool-label">Material</span>
+   <button class="mat-btn" data-material="road" type="button" aria-label="Zuckerstangen-Fahrbahn auswählen" title="Fahrbahn · stabil, mittlerer Preis" aria-pressed="true"><span class="emoji">🍬</span>Fahrbahn</button>
+   <button class="mat-btn" data-material="wood" type="button" aria-label="Holzstütze auswählen" title="Stütze · günstig, begrenzte Tragkraft" aria-pressed="false"><span class="emoji">🪵</span>Stütze</button>
+   <button class="mat-btn" data-material="rope" type="button" aria-label="Lichterseil auswählen" title="Lichterseil · günstig, trägt nur auf Zug" aria-pressed="false"><span class="emoji">✨</span>Seil</button>
+  </div>
+  <div class="toolbar-spacer"></div>
+  <div class="tool-group" aria-label="Bearbeiten">
+   <button id="undoBtn" class="tool-btn" type="button" aria-label="Rückgängig" title="Rückgängig · Strg+Z">↶</button>
+   <button id="redoBtn" class="tool-btn" type="button" aria-label="Wiederholen" title="Wiederholen · Strg+Y">↷</button>
+   <button id="resetBtn" class="tool-btn" type="button" aria-label="Brücke zurücksetzen">♻️ Reset</button>
+  </div>
+  <button id="runBtn" class="primary" type="button">▶ Schlitten starten</button>
+ </nav>
+ <div id="statusLine" class="statusline" aria-live="polite">Ziehe von einem Knotenpunkt zu einem Rasterpunkt, um einen Stab zu bauen.</div>
+</div>
+
+<section id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" hidden>
+ <div id="dialog" class="dialog">
+  <div class="ornament" aria-hidden="true">✦ ❄ ✦</div>
+  <h2 id="dialogTitle"></h2>
+  <div id="dialogBody"></div>
+  <div id="dialogActions" class="dialog-actions"></div>
+ </div>
+</section>
+
+<script>
+(()=>{'use strict';
+/* 1. Level, Material und Physik-Konfiguration */
+const WORLD={w:1120,h:620,grid:25,ground:620};
+const MATERIALS={
+ road:{name:'Fahrbahn',cost:.20,max:150,color:'#f6f3e7',dark:'#ad3344',compliance:.00008,limit:.28,width:13},
+ wood:{name:'Stütze',cost:.085,max:205,color:'#b8793e',dark:'#603c2c',compliance:.00004,limit:.20,width:9},
+ rope:{name:'Lichterseil',cost:.05,max:260,color:'#86e5b8',dark:'#184b53',compliance:.00012,limit:.33,width:5}
+};
+const LEVELS=[
+ {title:'Der erste Schneegraben',hint:'Drei Zuckerstangen-Balken bilden eine einfache Fahrbahn. Ein kleines Dreieck in der Mitte hält den Schlitten ruhig.',budget:150,anchors:[[350,410,'start'],[770,410,'goal']],start:[366,397],goal:[858,410],allowed:['road'],mass:.80,speed:112,cliffs:[[[0,250],[275,260],[320,340],[350,410],[350,620],[0,620]],[[770,410],[800,345],[848,265],[1120,250],[1120,620],[770,620]]],islands:[]},
+ {title:'Eiszapfen-Schlucht',hint:'Stütze die Fahrbahn mit einem umgedrehten V aus Holz. Die Seile bleiben noch im Elfenschuppen.',budget:290,anchors:[[330,410,'start'],[790,410,'goal']],start:[346,397],goal:[876,410],allowed:['road','wood'],mass:.88,speed:116,cliffs:[[[0,235],[255,246],[300,330],[330,410],[330,620],[0,620]],[[790,410],[822,330],[865,248],[1120,235],[1120,620],[790,620]]],islands:[]},
+ {title:'Lebkuchen-Brücke',hint:'Die Ausfahrt liegt höher. Führe die Fahrbahn in vier Abschnitten bergauf und verankere die Mitte mit Holz.',budget:350,anchors:[[315,435,'start'],[805,350,'goal']],start:[331,422],goal:[887,350],allowed:['road','wood'],mass:.92,speed:118,cliffs:[[[0,260],[242,270],[284,360],[315,435],[315,620],[0,620]],[[805,350],[842,305],[888,266],[1120,260],[1120,620],[805,620]]],islands:[]},
+ {title:'Lichterketten-Tal',hint:'Eine tiefe Schlucht braucht ein Hängewerk. Baue erst die Fahrbahn, dann ein hohes Dreieck aus Stützen und Zugseilen.',budget:430,anchors:[[285,415,'start'],[835,415,'goal']],start:[301,402],goal:[923,415],allowed:['road','wood','rope'],mass:1.02,speed:120,cliffs:[[[0,245],[220,250],[257,334],[285,415],[285,620],[0,620]],[[835,415],[865,332],[905,250],[1120,245],[1120,620],[835,620]]],islands:[]},
+ {title:'Der Tannenwald',hint:'Die Insel in der Mitte ist ein fester Anker. Baue zwei kürzere Fahrbahnspannen zu ihr und verstrebe beide Seiten.',budget:470,anchors:[[270,420,'start'],[560,386,'mid'],[850,420,'goal']],start:[286,407],goal:[936,420],allowed:['road','wood','rope'],mass:1.05,speed:120,cliffs:[[[0,248],[205,255],[240,340],[270,420],[270,620],[0,620]],[[850,420],[880,340],[915,255],[1120,248],[1120,620],[850,620]]],islands:[[[485,620],[497,456],[523,402],[560,386],[597,402],[623,456],[635,620]]]},
+ {title:'Zugbrücke der Elfen',hint:'Der Geschenkwagen ist schwerer und das Budget knapp. Nutze kurze Planken und ein sparsames Seil-Dreieck.',budget:320,anchors:[[325,410,'start'],[795,410,'goal']],start:[341,397],goal:[882,410],allowed:['road','wood','rope'],mass:1.45,speed:115,cliffs:[[[0,238],[247,248],[291,330],[325,410],[325,620],[0,620]],[[795,410],[830,330],[873,248],[1120,238],[1120,620],[795,620]]],islands:[]},
+ {title:'Nordpol-Express',hint:'Der lange Zug rollt schneller an. Eine hohe Fachwerkbrücke mit mehreren Dreiecken verteilt die Last.',budget:460,anchors:[[290,415,'start'],[830,385,'goal']],start:[306,402],goal:[916,385],allowed:['road','wood','rope'],mass:1.25,speed:140,cliffs:[[[0,250],[220,258],[260,340],[290,415],[290,620],[0,620]],[[830,385],[867,322],[908,258],[1120,250],[1120,620],[830,620]]],islands:[]},
+ {title:'Heiligabend-Finale',hint:'Zwei lange Spannweiten treffen auf der Mittelinsel zusammen. Plane sechs kurze Planken und verankere jedes Feld mit Dreiecken.',budget:590,anchors:[[245,425,'start'],[560,385,'mid'],[875,425,'goal']],start:[261,412],goal:[958,425],allowed:['road','wood','rope'],mass:1.5,speed:132,cliffs:[[[0,256],[175,266],[211,347],[245,425],[245,620],[0,620]],[[875,425],[909,347],[945,266],[1120,256],[1120,620],[875,620]]],islands:[[[462,620],[480,454],[516,399],[560,385],[604,399],[640,454],[658,620]]]}
+];
+const PHYS={step:1/60,gravity:430,damping:.992,iterations:9,dtMax:.05};
+const canvas=document.querySelector('#canvas'),ctx=canvas.getContext('2d',{alpha:false});
+const $=s=>document.querySelector(s);
+const ui={levelTitle:$('#levelTitle'),levelHint:$('#levelHint'),stateLabel:$('#stateLabel'),hud:$('#hud'),hudLevel:$('#hudLevel'),hudBudget:$('#hudBudget'),hudMode:$('#hudMode'),hudLoad:$('#hudLoad'),status:$('#statusLine'),toast:$('#toast'),overlay:$('#overlay'),dialog:$('#dialog'),dialogTitle:$('#dialogTitle'),dialogBody:$('#dialogBody'),dialogActions:$('#dialogActions'),run:$('#runBtn'),undo:$('#undoBtn'),redo:$('#redoBtn')};
+let state='menu',levelIndex=0,level=LEVELS[0],nodes=[],edges=[],idNext=1,selectedMaterial='road',tool='build',history=[],future=[],savedBuild=null,routeNodes=[],routeEdges=[],ride={distance:0,index:0,x:0,y:0,angle:0},paused=false,toastTimer=0,accumulator=0,lastFrame=0,scoreData={unlocked:1,stars:Array(LEVELS.length).fill(0)},soundOn=true,audio=null,tutShown=false,menuReturnState=null;
+let view={scale:1,ox:0,oy:0,dpr:1,w:1,h:1};
+const pointer={down:false,id:null,start:null,world:null,last:null,source:null,moved:false};
+const snow=[];
+const stars=[];
+const colors=['#b5f5ff','#fff1bf','#d9d1ff','#ffffff'];
+let seed=81723;
+function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}
+for(let i=0;i<100;i++)stars.push({x:rand()*WORLD.w,y:rand()*310,r:.5+rand()*1.4,a:.25+rand()*.7,phase:rand()*6.28});
+for(let i=0;i<72;i++)snow.push({x:rand()*WORLD.w,y:rand()*WORLD.h,r:1+rand()*2.1,v:20+rand()*45,drift:-9+rand()*18,phase:rand()*6.28});
+function safeLoad(){try{const d=JSON.parse(localStorage.getItem('nordlichtBrueckenbauV1')||'null');if(d&&Number.isFinite(d.unlocked)&&Array.isArray(d.stars)){scoreData.unlocked=Math.max(1,Math.min(LEVELS.length,d.unlocked));scoreData.stars=LEVELS.map((_,i)=>Math.max(0,Math.min(3,Number(d.stars[i])||0)));}}catch(_){scoreData={unlocked:1,stars:Array(LEVELS.length).fill(0)};}}
+function safeSave(){try{localStorage.setItem('nordlichtBrueckenbauV1',JSON.stringify(scoreData));}catch(_){}}
+function makeNode(x,y,kind){return{id:idNext++,x,y,px:x,py:y,kind:kind||'joint'};}
+function dist(a,b){const dx=a.x-b.x,dy=a.y-b.y;return Math.hypot(dx,dy);}
+function findNode(id){for(let i=0;i<nodes.length;i++)if(nodes[i].id===id)return nodes[i];return null;}
+function costOf(edge){return dist(findNode(edge.a),findNode(edge.b))*MATERIALS[edge.material].cost;}
+function spent(){let sum=0;for(const e of edges)sum+=costOf(e);return sum;}
+function snapshot(){return{next:idNext,nodes:nodes.map(n=>({id:n.id,x:n.x,y:n.y,kind:n.kind})),edges:edges.map(e=>({id:e.id,a:e.a,b:e.b,material:e.material,rest:e.rest,stress:0,broken:false}))};}
+function applySnapshot(s){idNext=s.next;nodes=s.nodes.map(n=>makeNode(n.x,n.y,n.kind));nodes.forEach((n,i)=>n.id=s.nodes[i].id);idNext=s.next;edges=s.edges.map(e=>({...e,stress:0,broken:false}));}
+function remember(){history.push(snapshot());if(history.length>40)history.shift();future.length=0;syncButtons();}
+function undo(){if(state!=='build'||!history.length)return;future.push(snapshot());applySnapshot(history.pop());selectedSource=null;updateHud();syncButtons();sound('tap');}
+function redo(){if(state!=='build'||!future.length)return;history.push(snapshot());applySnapshot(future.pop());selectedSource=null;updateHud();syncButtons();sound('tap');}
+function syncButtons(){ui.undo.disabled=state!=='build'||!history.length;ui.redo.disabled=state!=='build'||!future.length;$('#resetBtn').disabled=state!=='build';$('#buildTool').disabled=state!=='build';$('#deleteTool').disabled=state!=='build';for(const b of document.querySelectorAll('.mat-btn')){const ok=state==='build'&&level.allowed.includes(b.dataset.material);b.disabled=!ok;b.setAttribute('aria-pressed',String(selectedMaterial===b.dataset.material));}ui.run.textContent=state==='sim'?(paused?'▶ Weiter':'Ⅱ Pause'):state==='result'?'↶ Zurück zum Bauen':'▶ Schlitten starten';ui.run.disabled=state==='menu';}
+function toast(message){ui.toast.textContent=message;ui.toast.classList.add('show');toastTimer=2.5;}
+function updateHud(){const s=spent();ui.hudBudget.textContent=Math.round(s)+' / '+level.budget+' ✦';ui.hudLevel.textContent='Level '+(levelIndex+1)+' / '+LEVELS.length;ui.hudMode.textContent=state==='sim'?(paused?'Pause':'Simulation'):state==='result'?'Ergebnis':'Bauen';ui.hudLoad.textContent=state==='sim'?'Last: '+(level.mass>1.2?'schwer':'normal'):state==='result'?'Brücke ausgewertet':'Brücke bereit';ui.levelTitle.textContent=state==='menu'?'Eine Brücke für den Schlitten':level.title;ui.levelHint.textContent=state==='menu'?'Baue eine sichere Strecke durch den Schnee.':level.hint;ui.stateLabel.textContent=state==='sim'?'DER SCHLITTEN ROLLT':state==='result'?'LEVEL-AUSWERTUNG':state==='menu'?'NORDLICHT-BRÜCKENBAU':'LEVEL '+String(levelIndex+1).padStart(2,'0')+' · BAUMODUS';ui.hud.classList.toggle('hide',state==='menu');syncButtons();}
+function loadLevel(index,showTutorial){levelIndex=index;level=LEVELS[index];nodes=[];edges=[];idNext=1;history=[];future=[];savedBuild=null;paused=false;accumulator=0;selectedMaterial=level.allowed[0];tool='build';selectedSource=null;routeNodes=[];routeEdges=[];ride={distance:0,index:0,x:level.start[0],y:level.start[1],angle:0};for(const a of level.anchors)nodes.push(makeNode(a[0],a[1],a[2]));state='build';$('#buildTool').setAttribute('aria-pressed','true');$('#deleteTool').setAttribute('aria-pressed','false');$('#buildTool').classList.add('active');$('#deleteTool').classList.remove('active');document.querySelectorAll('.mat-btn').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.material===selectedMaterial)));ui.status.textContent='Ziehe von einem Knotenpunkt zu einem Rasterpunkt, um einen Stab zu bauen.';updateHud();if(showTutorial&&index===0&&!tutShown){tutShown=true;showTutorial();}}
+function showDialog(title,body,buttons,wide){ui.dialogTitle.textContent=title;ui.dialogBody.innerHTML=body||'';ui.dialog.classList.toggle('wide',!!wide);ui.dialogActions.replaceChildren();for(const b of buttons||[]){const el=document.createElement('button');el.type='button';el.className=b.primary?'primary':'secondary';el.textContent=b.label;el.addEventListener('click',b.action);ui.dialogActions.appendChild(el);}ui.overlay.hidden=false;}
+function hideDialog(){ui.overlay.hidden=true;}
+function showTutorial(){showDialog('So baust du eine Brücke','<div class="howto"><div><b>1 · Knoten verbinden</b>Ziehe von einem festen Anker oder Gelenk zu einem neuen Rasterpunkt. Ein weiterer Zug verbindet die Stäbe.</div><div><b>2 · Material wählen</b>Fahrbahn trägt den Schlitten. Holz stützt; Seile halten nur Zug aus. Bleib im Budget.</div><div><b>3 · Probe fahren</b>Starte die Simulation. Bei einem Bruch kannst du exakt zu deinem Bauplan zurückkehren.</div></div><p class="small">Tipp: Ein Dreieck versteift die Fahrbahn. Das Tutorial erscheint nur einmal.</p>',[{label:'Überspringen',action:()=>{hideDialog();}},{label:'Los geht’s',primary:true,action:()=>hideDialog()}],true);}
+function showMenu(){if(state!=='menu')menuReturnState=state;state='menu';paused=false;updateHud();const cards=LEVELS.map((l,i)=>{const locked=i+1>scoreData.unlocked;const stars='★'.repeat(scoreData.stars[i])+'☆'.repeat(3-scoreData.stars[i]);return'<button class="level-card '+(locked?'locked ':'')+(scoreData.stars[i]?'done':'')+'" data-level="'+i+'" '+(locked?'disabled':'')+'><span class="num">LEVEL '+String(i+1).padStart(2,'0')+(locked?' · 🔒':'')+'</span><span class="name">'+l.title+'</span><span class="stars">'+stars+'</span></button>';}).join('');showDialog('Nordlicht-Brückenbau','<p>Hilf dem Weihnachtsmann über die Schlucht! Baue aus Zuckerstangen, Holz und Lichterseilen eine tragfähige Brücke.</p><p class="small">Maus oder Finger · Ziehen zum Bauen · 8 winterliche Level</p><div class="level-grid">'+cards+'</div>',[{label:menuReturnState?'Weiterbauen':'Spielen',primary:true,action:()=>{hideDialog();if(menuReturnState==='sim'||menuReturnState==='result'){returnToBuild();}else if(menuReturnState==='build'){state='build';updateHud();}else loadLevel(levelIndex,true);menuReturnState=null;}}],true);ui.dialogBody.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.level);hideDialog();menuReturnState=null;loadLevel(i,true);sound('tap');}));}
+function showHint(){toast('Tipp: '+level.hint);}
+function chooseMaterial(id){if(state!=='build'||!level.allowed.includes(id)){toast('Dieses Material ist in dem Level noch nicht verfügbar.');return;}selectedMaterial=id;document.querySelectorAll('.mat-btn').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.material===id)));sound('tap');}
+function chooseTool(next){if(state!=='build')return;tool=next;selectedSource=null;$('#buildTool').setAttribute('aria-pressed',String(next==='build'));$('#deleteTool').setAttribute('aria-pressed',String(next==='delete'));ui.status.textContent=next==='delete'?'Tippe auf einen Stab oder ein Gelenk, um es zu entfernen.':'Ziehe von einem Knoten zu einem Punkt, um einen Stab zu bauen.';}
+function edgeExists(a,b){return edges.some(e=>(e.a===a&&e.b===b)||(e.a===b&&e.b===a));}
+function pointInPoly(x,y,p){let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if(((a[1]>y)!==(b[1]>y))&&(x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1]+1e-9)+a[0]))c=!c;}return c;}
+function linkClips(a,b){for(let i=0;i<level.cliffs.length;i++){const p=level.cliffs[i];for(let t=.12;t<.9;t+=.11)if(pointInPoly(a.x+(b.x-a.x)*t,a.y+(b.y-a.y)*t,p))return true;}for(let k=0;k<level.islands.length;k++){const p=level.islands[k];for(let t=.08;t<.96;t+=.08)if(pointInPoly(a.x+(b.x-a.x)*t,a.y+(b.y-a.y)*t,p))return true;}return false;}
+function nearestNode(p,max){let best=null,bd=max;for(const n of nodes){const d=Math.hypot(p.x-n.x,p.y-n.y);if(d<bd){bd=d;best=n;}}return best;}
+function snapPoint(p){const near=nearestNode(p,23);if(near)return{x:near.x,y:near.y,node:near};return{x:Math.round(p.x/WORLD.grid)*WORLD.grid,y:Math.round(p.y/WORLD.grid)*WORLD.grid,node:null};}
+function addLink(sourceId,end){const a=findNode(sourceId);if(!a)return false;let b=end.node;if(b&&b.id===a.id){toast('Wähle einen anderen Knotenpunkt.');return false;}if(!b){if(end.x<12||end.x>WORLD.w-12||end.y<35||end.y>WORLD.h-28){toast('Der Punkt liegt außerhalb des Spielfelds.');return false;}if(level.cliffs.some(p=>pointInPoly(end.x,end.y,p))||level.islands.some(p=>pointInPoly(end.x,end.y,p))){toast('Hier ist Fels im Weg. Wähle einen freien Rasterpunkt.');return false;}b=makeNode(end.x,end.y,'joint');}
+ const length=dist(a,b),mat=MATERIALS[selectedMaterial];if(length<24){toast('Der Stab ist zu kurz.');return false;}if(length>mat.max){toast(mat.name+' ist höchstens '+mat.max+' Einheiten lang.');return false;}if(edgeExists(a.id,b.id)){toast('Diese beiden Knoten sind schon verbunden.');return false;}if(linkClips(a,b)){toast('Der Stab würde durch eine Klippe oder Insel laufen.');return false;}const price=length*mat.cost;if(spent()+price>level.budget){toast('Dafür reichen die ✦ Geschenke im Budget nicht.');return false;}remember();if(!end.node)nodes.push(b);edges.push({id:idNext++,a:a.id,b:b.id,material:selectedMaterial,rest:length,stress:0,broken:false});selectedSource=b.id;updateHud();sound('tap');return true;}
+function removeAt(p){let near=null,bd=20;for(const n of nodes){if(n.kind!=='joint')continue;const d=Math.hypot(p.x-n.x,p.y-n.y);if(d<bd){bd=d;near=n;}}if(near){remember();edges=edges.filter(e=>e.a!==near.id&&e.b!==near.id);nodes=nodes.filter(n=>n.id!==near.id);selectedSource=null;updateHud();sound('tap');return true;}let hit=null;bd=16;for(const e of edges){const a=findNode(e.a),b=findNode(e.b);if(!a||!b)continue;const vx=b.x-a.x,vy=b.y-a.y,l2=vx*vx+vy*vy,t=Math.max(0,Math.min(1,((p.x-a.x)*vx+(p.y-a.y)*vy)/(l2||1))),d=Math.hypot(p.x-(a.x+vx*t),p.y-(a.y+vy*t));if(d<bd){bd=d;hit=e;}}if(hit){remember();edges=edges.filter(e=>e.id!==hit.id);updateHud();sound('tap');return true;}toast('Tippe genau auf einen Stab oder ein Gelenk.');return false;}
+function canvasPoint(ev){const r=canvas.getBoundingClientRect();const x=(ev.clientX-r.left-view.ox)/view.scale,y=(ev.clientY-r.top-view.oy)/view.scale;if(x<0||x>WORLD.w||y<0||y>WORLD.h)return null;return{x,y};}
+let selectedSource=null;
+function onPointerDown(ev){if(state!=='build'||ui.overlay.hidden===false)return;const p=canvasPoint(ev);if(!p)return;canvas.setPointerCapture(ev.pointerId);pointer.down=true;pointer.id=ev.pointerId;pointer.start=p;pointer.world=p;pointer.last=p;pointer.moved=false;if(tool==='delete')return;const n=nearestNode(p,24);if(n){pointer.source=n.id;selectedSource=n.id;}else{pointer.source=selectedSource;} }
+function onPointerMove(ev){const p=canvasPoint(ev);if(!p)return;pointer.world=p;if(pointer.down&&pointer.id===ev.pointerId&&pointer.start&&Math.hypot(p.x-pointer.start.x,p.y-pointer.start.y)>8)pointer.moved=true;}
+function onPointerUp(ev){if(!pointer.down||pointer.id!==ev.pointerId)return;const p=canvasPoint(ev);pointer.down=false;pointer.id=null;if(!p){pointer.source=null;return;}if(tool==='delete'){removeAt(p);pointer.source=null;return;}const source=pointer.source||selectedSource;const target=nearestNode(p,24);const moved=pointer.moved;pointer.source=null;if(source){if(target&&target.id===source){if(!moved)selectedSource=source;return;}const end=target?{node:target}:snapPoint(p);addLink(source,end);}else if(!moved&&!target){const sp=snapPoint(p);if(sp.x>12&&sp.x<WORLD.w-12&&sp.y>35&&sp.y<WORLD.h-28&&!level.cliffs.some(poly=>pointInPoly(sp.x,sp.y,poly))&&!level.islands.some(poly=>pointInPoly(sp.x,sp.y,poly))){remember();nodes.push(makeNode(sp.x,sp.y,'joint'));selectedSource=nodes[nodes.length-1].id;updateHud();toast('Gelenk gesetzt. Ziehe von ihm weiter.');}}else if(target){selectedSource=target.id;} }
+canvas.addEventListener('pointerdown',onPointerDown);canvas.addEventListener('pointermove',onPointerMove);canvas.addEventListener('pointerup',onPointerUp);canvas.addEventListener('pointercancel',()=>{pointer.down=false;pointer.id=null;});
+function buildRoute(){const start=nodes.find(n=>n.kind==='start'),goal=nodes.find(n=>n.kind==='goal');if(!start||!goal)return null;const adjacency=new Map();for(const n of nodes)adjacency.set(n.id,[]);for(const e of edges){if(e.material!=='road'||e.broken)continue;if(!adjacency.has(e.a)||!adjacency.has(e.b))continue;adjacency.get(e.a).push({to:e.b,e});adjacency.get(e.b).push({to:e.a,e});}const queue=[start.id],prev=new Map([[start.id,null]]);for(let q=0;q<queue.length;q++){const id=queue[q];if(id===goal.id)break;for(const x of adjacency.get(id)||[])if(!prev.has(x.to)){prev.set(x.to,{from:id,e:x.e});queue.push(x.to);}}if(!prev.has(goal.id))return null;const ns=[goal.id],es=[];let at=goal.id;while(at!==start.id){const p=prev.get(at);es.push(p.e);at=p.from;ns.push(at);}ns.reverse();es.reverse();return{nodes:ns,edges:es};}
+function beginSimulation(){if(state!=='build')return;const route=buildRoute();if(!route){toast('Die Fahrbahn hat noch keine durchgehende Verbindung. Verbinde beide Anker mit Fahrbahn.');return;}if(spent()>level.budget+.01){toast('Das Budget ist überschritten.');return;}savedBuild=snapshot();routeNodes=route.nodes;routeEdges=route.edges;ride={distance:16,index:0,x:level.start[0],y:level.start[1],angle:0};for(const n of nodes){n.px=n.x;n.py=n.y;}for(const e of edges)e.stress=0;state='sim';paused=false;accumulator=0;ui.status.textContent='Fahre mit dem Schlitten über die Brücke. Leertaste pausiert.';updateHud();sound('start');}
+function returnToBuild(){if(savedBuild)applySnapshot(savedBuild);savedBuild=null;state='build';paused=false;accumulator=0;ride={distance:0,index:0,x:level.start[0],y:level.start[1],angle:0};ui.status.textContent='Dein Bauplan wurde wiederhergestellt. Du kannst weiterbauen.';updateHud();}
+function resetBuild(){if(state!=='build')return;remember();nodes=nodes.filter(n=>n.kind!=='joint');edges=[];selectedSource=null;updateHud();toast('Brücke zurückgesetzt. Die festen Anker bleiben stehen.');}
+function findRoadPathStillValid(){for(const e of routeEdges)if(e.broken)return false;return true;}
+function finish(success,message){if(state!=='sim')return;state='result';paused=true;updateHud();if(success){const ratio=spent()/level.budget;const starsEarned=ratio<=.6?3:ratio<=.82?2:1;scoreData.stars[levelIndex]=Math.max(scoreData.stars[levelIndex],starsEarned);scoreData.unlocked=Math.max(scoreData.unlocked,Math.min(LEVELS.length,levelIndex+2));safeSave();sound('win');const label='★'.repeat(starsEarned)+'☆'.repeat(3-starsEarned);const next=levelIndex+1<LEVELS.length;showDialog('Geschafft! 🎄','<p style="font-size:34px;color:#ffe18a;letter-spacing:.16em">'+label+'</p><p>Der Schlitten ist sicher angekommen. Du hast <b>'+Math.round(spent())+' von '+level.budget+' ✦</b> verbraucht.</p><p class="small">'+(starsEarned===3?'Sparsam gebaut – drei Sterne!':starsEarned===2?'Eine starke Brücke – zwei Sterne!':'Das Level ist geschafft – beim nächsten Versuch geht noch etwas günstiger.')+'</p>',[{label:'Nochmal',action:()=>{hideDialog();returnToBuild();}},{label:'Menü',action:()=>{hideDialog();showMenu();}},...(next?[{label:'Nächstes Level',primary:true,action:()=>{hideDialog();loadLevel(levelIndex+1,true);}}]:[{label:'Alle Level',primary:true,action:()=>{hideDialog();showMenu();}}])],false);}else{sound('break');showDialog('Oh weh, die Brücke!','<p>'+message+'</p><p class="small">Dein Bauplan ist gespeichert. Verstärke die Strecke und probiere es erneut.</p>',[{label:'Menü',action:()=>{hideDialog();showMenu();}},{label:'Zurück zum Bauen',primary:true,action:()=>{hideDialog();returnToBuild();}}],false);}}
+function stepPhysics(dt){
+ if(state!=='sim'||paused)return;
+ for(const n of nodes){
+  if(n.kind==='start'||n.kind==='goal'||n.kind==='mid'){n.px=n.x;n.py=n.y;continue;}
+  const vx=(n.x-n.px)*PHYS.damping,vy=(n.y-n.py)*PHYS.damping;
+  n.px=n.x;n.py=n.y;n.x+=vx;n.y+=vy+PHYS.gravity*dt*dt;
+ }
+ if(ride.index<routeEdges.length){
+  const i=ride.index,a=findNode(routeNodes[i]),b=findNode(routeNodes[i+1]);
+  if(a&&b){
+   const len=Math.max(1,dist(a,b)),t=Math.min(1,ride.distance/len);
+   const load=PHYS.gravity*level.mass*dt*dt*2.1;
+   if(a.kind==='joint')a.y+=load*(1-t);
+   if(b.kind==='joint')b.y+=load*t;
+   ride.x=a.x+(b.x-a.x)*t;ride.y=a.y+(b.y-a.y)*t-17;
+   ride.angle=Math.atan2(b.y-a.y,b.x-a.x);ride.distance+=level.speed*dt;
+   if(ride.distance>=len){ride.distance-=len;ride.index++;}
+  }
+ }
+ stressScratch.length=edges.length;stressScratch.fill(0);
+ lambdaScratch.length=edges.length;lambdaScratch.fill(0);
+ for(let k=0;k<PHYS.iterations;k++){
+  for(let j=0;j<edges.length;j++){
+   const e=edges[j];if(e.broken)continue;
+   const a=findNode(e.a),b=findNode(e.b);if(!a||!b)continue;
+   const dx=b.x-a.x,dy=b.y-a.y,len=Math.max(.001,Math.hypot(dx,dy));
+   const m=MATERIALS[e.material],strain=(len-e.rest)/e.rest;
+   const stress=e.material==='rope'?Math.max(0,strain)/m.limit:Math.abs(strain)/m.limit;
+   if(stress>stressScratch[j])stressScratch[j]=stress;
+   if(e.material==='rope'&&len<=e.rest)continue;
+   const ia=a.kind==='joint'?1:0,ib=b.kind==='joint'?1:0,sum=ia+ib;
+   if(sum===0)continue;
+   const alpha=m.compliance/(dt*dt);
+   const deltaLambda=(-(len-e.rest)-alpha*lambdaScratch[j])/(sum+alpha);
+   lambdaScratch[j]+=deltaLambda;
+   const correction=-deltaLambda/len;
+   a.x+=dx*correction*ia;a.y+=dy*correction*ia;
+   b.x-=dx*correction*ib;b.y-=dy*correction*ib;
+  }
+ }
+ for(let i=0;i<edges.length;i++){
+  const e=edges[i];if(e.broken)continue;
+  e.stress=Math.max((e.stress||0)*.88,stressScratch[i]);
+  if(e.stress>1.28){
+   e.broken=true;const a=findNode(e.a),b=findNode(e.b);
+   if(a&&b)burst((a.x+b.x)/2,(a.y+b.y)/2,14,'#ffdf9a');
+   toast('Knacks! Ein Stab ist gebrochen.');
+  }
+ }
+ if(!findRoadPathStillValid()){finish(false,'Ein Fahrbahn-Stab ist gebrochen, und der Weg ist unterbrochen.');return;}
+ if(ride.index>=routeEdges.length){finish(true,'Der Schlitten hat das Ziel erreicht.');return;}
+ if(ride.y>WORLD.h-22||nodes.some(n=>n.kind==='joint'&&n.y>WORLD.h-16))
+  finish(false,'Der Schlitten oder ein Gelenk ist in die Schlucht gefallen.');
+}
+const effects=[],stressScratch=[],lambdaScratch=[];
+function burst(x,y,count,color){for(let i=0;i<count&&effects.length<180;i++)effects.push({x,y,vx:(rand()-.5)*180,vy:-30-rand()*170,life:.65+rand()*.6,max:.65+rand()*.6,size:2+rand()*4,color});}
+function updateEffects(dt){for(let i=effects.length-1;i>=0;i--){const p=effects[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=180*dt;p.life-=dt;if(p.life<=0)effects.splice(i,1);}for(const p of snow){p.y+=p.v*dt;p.x+=p.drift*dt;if(p.y>WORLD.h+5){p.y=-5;p.x=rand()*WORLD.w;}if(p.x<-5)p.x=WORLD.w+5;if(p.x>WORLD.w+5)p.x=-5;}}
+function resize(){const r=canvas.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);view.w=r.width;view.h=r.height;view.dpr=dpr;canvas.width=Math.max(1,Math.round(r.width*dpr));canvas.height=Math.max(1,Math.round(r.height*dpr));view.scale=Math.min(r.width/WORLD.w,r.height/WORLD.h);view.ox=(r.width-WORLD.w*view.scale)/2;view.oy=(r.height-WORLD.h*view.scale)/2;}
+function polygon(points,fill,stroke){ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}}
+function drawBackground(t){const g=ctx.createLinearGradient(0,0,0,WORLD.h);g.addColorStop(0,'#071329');g.addColorStop(.55,'#142b50');g.addColorStop(1,'#09162d');ctx.fillStyle=g;ctx.fillRect(0,0,WORLD.w,WORLD.h);
+ for(let i=0;i<stars.length;i++){const s=stars[i],tw=.65+.35*Math.sin(t*1.2+s.phase);ctx.globalAlpha=s.a*tw;ctx.fillStyle=colors[i%colors.length];ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;
+ const aur=ctx.createLinearGradient(100,0,900,320);aur.addColorStop(0,'#3ef2c000');aur.addColorStop(.3,'#41e3c42c');aur.addColorStop(.58,'#66a8ff24');aur.addColorStop(1,'#b552da00');ctx.fillStyle=aur;ctx.beginPath();ctx.moveTo(0,180);ctx.bezierCurveTo(230,30+Math.sin(t*.15)*16,365,260,600,115);ctx.bezierCurveTo(805,5,960,200,1120,75);ctx.lineTo(1120,255);ctx.bezierCurveTo(920,325,790,125,595,245);ctx.bezierCurveTo(345,390,195,165,0,300);ctx.closePath();ctx.fill();
+ ctx.save();ctx.shadowColor='#fff4cb';ctx.shadowBlur=24;ctx.fillStyle='#fff2c9';ctx.beginPath();ctx.arc(935,92,29,0,Math.PI*2);ctx.fill();ctx.restore();ctx.fillStyle='#d8ecff';ctx.globalAlpha=.36;for(let i=0;i<8;i++){ctx.beginPath();ctx.arc(927+(i*7%25),82+(i*11%25),2.6,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;
+ ctx.fillStyle='#142946';ctx.beginPath();ctx.moveTo(0,344);ctx.quadraticCurveTo(150,240,305,336);ctx.quadraticCurveTo(520,230,740,350);ctx.quadraticCurveTo(950,245,1120,330);ctx.lineTo(1120,620);ctx.lineTo(0,620);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#1b3656';ctx.beginPath();ctx.moveTo(0,390);ctx.quadraticCurveTo(170,310,365,392);ctx.quadraticCurveTo(560,315,770,395);ctx.quadraticCurveTo(975,320,1120,385);ctx.lineTo(1120,620);ctx.lineTo(0,620);ctx.closePath();ctx.fill();
+ polygon(level.cliffs[0],'#344e68','#86c9e7');polygon(level.cliffs[1],'#344e68','#86c9e7');
+ for(let i=0;i<level.islands.length;i++)polygon(level.islands[i],'#38516b','#9beaff');
+ // Schneekappen an den Klippen und Tannen in drei Tiefenebenen.
+ for(let side=0;side<2;side++){const x0=side?887:55;for(let j=0;j<7;j++){const x=x0+j*30,y=side?272+(j%3)*10:270+(j%3)*11;drawTree(x,y,0.55+(j%2)*.12);}}
+ for(let i=0;i<level.islands.length;i++){const mid=level.anchors.find(a=>a[2]==='mid');if(mid){drawTree(mid[0]+35,mid[1]-10,.62);drawTree(mid[0]-34,mid[1]+7,.47);}}
+ // Kaltes Wasser und die gestrichelte Rasterhilfe im Baumodus.
+ const water=ctx.createLinearGradient(0,480,0,620);water.addColorStop(0,'#278cae88');water.addColorStop(1,'#071936');ctx.fillStyle=water;ctx.fillRect(0,550,WORLD.w,70);
+ if(state==='build'){ctx.fillStyle='#cdeeff13';for(let x=25;x<WORLD.w;x+=WORLD.grid)for(let y=50;y<550;y+=WORLD.grid){ctx.fillRect(x-1,y-1,2,2);}}
+}
+function drawTree(x,y,s){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle='#382d34';ctx.fillRect(-4,0,8,22);for(let i=0;i<3;i++){const yy=-i*19;ctx.fillStyle=i%2?'#175243':'#20634e';ctx.beginPath();ctx.moveTo(0,yy-27);ctx.lineTo(-23+i*3,yy+7);ctx.lineTo(23-i*3,yy+7);ctx.closePath();ctx.fill();ctx.strokeStyle='#e4f8ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-14+i*2,yy-5);ctx.quadraticCurveTo(0,yy+1,14-i*2,yy-5);ctx.stroke();}ctx.restore();}
+function drawGoal(){const gx=level.goal[0],gy=level.goal[1];ctx.save();ctx.globalAlpha=.45+.18*Math.sin(performance.now()*.004);ctx.strokeStyle='#ffe37a';ctx.lineWidth=3;ctx.setLineDash([8,6]);ctx.beginPath();ctx.ellipse(gx,gy-12,35,48,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.restore();ctx.save();ctx.translate(gx+30,gy-14);ctx.fillStyle='#b33343';ctx.beginPath();ctx.moveTo(-16,6);ctx.lineTo(0,-13);ctx.lineTo(16,6);ctx.fill();ctx.fillStyle='#eadbbd';ctx.fillRect(-12,6,24,22);ctx.fillStyle='#f2c55a';ctx.fillRect(0,14,7,14);ctx.fillStyle='#d7e9f5';ctx.fillRect(4,-13,5,12);ctx.restore();}
+function drawEdge(e){const a=findNode(e.a),b=findNode(e.b);if(!a||!b)return;const m=MATERIALS[e.material],dx=b.x-a.x,dy=b.y-a.y,len=Math.max(1,Math.hypot(dx,dy)),stress=e.stress||0;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+ if(e.broken){ctx.strokeStyle='#644754';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(a.x+dx*.42,a.y+dy*.42+9);ctx.moveTo(a.x+dx*.58,a.y+dy*.58+9);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.restore();return;}
+ if(e.material==='road'){ctx.strokeStyle='#403545';ctx.lineWidth=m.width+5;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.strokeStyle='#fff4df';ctx.lineWidth=m.width;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.save();ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='#cb4652';ctx.lineWidth=4;ctx.setLineDash([10,10]);ctx.lineDashOffset=-performance.now()*.018;ctx.stroke();ctx.restore();}
+ else if(e.material==='wood'){ctx.strokeStyle='#392f35';ctx.lineWidth=m.width+4;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.strokeStyle=m.color;ctx.lineWidth=m.width;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.strokeStyle='#edb875';ctx.lineWidth=1.5;ctx.setLineDash([4,14]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);}
+ else{ctx.shadowColor='#6bffd3';ctx.shadowBlur=11;ctx.strokeStyle='#183d4b';ctx.lineWidth=m.width+2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.shadowBlur=0;ctx.strokeStyle='#66d9ac';ctx.lineWidth=2.4;ctx.setLineDash([4,5]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);for(let d=18;d<len;d+=35){const q=d/len;ctx.fillStyle=(Math.floor(d/35)%2)?'#ffd65f':'#8dffda';ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=10;ctx.beginPath();ctx.arc(a.x+dx*q,a.y+dy*q,3.2,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}}
+ if(state==='sim'&&stress>.35){const c=stress>.8?'#ff4b59':stress>.58?'#ffc247':'#55bdea';ctx.strokeStyle=c;ctx.lineWidth=3+stress*2;ctx.setLineDash(stress>.8?[3,4]:[]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);}
+ ctx.restore();}
+function drawNodes(){for(const n of nodes){const isAnchor=n.kind!=='joint';ctx.save();if(isAnchor){ctx.fillStyle='#0a1b33';ctx.strokeStyle='#ffd779';ctx.lineWidth=3;ctx.beginPath();ctx.arc(n.x,n.y,12,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#ffe6a3';ctx.beginPath();ctx.arc(n.x,n.y,3.5,0,Math.PI*2);ctx.fill();}else{const picked=n.id===selectedSource;ctx.fillStyle=picked?'#ffd779':'#e8fbff';ctx.strokeStyle=picked?'#fff6c4':'#39728b';ctx.lineWidth=picked?3:2;ctx.beginPath();ctx.arc(n.x,n.y,picked?8:6,0,Math.PI*2);ctx.fill();ctx.stroke();}ctx.restore();}}
+function drawVehicle(){if(state!=='sim'&&state!=='result')return;const x=ride.x,y=ride.y;ctx.save();ctx.translate(x,y);ctx.rotate(ride.angle);ctx.fillStyle='#9a273c';ctx.strokeStyle='#ffe9c0';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(-23,5);ctx.quadraticCurveTo(-18,15,17,12);ctx.quadraticCurveTo(31,9,27,2);ctx.lineTo(21,1);ctx.quadraticCurveTo(10,7,-11,1);ctx.closePath();ctx.fill();ctx.stroke();ctx.strokeStyle='#ffd779';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-23,7);ctx.quadraticCurveTo(-31,16,-12,17);ctx.lineTo(20,14);ctx.stroke();ctx.fillStyle='#f8d7ac';ctx.beginPath();ctx.arc(-7,-3,7,0,Math.PI*2);ctx.fill();ctx.fillStyle='#9e3440';ctx.fillRect(3,-12,12,10);ctx.fillStyle='#75d1ab';ctx.fillRect(14,-9,9,8);ctx.fillStyle='#ffe187';ctx.beginPath();ctx.arc(-4,-5,1.3,0,Math.PI*2);ctx.fill();ctx.restore();}
+function drawEffects(){for(const p of effects){ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;}
+function render(now){const t=now/1000;ctx.setTransform(view.dpr*view.scale,0,0,view.dpr*view.scale,view.dpr*view.ox,view.dpr*view.oy);drawBackground(t);drawGoal();for(const e of edges)drawEdge(e);if(pointer.down&&pointer.start&&tool==='build'&&state==='build'&&pointer.source){const a=findNode(pointer.source),p=pointer.world;if(a&&p){const q=snapPoint(p);ctx.save();ctx.setLineDash([7,6]);ctx.lineWidth=4;ctx.strokeStyle='#ffd779cc';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(q.x,q.y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#fff3b5';ctx.beginPath();ctx.arc(q.x,q.y,5,0,Math.PI*2);ctx.fill();ctx.restore();}}drawNodes();drawVehicle();drawEffects();for(const p of snow){ctx.globalAlpha=.42+.4*(.5+.5*Math.sin(t*1.5+p.phase));ctx.fillStyle='#e6f7ff';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;ctx.setTransform(1,0,0,1,0,0);}
+function loop(now){if(!lastFrame)lastFrame=now;let dt=Math.min(PHYS.dtMax,(now-lastFrame)/1000);lastFrame=now;if(state==='sim'&&!paused){accumulator+=dt;while(accumulator>=PHYS.step){stepPhysics(PHYS.step);accumulator-=PHYS.step;}}updateEffects(dt);if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0)ui.toast.classList.remove('show');}render(now);requestAnimationFrame(loop);}
+function sound(kind){if(!soundOn)return;try{if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const now=audio.currentTime;const notes=kind==='win'?[660,880,1100]:kind==='break'?[180,120]:kind==='start'?[440,660]:[510];for(let i=0;i<notes.length;i++){const o=audio.createOscillator(),g=audio.createGain();o.type=kind==='break'?'triangle':'sine';o.frequency.value=notes[i];g.gain.setValueAtTime(.0001,now+i*.09);g.gain.exponentialRampToValueAtTime(kind==='win'?.075:.035,now+i*.09+.012);g.gain.exponentialRampToValueAtTime(.0001,now+i*.09+.16);o.connect(g);g.connect(audio.destination);o.start(now+i*.09);o.stop(now+i*.09+.18);}}catch(_){}}
+function toggleSound(){soundOn=!soundOn;$('#soundBtn').textContent=soundOn?'🔔':'🔕';$('#soundBtn').setAttribute('aria-label',soundOn?'Ton ausschalten':'Ton einschalten');if(soundOn)sound('tap');}
+function onRun(){if(state==='build'){beginSimulation();return;}if(state==='sim'){paused=!paused;ui.status.textContent=paused?'Simulation pausiert. Tippe Weiter oder Leertaste.':'Der Schlitten rollt weiter.';updateHud();return;}if(state==='result'){hideDialog();returnToBuild();}}
+$('#buildTool').addEventListener('click',()=>chooseTool('build'));$('#deleteTool').addEventListener('click',()=>chooseTool('delete'));document.querySelectorAll('.mat-btn').forEach(b=>b.addEventListener('click',()=>chooseMaterial(b.dataset.material)));$('#undoBtn').addEventListener('click',undo);$('#redoBtn').addEventListener('click',redo);$('#resetBtn').addEventListener('click',resetBuild);$('#runBtn').addEventListener('click',onRun);$('#tipBtn').addEventListener('click',showHint);$('#soundBtn').addEventListener('click',toggleSound);$('#menuBtn').addEventListener('click',showMenu);
+window.addEventListener('keydown',ev=>{if(ev.target&&['INPUT','TEXTAREA'].includes(ev.target.tagName))return;if(ev.code==='Space'){ev.preventDefault();if(ui.overlay.hidden)onRun();}else if((ev.ctrlKey||ev.metaKey)&&ev.key.toLowerCase()==='z'){ev.preventDefault();undo();}else if((ev.ctrlKey||ev.metaKey)&&ev.key.toLowerCase()==='y'){ev.preventDefault();redo();}else if(ev.key==='Delete'||ev.key==='Backspace'){chooseTool('delete');}else if(ev.key==='Escape'){if(!ui.overlay.hidden){hideDialog();if(state==='menu'){if(menuReturnState==='sim'||menuReturnState==='result')returnToBuild();else{state=menuReturnState||'build';updateHud();}menuReturnState=null;}else updateHud();}else if(state==='sim'){paused=true;updateHud();}else showMenu();}else if(['1','2','3'].includes(ev.key)){const ids=['road','wood','rope'];chooseMaterial(ids[Number(ev.key)-1]);}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='sim'){paused=true;updateHud();}});
+window.addEventListener('resize',resize,{passive:true});window.addEventListener('orientationchange',()=>setTimeout(resize,100),{passive:true});
+safeLoad();loadLevel(0,false);state='menu';showMenu();resize();requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
