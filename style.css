@@ -319,7 +319,34 @@ footer { display:flex; justify-content:space-between; color:var(--muted); font-s
 }
 
 @media (max-width: 700px) {
+  .artillery-embed {
+    height: clamp(420px, 70vh, 660px);
+    margin: .5rem auto;
+  }
   .winter-asteroids-embed {
     height: clamp(480px, 72vh, 680px);
   }
+}
+
+.mobile-game-tab-notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, .04);
+  text-align: center;
+}
+.mobile-game-tab-notice p { margin: 0; }
+.mobile-game-tab-notice a {
+  display: inline-flex;
+  justify-content: center;
+  padding: .7rem 1rem;
+  border-radius: 999px;
+  background: #f6c55f;
+  color: #22314a;
+  font-weight: 750;
+  text-decoration: none;
 }

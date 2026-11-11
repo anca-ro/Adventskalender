@@ -8,6 +8,31 @@
 <style>
 :root{color-scheme:dark;--gold:#ffd778;--red:#e85a66;--green:#8ed4ac;--ink:#f7f8ff;--muted:#b9c7e3}*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:18px;background:radial-gradient(ellipse at 50% -20%,#5074a4,#1d3157 55%,#101a31);color:var(--ink);font-family:system-ui,'Segoe UI',sans-serif}.game{width:min(100%,950px);filter:drop-shadow(0 20px 45px #07132999)}header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#142747;border:1px solid #ffffff25;border-radius:20px 20px 0 0}.title{font-weight:900;letter-spacing:.04em;font-size:18px}.title span{color:var(--gold)}.hud{display:flex;gap:clamp(12px,4vw,36px);align-items:center}.stat{text-align:center;min-width:58px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:800}.value{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums}.score{color:var(--gold)}.ammo{color:#d9edff}.high{font-size:12px;color:#dbe4f7}canvas{display:block;width:100%;height:auto;aspect-ratio:900/530;background:#a6d7f1;touch-action:none;cursor:none;border:1px solid #ffffff25;border-top:0;border-radius:0 0 20px 20px}.stage{position:relative}button{border:0;border-radius:14px;padding:12px 21px;background:linear-gradient(135deg,#ffe393,#f2b84d);color:#392b11;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 #bb8032;transition:transform .12s}button:hover{transform:translateY(-2px)}.overlay{position:absolute;inset:0;border-radius:0 0 20px 20px;background:#10203bbd;backdrop-filter:blur(5px);display:grid;place-items:center;padding:20px;transition:opacity .2s;z-index:3}.overlay.hidden{opacity:0;pointer-events:none}.card{width:min(100%,440px);text-align:center;padding:28px;border:1px solid #ffffff30;border-radius:24px;background:linear-gradient(145deg,#27466ceF,#182a49f2);box-shadow:0 18px 55px #06132988}.eyebrow{color:var(--green);font-size:11px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}.card h1{font-size:clamp(33px,6vw,48px);line-height:1.02;margin:10px 0;color:#fff}.card h1 em{font-style:normal;color:var(--gold)}.card p{color:#d2ddf0;line-height:1.55;font-size:14px;margin:12px auto 20px}.instructions{font-size:12px!important;color:#b9c7df!important}.result{font-size:18px!important;font-weight:800;color:var(--gold)!important}.small{font-size:12px;color:#b9c7df;margin-top:18px}.footer{display:flex;justify-content:space-between;padding:9px 7px;color:#c3d3eb;font-size:11px}.pill{padding:5px 9px;border-radius:9px;background:#ffffff10}@media(max-width:560px){body{padding:8px}.title{font-size:14px}.stat{min-width:44px}.value{font-size:19px}.high{font-size:10px}.card{padding:21px}.footer{font-size:10px}}
 </style>
+
+  <style>
+    .mobile-orientation-hint {
+      position: fixed;
+      z-index: 2147483647;
+      left: 50%;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      display: none;
+      width: max-content;
+      max-width: calc(100vw - 24px);
+      transform: translateX(-50%);
+      padding: .55rem .8rem;
+      border: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 999px;
+      background: rgba(7, 21, 43, .92);
+      color: #fff;
+      font: 600 .85rem/1.3 system-ui, sans-serif;
+      text-align: center;
+      box-shadow: 0 4px 18px #0008;
+      pointer-events: none;
+    }
+    @media (pointer: coarse) and (orientation: portrait) {
+      .mobile-orientation-hint { display: block; }
+    }
+  </style>
 </head>
 <body>
 <main class="game" aria-label="Winterjäger-Spiel">
@@ -46,5 +71,18 @@ function pos(e){const r=canvas.getBoundingClientRect();pointer.x=(e.clientX-r.le
 function frame(ts){const dt=Math.min(.04,(ts-last)/1000||0);last=ts;update(dt);render(ts);requestAnimationFrame(frame)}requestAnimationFrame(frame);hud();
 })();
 </script>
+
+  <p class="mobile-orientation-hint" role="note">Für mehr Platz: Smartphone ins Querformat drehen.</p>
+  <script>
+    (() => {
+      if (!window.matchMedia("(pointer: coarse)").matches) return;
+      document.addEventListener("pointerdown", () => {
+        try {
+          const orientationRequest = screen.orientation?.lock?.("landscape");
+          orientationRequest?.catch?.(() => {});
+        } catch (_) {}
+      }, { once: true, capture: true });
+    })();
+  </script>
 </body>
 </html>

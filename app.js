@@ -127,6 +127,57 @@ function renderMedia(media) {
   return "";
 }
 
+function isSmartphone() {
+  if (!window.matchMedia("(pointer: coarse)").matches) return false;
+  const shortSide = Math.min(
+    window.screen?.width || window.innerWidth,
+    window.screen?.height || window.innerHeight
+  );
+  return shortSide <= 600;
+}
+
+function prepareMiniGameForPhone(item, openInNewTab) {
+  if (!isSmartphone()) return item.html;
+
+  const template = document.createElement("template");
+  template.innerHTML = item.html;
+  const frame = template.content.querySelector("iframe[src]");
+  if (!frame) return item.html;
+
+  let gameUrl;
+  try {
+    gameUrl = new URL(frame.getAttribute("src"), window.location.href);
+  } catch (_) {
+    return item.html;
+  }
+  if (gameUrl.origin !== window.location.origin || !/\.html$/i.test(gameUrl.pathname)) return item.html;
+
+  if (openInNewTab) window.open(gameUrl.href, "_blank", "noopener,noreferrer");
+
+  const notice = document.createElement("div");
+  notice.className = "mobile-game-tab-notice";
+  notice.setAttribute("role", "status");
+
+  const message = document.createElement("p");
+  message.textContent = openInNewTab
+    ? "Das Minispiel sollte sich in einem neuen Tab geöffnet haben. Falls nicht, tippe hier:"
+    : "Dieses Minispiel wird auf dem Smartphone in einem eigenen Tab gespielt.";
+
+  const link = document.createElement("a");
+  link.href = gameUrl.href;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = (frame.title || "Minispiel") + " in neuem Tab öffnen";
+  notice.append(message, link);
+  frame.replaceWith(notice);
+
+  template.content.querySelectorAll('a[target="_blank"]').forEach(existingLink => {
+    try {
+      if (new URL(existingLink.href, window.location.href).href === gameUrl.href) existingLink.remove();
+    } catch (_) {}
+  });
+  return template.innerHTML;
+}
 function render() {
   const state = getAdventState();
   document.getElementById("year").textContent = state.year;
@@ -160,7 +211,7 @@ function render() {
       <span class="emoji">${unlocked ? item.emoji : "🔒"}</span>
     `;
 
-    if (unlocked) button.addEventListener("click", () => showDoor(i));
+    if (unlocked) button.addEventListener("click", () => showDoor(i, true, true));
     calendar.appendChild(button);
   }
 
@@ -168,12 +219,12 @@ function render() {
   else if (state.state === "after") showDoor(24, false);
 }
 
-function showDoor(day, scroll = true) {
+function showDoor(day, scroll = true, openMiniGameInNewTab = false) {
   const item = ADVENT_CONTENT[day];
   document.getElementById("todayNumber").textContent = day;
   document.getElementById("todayTitle").textContent = item.title;
   document.getElementById("todayEmoji").textContent = item.emoji;
-  document.getElementById("todayContent").innerHTML = item.html + renderMedia(item.media);
+  document.getElementById("todayContent").innerHTML = prepareMiniGameForPhone(item, openMiniGameInNewTab) + renderMedia(item.media);
 
   const section = document.getElementById("today");
   section.classList.remove("hidden");

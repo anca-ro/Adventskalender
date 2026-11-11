@@ -1,19 +1,90 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Schneeballschlacht – Nordpol-Duell</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap');
 :root{color-scheme:dark;--ice:#a8efff;--gold:#ffd875;--panel:#101d3be8}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#3a487d 0,#182341 45%,#0b1329 100%);color:#f5f8ff;font-family:Nunito,'Trebuchet MS',sans-serif;display:flex;justify-content:center;align-items:center;padding:16px}.game{width:min(100%,1000px)}header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 4px 10px}.brand{font-weight:900;font-size:clamp(18px,3vw,28px);letter-spacing:.3px}.brand span{color:var(--ice)}.hud{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.pill{background:#ffffff12;border:1px solid #ffffff25;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:800;white-space:nowrap}.pill strong{color:var(--gold)}button{font:inherit;color:#f7fbff;border:1px solid #ffffff3b;background:#ffffff16;border-radius:12px;padding:9px 14px;font-weight:800;cursor:pointer;transition:.15s}button:hover{background:#ffffff2a;transform:translateY(-1px)}button:active{transform:translateY(1px)}.stage{position:relative;border:1px solid #c8edff66;border-radius:18px;overflow:hidden;box-shadow:0 18px 55px #02071399;background:#111a35}canvas{display:block;width:100%;height:auto;touch-action:none}.statusbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 4px 0;color:#c8d8f3;font-size:13px}.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.controls kbd{background:#ffffff18;border:1px solid #ffffff31;border-bottom-width:2px;padding:2px 6px;border-radius:5px;color:#fff;font:700 11px inherit}.weaponbar{display:flex;gap:7px}.weapon{padding:6px 10px;font-size:12px}.weapon.active{border-color:#ffe292;color:#ffe292;background:#ffc84e20}.overlay{position:absolute;inset:0;display:grid;place-items:center;background:#0811278c;backdrop-filter:blur(3px);transition:opacity .28s;z-index:2}.overlay.hidden{opacity:0;pointer-events:none}.card{width:min(440px,88%);padding:24px;text-align:center;background:linear-gradient(145deg,#1c2b51f5,#111b36f5);border:1px solid #d6f4ff66;border-radius:22px;box-shadow:0 18px 55px #0008}.card h1{font-size:clamp(26px,5vw,40px);line-height:1.08;margin:0 0 9px;color:#fff}.card p{color:#d2def5;line-height:1.55;margin:8px 0 18px}.primary{background:linear-gradient(135deg,#36b9d2,#5796f0);border:0;padding:12px 23px;box-shadow:0 7px 24px #37b6d255}.muted{font-size:12px;color:#9db0d3!important;margin-top:14px!important}.end h1{color:var(--gold)}@media(max-width:600px){body{padding:9px}.pill{padding:6px 9px;font-size:11px}.statusbar{align-items:flex-start;flex-direction:column}.brand{font-size:19px}.controls{line-height:1.7}}
 .touch-controls{display:none;align-items:center;justify-content:center;gap:10px;padding:10px 0 2px}.touch-pad{display:flex;gap:5px}.touch-controls button{min-width:52px;min-height:48px;padding:8px 10px;font-size:20px;touch-action:none;user-select:none;-webkit-user-select:none}.touch-controls button.is-pressed{background:#8deaff54;border-color:#a8efff;transform:scale(.96)}.touch-controls .touch-fire{font-size:14px;line-height:1.2;border-color:#ffe292;color:#fff0bd}.touch-fire small{font-size:10px;color:#d4def1}@media(pointer:coarse){.touch-controls{display:flex}}@media(max-width:600px){.touch-controls{gap:6px}.touch-controls button{min-width:44px;min-height:46px;padding:7px}.touch-controls .touch-fire{min-width:116px}}
 </style>
+<style>
+html,body{width:100%;min-width:0}
+body{min-height:100svh;min-height:100dvh;padding:clamp(8px,2vw,18px)}
+.game{min-width:0}
+.stage{width:100%;aspect-ratio:16/9;display:grid;place-items:center}
+canvas{width:100%;height:100%;object-fit:contain}
+.statusbar,.controls,.weaponbar,.touch-controls{min-width:0;max-width:100%}
+.controls,.weaponbar,.touch-controls{flex-wrap:wrap}
+.weaponbar{justify-content:flex-end}
+.touch-help{display:none}
+@media(pointer:coarse){.keyboard-help,.controls{display:none}.touch-help{display:block}}
+@media(max-width:700px){
+  body{padding:8px;align-items:flex-start}
+  .game{width:100%}
+  header{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;margin:0 0 7px}
+  .brand{font-size:19px}
+  .hud{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(54px,.7fr) minmax(0,1fr) 38px;gap:5px;justify-content:stretch}
+  .pill{min-width:0;padding:6px 7px;font-size:11px;line-height:1.2;text-align:center;white-space:normal;overflow-wrap:anywhere}
+  #soundBtn{min-width:38px;min-height:34px;padding:5px}
+  .stage{flex:none}
+  .statusbar{align-items:center;flex-direction:row;gap:6px;padding:6px 0 0}
+  .controls{font-size:11px;gap:5px}
+  .weaponbar{width:100%;justify-content:center;gap:5px}
+  .weapon{padding:6px 8px;font-size:11px}
+  .touch-controls{display:flex;width:100%;justify-content:center;gap:6px;padding:8px 0 0}
+  .touch-controls .touch-pad{gap:5px}
+  .touch-controls button{min-width:44px;min-height:44px;padding:6px}
+  .touch-controls .touch-fire{min-width:112px;min-height:44px;padding:6px}
+  .card{max-height:calc(100% - 12px);overflow:auto;padding:12px}
+  .card h1{font-size:clamp(22px,7vw,30px)}
+  .card p{font-size:13px;line-height:1.3;margin:5px 0 9px}
+  .card .muted{display:none}
+}
+@media(pointer:coarse) and (max-height:520px) and (orientation:landscape){
+  body{padding:6px;align-items:stretch}
+  .game{height:calc(100dvh - 12px);display:grid;grid-template-columns:minmax(0,1fr) 168px;grid-template-rows:auto minmax(0,1fr) auto;column-gap:8px;row-gap:5px}
+  header{grid-column:1/-1;grid-row:1;display:grid;margin:0}
+  .brand{font-size:16px}
+  .stage{grid-column:1;grid-row:2;width:100%;height:100%;aspect-ratio:auto}
+  .statusbar{grid-column:1;grid-row:3;padding:0}
+  .weaponbar{justify-content:center}
+  .touch-controls{grid-column:2;grid-row:2/4;width:100%;height:100%;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:center;padding:0;gap:6px}
+  .touch-controls .touch-pad{justify-content:center}
+  .touch-controls .touch-fire{width:100%;min-width:0}
+}
+</style>
+
+  <style>
+    .mobile-orientation-hint {
+      position: fixed;
+      z-index: 2147483647;
+      left: 50%;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      display: none;
+      width: max-content;
+      max-width: calc(100vw - 24px);
+      transform: translateX(-50%);
+      padding: .55rem .8rem;
+      border: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 999px;
+      background: rgba(7, 21, 43, .92);
+      color: #fff;
+      font: 600 .85rem/1.3 system-ui, sans-serif;
+      text-align: center;
+      box-shadow: 0 4px 18px #0008;
+      pointer-events: none;
+    }
+    @media (pointer: coarse) and (orientation: portrait) {
+      .mobile-orientation-hint { display: block; }
+    }
+  </style>
 </head>
 <body><main class="game">
 <audio id="bgMusic" src="audio/Schneeballschlacht.mp3" loop preload="auto"></audio>
 <header><div class="brand">❄ <span>NORDPOL</span>-DUELL</div><div class="hud"><div class="pill" id="turnLabel">Team Rot am Zug</div><div class="pill">⏱ <strong id="clock">20</strong></div><div class="pill" id="windLabel">💨 Wind: —</div><button id="soundBtn" title="Sound ein/aus">🔊</button></div></header>
 <section class="stage"><canvas id="game" width="960" height="540" aria-label="Canvas-Spiel Schneeballschlacht"></canvas>
-<div class="overlay" id="intro"><div class="card"><h1>❄ Schneeballschlacht ❄</h1><p>Zwei Teams, sechs Wichtel und ein sehr frostiger Streit um den letzten Lebkuchen.</p><p><b>← →</b> laufen · <b>↑ ↓</b> zielen · <b>Leertaste</b> halten und loslassen zum Werfen · <b>1–3</b> Waffen wählen</p><button class="primary" id="startBtn">Los geht’s!</button><p class="muted">Lokaler Mehrspieler · abwechselnd · 3 Wichtel je Team</p></div></div>
+<div class="overlay" id="intro"><div class="card"><h1>❄ Schneeballschlacht ❄</h1><p>Zwei Teams, sechs Wichtel. Wer bleibt zuletzt stehen?</p><p class="keyboard-help"><b>← →</b> laufen · <b>↑ ↓</b> zielen · <b>Leertaste</b> halten und loslassen zum Werfen · <b>1–3</b> Waffen wählen</p><p class="touch-help">Mit den Tasten unter dem Spielfeld bewegen und zielen. Zum Werfen halten und loslassen.</p><button class="primary" id="startBtn">Los geht’s!</button><p class="muted">Lokaler Mehrspieler · abwechselnd · 3 Wichtel je Team</p></div></div>
 <div class="overlay hidden" id="turnOverlay"><div class="card"><h1 id="turnTitle">❄ Team Rot ist am Zug! ❄</h1><p>Bereit? Dein Wichtel wartet schon.</p><button class="primary" id="continueBtn">Weiter</button></div></div>
 <div class="overlay hidden" id="gameOver"><div class="card end"><h1 id="winner">Team Rot gewinnt!</h1><p>Der Nordpol ist wieder sicher. Zumindest bis zur nächsten Schneeballschlacht …</p><p id="matchScore"></p><button class="primary" id="restartBtn">↻ Nochmal spielen</button></div></div>
 </section><div class="statusbar"><div class="controls"><span><kbd>←</kbd><kbd>→</kbd> Laufen</span><span><kbd>↑</kbd><kbd>↓</kbd> Winkel</span><span><kbd>Leertaste</kbd> Laden / Werfen</span><span><kbd>1</kbd>–<kbd>3</kbd> Waffe</span></div><div class="weaponbar" id="weaponBar"></div></div>
@@ -68,4 +139,17 @@ function rebuildWeapons(){let bar=$('#weaponBar');weapons.forEach((w,i)=>{let b=
 $('#startBtn').onclick=()=>{if(phase==='intro'){if(!muted)$('#bgMusic').play().catch(()=>{});phase='handoff';$('#intro').classList.add('hidden');$('#turnTitle').textContent='❄ Team Rot ist am Zug! ❄';$('#turnOverlay').classList.remove('hidden')}};$('#continueBtn').onclick=beginTurn;$('#restartBtn').onclick=()=>{setup();$('#gameOver').classList.add('hidden');$('#intro').classList.remove('hidden')};$('#soundBtn').onclick=()=>{muted=!muted;$('#soundBtn').textContent=muted?'🔇':'🔊';$('#bgMusic').muted=muted;if(muted)$('#bgMusic').pause();else if(phase!=='intro')$('#bgMusic').play().catch(()=>{})};
 setup();rebuildWeapons();requestAnimationFrame(frame);
 })();
-</script></body></html>
+</script>
+  <p class="mobile-orientation-hint" role="note">Für mehr Platz: Smartphone ins Querformat drehen.</p>
+  <script>
+    (() => {
+      if (!window.matchMedia("(pointer: coarse)").matches) return;
+      document.addEventListener("pointerdown", () => {
+        try {
+          const orientationRequest = screen.orientation?.lock?.("landscape");
+          orientationRequest?.catch?.(() => {});
+        } catch (_) {}
+      }, { once: true, capture: true });
+    })();
+  </script>
+</body></html>
