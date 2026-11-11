@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Schneeballschlacht – Nordpol-Duell</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap');
@@ -13,7 +13,7 @@ html,body{width:100%;min-width:0}
 body{min-height:100svh;min-height:100dvh;padding:clamp(8px,2vw,18px)}
 .game{min-width:0}
 .stage{width:100%;aspect-ratio:16/9;display:grid;place-items:center}
-canvas{width:100%;height:100%;object-fit:contain}
+canvas{width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
 .statusbar,.controls,.weaponbar,.touch-controls{min-width:0;max-width:100%}
 .controls,.weaponbar,.touch-controls{flex-wrap:wrap}
 .weaponbar{justify-content:flex-end}
@@ -42,41 +42,44 @@ canvas{width:100%;height:100%;object-fit:contain}
   .card .muted{display:none}
 }
 @media(pointer:coarse) and (max-height:520px) and (orientation:landscape){
-  body{padding:6px;align-items:stretch}
-  .game{height:calc(100dvh - 12px);display:grid;grid-template-columns:minmax(0,1fr) 168px;grid-template-rows:auto minmax(0,1fr) auto;column-gap:8px;row-gap:5px}
+  body{height:100dvh;padding:max(4px,env(safe-area-inset-top)) max(4px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left));align-items:stretch;overflow:hidden}
+  .game{height:100%;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 138px;grid-template-rows:auto minmax(0,1fr) auto;column-gap:8px;row-gap:5px}
   header{grid-column:1/-1;grid-row:1;display:grid;margin:0}
   .brand{font-size:16px}
-  .stage{grid-column:1;grid-row:2;width:100%;height:100%;aspect-ratio:auto}
+  .stage{grid-column:1;grid-row:2;width:100%;height:100%;min-width:0;min-height:0;aspect-ratio:auto}
   .statusbar{grid-column:1;grid-row:3;padding:0}
   .weaponbar{justify-content:center}
   .touch-controls{grid-column:2;grid-row:2/4;width:100%;height:100%;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:center;padding:0;gap:6px}
   .touch-controls .touch-pad{justify-content:center}
   .touch-controls .touch-fire{width:100%;min-width:0}
 }
-</style>
-
-  <style>
-    .mobile-orientation-hint {
+</style>  <style>
+    .mobile-orientation-screen {
       position: fixed;
       z-index: 2147483647;
-      left: 50%;
-      bottom: calc(10px + env(safe-area-inset-bottom));
+      inset: 0;
       display: none;
-      width: max-content;
-      max-width: calc(100vw - 24px);
-      transform: translateX(-50%);
-      padding: .55rem .8rem;
-      border: 1px solid rgba(255, 255, 255, .35);
-      border-radius: 999px;
-      background: rgba(7, 21, 43, .92);
-      color: #fff;
-      font: 600 .85rem/1.3 system-ui, sans-serif;
+      place-items: center;
+      padding: 24px;
+      background: radial-gradient(ellipse at 50% -10%, #3a487d 0, #182341 45%, #0b1329 100%);
+      color: #f5f8ff;
       text-align: center;
-      box-shadow: 0 4px 18px #0008;
-      pointer-events: none;
     }
+    .orientation-card {
+      width: min(440px, 100%);
+      padding: 24px;
+      border: 1px solid #d6f4ff66;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #1c2b51f5, #111b36f5);
+      box-shadow: 0 18px 55px #0008;
+    }
+    .orientation-icon { color: #a8efff; font-size: 52px; line-height: 1; }
+    .orientation-card h1 { margin: 12px 0 8px; font: 900 clamp(24px, 6vw, 34px)/1.1 Nunito, 'Trebuchet MS', sans-serif; }
+    .orientation-card p { margin: 8px 0 16px; color: #d2def5; font: 14px/1.5 Nunito, 'Trebuchet MS', sans-serif; }
+    .orientation-card .primary { font: 800 15px Nunito, 'Trebuchet MS', sans-serif; }
     @media (pointer: coarse) and (orientation: portrait) {
-      .mobile-orientation-hint { display: block; }
+      html, body { height: 100%; overflow: hidden; }
+      .mobile-orientation-screen { display: grid; }
     }
   </style>
 </head>
@@ -136,20 +139,40 @@ function controls(dt){if(phase!=='aiming')return;let u=current();if(!u)return;if
 // Run movement separately at animation-frame cadence.
 const baseLoop=loop;function frame(now){controls(Math.min(32,now-lastTime));baseLoop(now)}
 function rebuildWeapons(){let bar=$('#weaponBar');weapons.forEach((w,i)=>{let b=document.createElement('button');b.className='weapon';b.textContent=`${i+1} ${w.icon} ${w.name}`;b.onclick=()=>{if(phase==='aiming'){weapon=i;refreshHud()}};bar.appendChild(b)})}
-$('#startBtn').onclick=()=>{if(phase==='intro'){if(!muted)$('#bgMusic').play().catch(()=>{});phase='handoff';$('#intro').classList.add('hidden');$('#turnTitle').textContent='❄ Team Rot ist am Zug! ❄';$('#turnOverlay').classList.remove('hidden')}};$('#continueBtn').onclick=beginTurn;$('#restartBtn').onclick=()=>{setup();$('#gameOver').classList.add('hidden');$('#intro').classList.remove('hidden')};$('#soundBtn').onclick=()=>{muted=!muted;$('#soundBtn').textContent=muted?'🔇':'🔊';$('#bgMusic').muted=muted;if(muted)$('#bgMusic').pause();else if(phase!=='intro')$('#bgMusic').play().catch(()=>{})};
+$('#startBtn').onclick=()=>{requestLandscapeMode();if(phase==='intro'){if(!muted)$('#bgMusic').play().catch(()=>{});phase='handoff';$('#intro').classList.add('hidden');$('#turnTitle').textContent='❄ Team Rot ist am Zug! ❄';$('#turnOverlay').classList.remove('hidden')}};$('#continueBtn').onclick=beginTurn;$('#restartBtn').onclick=()=>{setup();$('#gameOver').classList.add('hidden');$('#intro').classList.remove('hidden')};$('#soundBtn').onclick=()=>{muted=!muted;$('#soundBtn').textContent=muted?'🔇':'🔊';$('#bgMusic').muted=muted;if(muted)$('#bgMusic').pause();else if(phase!=='intro')$('#bgMusic').play().catch(()=>{})};
 setup();rebuildWeapons();requestAnimationFrame(frame);
 })();
 </script>
-  <p class="mobile-orientation-hint" role="note">Für mehr Platz: Smartphone ins Querformat drehen.</p>
-  <script>
-    (() => {
-      if (!window.matchMedia("(pointer: coarse)").matches) return;
-      document.addEventListener("pointerdown", () => {
-        try {
-          const orientationRequest = screen.orientation?.lock?.("landscape");
-          orientationRequest?.catch?.(() => {});
-        } catch (_) {}
-      }, { once: true, capture: true });
-    })();
-  </script>
+  <div class="mobile-orientation-screen" role="dialog" aria-modal="true" aria-labelledby="mobileOrientationTitle">
+  <section class="orientation-card">
+    <div class="orientation-icon" aria-hidden="true">↔</div>
+    <h1 id="mobileOrientationTitle">Querformat erforderlich</h1>
+    <p>Die Schneeballschlacht läuft nur im Landscape-Modus. Drehe dein Smartphone oder fordere den Querformat-Modus an.</p>
+    <button type="button" class="primary" id="landscapeBtn">Querformat anfordern</button>
+  </section>
+</div>
+<script>
+  function requestLandscapeMode() {
+    if (!window.matchMedia("(pointer: coarse)").matches) return;
+    const lock = () => {
+      try {
+        const orientationRequest = screen.orientation?.lock?.("landscape");
+        orientationRequest?.catch?.(() => {});
+      } catch (_) {}
+    };
+    try {
+      if (document.fullscreenElement) {
+        lock();
+        return;
+      }
+      const fullscreenRequest = document.documentElement.requestFullscreen?.({ navigationUI: "hide" });
+      if (fullscreenRequest?.then) {
+        fullscreenRequest.then(lock, lock);
+        return;
+      }
+    } catch (_) {}
+    lock();
+  }
+  document.querySelector("#landscapeBtn").addEventListener("click", requestLandscapeMode);
+</script>
 </body></html>

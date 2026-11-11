@@ -36,12 +36,21 @@ h1 {font-size:clamp(44px,5.2vw,65px);letter-spacing:-.065em;line-height:1.02;mar
 .below {display:flex;justify-content:space-between;align-items:center;padding:13px 3px 5px;font-size:10px;color:var(--muted);gap:8px}.below strong {font-weight:750;color:var(--pine)}.meter {height:4px;border-radius:5px;overflow:hidden;background:#dbe6dc;margin:3px 3px 0}.meter span {display:block;width:0;height:100%;background:#3f9270;transition:width .15s linear}.power-bar {position:absolute;inset:0 0 auto;height:4px;background:#efd16d;z-index:1;transform:scaleX(0);transform-origin:left}.toast {position:absolute;z-index:2;top:15px;left:50%;transform:translateX(-50%);padding:7px 13px;max-width:90%;text-align:center;background:#184836ec;color:#fff8d7;border-radius:9px;font-size:11px;font-weight:700;pointer-events:none}
 .mobile-controls {display:none;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,42px);gap:5px;justify-content:center;margin-top:12px}.mobile-controls button {border:1px solid #c7dacf;border-bottom:3px solid #b7cdbd;border-radius:11px;background:#f9fcf7;color:var(--pine);font-size:19px;touch-action:none}.mobile-controls button:active {background:#d1e6d7;transform:translateY(1px)}[data-dir="up"] {grid-column:2}[data-dir="left"] {grid-column:1;grid-row:2}[data-dir="down"] {grid-column:2;grid-row:2}[data-dir="right"] {grid-column:3;grid-row:2}
 .footer {display:flex;justify-content:space-between;margin-top:22px;padding-top:14px;border-top:1px solid #d1dfd3;color:#7b8e80;font-size:10px}.footer a {color:inherit;text-decoration:none}.footer a:hover {color:var(--pine)}
+.portrait-gate {display:none}
+.portrait-gate-card {width:min(100%,360px);padding:32px 24px;border:1px solid #fff;border-radius:22px;background:#fffef6f5;box-shadow:0 15px 50px #113c3430;text-align:center}
+.portrait-gate-icon {font-size:42px;line-height:1;margin-bottom:18px;transform:rotate(90deg);color:var(--pine)}
+.portrait-gate h2 {font-size:25px;line-height:1.15;letter-spacing:-.04em;margin:0 0 10px}
+.portrait-gate p {font-size:14px;line-height:1.6;color:var(--muted);margin:0}
 .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media (max-width:800px) {.shell{width:min(100% - 32px,750px)}.layout{gap:28px;grid-template-columns:minmax(190px,1fr) minmax(0,440px)}h1{font-size:45px}.subtitle{font-size:14px}.legend small{font-size:10px}.edition{display:none}}
 @media (min-width:621px) and (max-width:1050px) {h1 span{display:block}.keys{flex-wrap:wrap}}
 @media (max-width:620px) {.shell{width:min(100% - 24px,420px);padding-top:12px}.topline{padding-bottom:13px;font-size:9px}.brand-mark{font-size:18px}.layout{display:block}.intro{padding:0}.eyebrow,.mission,.keyboard{display:none}h1{font-size:35px;letter-spacing:-.055em;margin-bottom:5px}h1 br{display:none}.subtitle{font-size:12px;line-height:1.5;max-width:none;margin:0 0 15px}.play-column{width:min(100%,calc((100svh - 285px)*19/21));min-width:248px;margin:auto}.game-top{margin-bottom:7px}.round{font-size:9px}.tool{width:32px;height:29px}.machine{padding:7px;border-radius:18px}.hud{padding:5px 7px 10px}.stat-value{font-size:21px}.stat-value.best{font-size:18px}.stat-label{font-size:8px}.hearts{font-size:18px}.board{border-width:3px;border-radius:10px}.card{padding:18px 17px}.card-icon{width:43px;height:43px;font-size:23px;margin-bottom:11px}.card .eyebrow{display:block;font-size:8px}.card h2{font-size:24px;margin-bottom:9px}.card p{font-size:11px;margin-bottom:16px}.primary{font-size:12px;padding:11px}.card-foot{font-size:9px;margin-top:11px}.mobile-controls{display:grid}.below{font-size:9px;padding-top:10px}.footer{margin-top:14px;padding-top:10px;font-size:9px}.footer span{max-width:180px;text-align:right}}
 @media (pointer:coarse) and (min-width:621px) {.mobile-controls{display:grid}}
 @media (max-width:380px) {.play-column{width:100%;min-width:0}.overlay{padding:10px}.card{padding:15px 13px}.card-icon,.card .eyebrow,.card-foot{display:none}.card h2{font-size:21px}.card p{line-height:1.45;margin-bottom:12px}.card .result{font-size:27px!important}.secondary{margin-top:12px}.below{font-size:8px}}
+@media (pointer:coarse) and (orientation:landscape) {
+  body {overflow:hidden}
+  .portrait-gate {position:fixed;z-index:20;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 16% 13%,#fffdf2 0,transparent 46%),radial-gradient(ellipse at 85% 80%,#dbece6 0,transparent 55%),#eaf2ed;color:var(--ink)}
+}
 @media (prefers-reduced-motion:reduce) {*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -83,6 +92,9 @@ h1 {font-size:clamp(44px,5.2vw,65px);letter-spacing:-.065em;line-height:1.02;mar
   <p class="sr-only" role="status" aria-live="polite" id="announcement"></p>
   <noscript>Bitte aktiviere JavaScript, um den Winterräumer zu spielen.</noscript>
 </main>
+<div class="portrait-gate" role="status" aria-live="polite">
+  <div class="portrait-gate-card"><div class="portrait-gate-icon" aria-hidden="true">▯</div><h2>Bitte dreh dein Gerät.</h2><p>Der Winterräumer läuft auf mobilen Geräten nur im Hochformat.</p></div>
+</div>
 <audio id="winter-music" src="audio/Der%20Schneepflug-Cowboy.mp3" preload="auto" loop></audio>
 
 <script id="winter-engine">
@@ -356,6 +368,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {WinterGam
   'use strict';
   const $ = id => document.getElementById(id);
   const canvas = $('game'), ctx = canvas.getContext('2d');
+  const mobileLandscape = matchMedia('(pointer: coarse) and (orientation: landscape)');
+  const mobilePointer = matchMedia('(pointer: coarse)');
   const game = new WinterGame(), S = 30, W = 570, H = 630, STEP = 1 / 120;
   const terrain = document.createElement('canvas');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -627,6 +641,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {WinterGam
     if (running()) frame = requestAnimationFrame(loop);
   }
   function primaryAction() {
+    if (mobileLandscape.matches) return;
     if (game.state === 'paused') game.resume();
     else if (game.state === 'roundwon') { game.nextRound(); particles = []; }
     else if (['ready', 'won', 'gameover'].includes(game.state)) { game.start(); particles = []; toastTime = 0; $('toast').hidden = true; }
@@ -634,13 +649,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {WinterGam
     canvas.focus({preventScroll: true}); tone(480, .07); wake();
   }
   function togglePause() {
+    if (mobileLandscape.matches) return;
     if (game.state === 'paused') { game.resume(); canvas.focus({preventScroll: true}); }
     else game.pause();
     wake();
   }
   function autoPause() { if (running()) { game.pause(); saveBest(); wake(); } }
   $('start').addEventListener('click', primaryAction);
-  $('restart').addEventListener('click', () => { saveBest(); game.start(); particles = []; toastTime = 0; $('toast').hidden = true; canvas.focus({preventScroll: true}); wake(); });
+  $('restart').addEventListener('click', () => { if (mobileLandscape.matches) return; saveBest(); game.start(); particles = []; toastTime = 0; $('toast').hidden = true; canvas.focus({preventScroll: true}); wake(); });
   $('pause').addEventListener('click', togglePause);
   $('sound').addEventListener('click', () => {
     soundOn = !soundOn; $('sound').setAttribute('aria-pressed', String(soundOn));
@@ -650,6 +666,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {WinterGam
   });
   const keys = {ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right'};
   window.addEventListener('keydown', e => {
+    if (mobileLandscape.matches) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.target.closest('a, input, select, textarea, [contenteditable="true"]')) return;
     const dir = keys[e.key] || keys[e.key.toLowerCase()];
@@ -681,6 +698,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {WinterGam
   document.addEventListener('visibilitychange', () => { if (document.hidden) autoPause(); });
   window.addEventListener('pagehide', () => { if (game.score > 0) saveBest(); });
   window.addEventListener('storage', e => { if (e.key === storageKey || e.key === null) { best = readBest(); hud(); } });
+  function lockPortrait() {
+    if (mobilePointer.matches) window.screen?.orientation?.lock?.('portrait')?.catch(() => {});
+  }
+  $('start').addEventListener('click', lockPortrait);
+  $('restart').addEventListener('click', lockPortrait);
+  mobileLandscape.addEventListener('change', () => { if (mobileLandscape.matches) autoPause(); });
+  window.screen?.orientation?.addEventListener?.('change', () => { if (mobileLandscape.matches) autoPause(); });
+  window.addEventListener('orientationchange', () => { if (mobileLandscape.matches) autoPause(); });
   window.addEventListener('resize', resize);
   resize(); hud();
 })();
