@@ -92,16 +92,43 @@ const ADVENT_CONTENT = {
     `
   },
   6: {
-    title: "Weihnachtsgeschichte 1/3: Der Stern im Schnee",
+    title: "Weihnachtsgeschichte 1/3: Die erste, die stehen blieb",
     emoji: "📖",
     html: `
-      <p><strong>Der Stern, der den Heimweg fand · Kapitel 1</strong></p>
-      <p>Als Wichtel Lio am Morgen durch den frischen Schnee stapfte, blitzte etwas zwischen den Tannen. Es war ein kleiner goldener Stern, ganz kalt und ohne Glanz. An seiner Rückseite hing ein Zettel: <em>„Bring mich zum alten Glockenturm.“</em></p>
-      <p>„Der Turm steht seit Jahren leer“, sagte Flocke, der Fuchs, als Lio ihm den Fund zeigte. Da erklang aus der Ferne eine einzelne Glocke. Der Stern schimmerte für einen Augenblick – und aus dem Schnee führte eine Spur winziger goldener Punkte geradewegs in den Wald.</p>
-      <p>Lio steckte den Stern vorsichtig ein. „Dann finden wir heraus, wem er gehört.“ Gemeinsam machten sich die beiden auf den Weg.</p>
+      <p><strong>Episode 1: Die erste, die stehen blieb</strong></p>
+      <p>Es schneite auf der A81 so ausdauernd, als habe der Himmel eine Beschwerde eingereicht und beschlossen, sie durch Wiederholung zu bekräftigen. Der Schnee kam schräg über die Fahrbahn, legte sich auf Markierungen und Leitpfosten und machte aus jeder Spur eine vorläufige Vermutung. Der Verkehr bewegte sich noch  – jenes unentschlossene Vorankommen, bei dem jeder Fahrer glaubt, es müsse gleich besser werden, obwohl vor ihm nur weitere rote Rücklichter liegen. Noch rollten die Wagen. Noch konnte man sich einreden, man sei unterwegs. Beides sollte nicht lange anhalten.</p>
+      <p>Mara war unterwegs zu ihrer Mutter, wo Heiligabend nach festen Regeln ablief: erst Kartoffelsalat, dann Geschenke, dann Fragen, auf die niemand eine ehrliche Antwort hören wollte. Im Kofferraum lagen drei Geschenke, alle in Papier mit goldenen Sternen, das Mara an einer Tankstelle gekauft hatte. Eine Duftkerze für ihre Mutter, eine Flasche Wein für ihren Bruder und eine Spieluhr für den Neffen, die „Stille Nacht“ spielte, wenn man sie schief hielt.</p>
+      <p>Vor Mara fuhr ein orangefarbener Räum-Lkw. Ein echtes, schweres Fahrzeug, mit Pflug, Streuaufsatz, gelben Warnleuchten und einer Fahrerin, die aufrecht und konzentriert in der Kabine saß. Die Maschine arbeitete sich über die linke Spur, nicht schnell, aber stetig. Wenn man hinter ihr fuhr, konnte man beinahe glauben, das Schneetreiben sei gar nicht so schlimm.</p>
+      <p>Mara folgte ihr seit etwa zwanzig Minuten. Hinter Mara folgte ein dunkler SUV, dessen Fahrer mit der Lichthupe eine Art privates Weihnachtskonzert gab. Erst zweimal. Dann in regelmäßigen Stößen. Schließlich so ausdauernd, dass Mara im Rückspiegel das Gefühl bekam, der Mann wolle ihr eine Botschaft übermitteln, die er selbst noch nicht formuliert hatte. Sie hätte ihn ignorieren können. Sie hätte auch sein Kennzeichen notieren und später vergessen können. Stattdessen sah sie rechts eine Lücke, setzte den Blinker und wechselte bei Schrittgeschwindigkeit auf die mittlere Spur.</p>
+      <p>Der SUV schoss an ihr vorbei, soweit man bei zwölf Kilometern pro Stunde schießen kann. Er schien nun der Auffassung zu sein, einen wesentlichen Sieg errungen zu haben. Vor ihm aber war weiterhin der Räum-Lkw. Der Schnee fiel. Die Spur war schmal, die Sicht schlecht, und die Autos krochen dicht nebeneinander. Niemand konnte sich an dem breiten Räumfahrzeug vorbeidrücken, ohne den eigenen Wagen oder den eines anderen in eine sehr persönliche Beziehung mit der Leitplanke zu bringen.</p>
+      <p>Dann wurde der Lkw langsamer.</p>
+      <p>Nicht plötzlich. Nicht dramatisch. Er rollte einfach ein wenig langsamer als zuvor. Die Fahrerin betätigte etwas in der Kabine. Die Warnleuchten arbeiteten weiter, aber der Lastwagen fuhr nicht mehr.</p>
+      <p>Er stand.</p>
+      <p>Die Fahrerin probierte einen Hebel, dann noch einen. Ein tiefes hydraulisches Stöhnen antwortete ihr; danach ein hartnäckiges Klacken, das Mara an einen alten Heizkörper erinnerte, der seine besten Tage schon lange hinter sich hat. Die Fahrerin griff zum Funkgerät.</p>
+      <p>„Leitstelle, hier Räumfahrzeug Gisela. Keine Weiterfahrt, vermutlich Hydraulikfehler. Bitte Techniker schicken.“</p>
+      <p>Sie hörte zu. Draußen fielen Flocken auf die gelb blitzenden Leuchten, als wären sie kleine, unbeeindruckte Zuschauer.</p>
+      <p>„Ja, ich weiß, dass es dauert“, sagte die Fahrerin. „Schickt ihn trotzdem.“</p>
+      <p>Sie legte das Funkgerät weg und beugte sich wieder über die Schalter. „Komm schon, Gisela“, sagte sie, als könne ein Lastwagen durch gutes Zureden zu einer Einsicht gelangen.</p>
+      <p>Mara stellte das Radio aus. Der Verkehr stand nun vollständig. Vor ihr das Räumfahrzeug, neben ihr der SUV, dessen Fahrer jetzt nicht mehr blitzte, sondern beide Hände am Lenkrad festhielt. Es war erstaunlich, wie schnell Menschen ihre Überzeugung aufgaben, die Straße gehöre ihnen, sobald sie sich nicht mehr bewegen konnten.</p>
+      <p>Mara schaltete den Motor aus. Der Schnee schluckte alle anderen Geräusche. Die Stille war nicht vollkommen – Stille auf einer Autobahn enthält immer Motoren, ein fernes Hupen und irgendwo einen Menschen, der „Das gibt’s doch nicht!“ sagt –, aber sie wurde groß genug, dass Mara etwas anderes hörte: ein leises, unregelmäßiges Knacken aus Richtung des Räumfahrzeugs.</p>
+      <p>„Nun“, sagte eine Stimme, „da ist er also vorbeigekommen.“</p>
+      <p>Mara fuhr zusammen. Sie sah zur Kabine. Die Fahrerin war mit dem Versuch beschäftigt, die Räummaschine doch noch zur Fortbewegung zu bewegen und schien sie nicht zu beachten.</p>
+      <p>„Wer?“, fragte Mara.</p>
+      <p>„Der Eilige. Der Mann, der mit Lichtzeichen anzeigt, dass seine Zeit wichtiger ist als die aller anderen. Jetzt steht er hinter mir und ist genauso weit gekommen wie du.“</p>
+      <p>Mara starrte auf die Rückseite des Räumfahrzeugs.</p>
+      <p>„Du redest mit mir? Du bist ein Schneepflug.“</p>
+      <p>Das Klackern kam wieder, diesmal in einer fast empörten Folge.</p>
+      <p>„Und du bist eine Frau in einem Kleinwagen, die einen Mann vorbeigelassen hat, obwohl sie wusste, dass er sich danebenbenimmt. Wir alle tragen Dinge, die uns nicht stehen.“</p>
+      <p>Mara öffnete den Mund, schloss ihn wieder. Vielleicht war sie übermüdet. Vielleicht hatte die Heizung die letzten brauchbaren Gedanken in ihrem Kopf weichgekocht. Beides schien möglich.</p>
+      <p>„Der Techniker kommt“, sagte sie schließlich.</p>
+      <p>„Er versucht es“, antwortete der Schneepflug. „Er sitzt vermutlich ebenfalls im Schnee fest. Die Leitstelle hat eine optimistische Vorstellung davon, was ein Mensch mit Werkzeug und Warnweste gegen dreißig Kilometer Stau ausrichten kann.“</p>
+      <p>Mara sah an den Wagen vorbei. Die Straße vor Gisela lag unter einer weißen Decke. Hinter ihr standen alle Spuren still. Keine Lücke, kein Ausweg. Der Techniker würde nicht durchkommen, und kein Auto würde an dem Räumfahrzeug vorbeifahren. Die Maschine war die Einzige, die den Weg frei machen konnte – und sie bewegte sich nicht.</p>
+      <p>„Du könntest doch einfach weiterfahren“, sagte Mara.</p>
+      <p>Ein tiefes Klacken antwortete. Dann sagte Gisela: „Ich könnte vieles. Aber heute räume ich nicht für Leute, die glauben, eine Lichthupe sei eine höfliche Bitte.“</p>
+      <p>Vor Mara blitzten die Warnleuchten weiter. Schnee setzte sich auf die Motorhaube, den Pflug und Maras Windschutzscheibe. Hinter Gisela warteten Hunderte Menschen auf eine Weiterfahrt und vor ihr lag eine Straße, auf der sich immer mehr Schnee sammelte.</p>
+      <p>Mara begriff, dass sie ohne Gisela nicht weiterkamen. Gisela wusste das längst. Sie sagte es nur nicht. Sie ließ das Klacken für sich sprechen.</p>
     `
-  },
-  7: {
+  },  7: {
     title: "Schneeballschlacht",
     emoji: "🐸",
     html: `
@@ -311,16 +338,20 @@ const ADVENT_CONTENT = {
     `
   },
   23: {
-    title: "Winterwissen: Kurze Tage",
-    emoji: "🌍",
+    title: "Weihnachtsgruß aus dem Büro",
+    emoji: "🎄",
     html: `
-      <div class="fact">
-        <span>☀️</span>
-        <div>Im Dezember ist die Nordhalbkugel von der Sonne weg geneigt. Dadurch steht die Sonne bei uns niedriger am Himmel und die Tage sind kürzer als im Sommer.</div>
+      <div class="card">
+        <h3>Liebe Kolleginnen und Kollegen,</h3>
+        <p>Ein herzlicher Weihnachtsgruß an alle, die am 23. Dezember noch im Büro sind! Danke für euren Einsatz. Haltet durch – die Feiertage sind schon ganz nah. Wir wünschen euch schöne und erholsame Weihnachtstage und einen guten Start ins neue Jahr. 🎄</p>
       </div>
-      <p>Rund um die Wintersonnenwende ist der Tag am kürzesten. Danach nimmt die Tageslänge langsam wieder zu.</p>
-      <p class="small"><a href="https://science.nasa.gov/helio-and-you-seasons-on-earth-mars-and-beyond/" target="_blank" rel="noopener">NASA: Wie die Neigung der Erde die Jahreszeiten prägt</a></p>
-    `
+    `,
+    media: {
+      type: "youtube",
+      url: "https://www.youtube.com/watch?v=zbnXcsfcEgI",
+      title: "Weihnachtsvideo",
+      caption: "Viel Spaß beim Anschauen!"
+    }
   },
   24: {
     title: "Weihnachts-Sudoku",

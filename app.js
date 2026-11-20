@@ -106,6 +106,20 @@ function renderMedia(media) {
     }
 
     const title = escapeHtml(media.title || "YouTube-Video zum Adventstürchen");
+
+    if (window.location.protocol === "file:") {
+      const youtubeUrl = `https://www.youtube.com/watch?v=${id}`;
+      return `
+        <div class="media-card">
+          <div class="media-heading">🎬 Video</div>
+          <p>Bei einer direkt geöffneten Datei kann YouTube den Player nicht einbetten.</p>
+          <p><a href="${youtubeUrl}" target="_blank" rel="noopener">Video auf YouTube ansehen</a></p>
+          <p class="small">Für die eingebettete Wiedergabe den Kalender über eine HTTPS-Adresse öffnen.</p>
+          ${caption}
+        </div>
+      `;
+    }
+
     return `
       <div class="media-card">
         <div class="media-heading">🎬 Video</div>
