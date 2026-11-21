@@ -1,399 +1,737 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Winter Frogger</title>
-<style>
-  :root{
-    --bg:#09111d; --panel:#111d2d; --road:#252b35; --safe:#dbeeff;
-    --ice:#bfe8ff; --accent:#63e6be; --danger:#ff6b6b; --text:#f4f7fb;
-  }
-  *{box-sizing:border-box}
-  html,body{width:100%;height:100%;margin:0;min-height:0;overflow:hidden;background:radial-gradient(circle at top,#17314a,#09111d 65%);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text)}
-  body{display:flex;justify-content:center;align-items:center;padding:6px}
-  .game-wrap{width:min(680px,100%);height:100%;min-height:0;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto auto;align-content:center;gap:2px;text-align:center}
-  h1{margin:0 0 4px;font-size:clamp(20px,4.5vw,30px);letter-spacing:.08em;text-transform:uppercase}
-  .sub{margin:0 0 5px;color:#b8c8d9;font-size:12px}
-  .hud{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:5px}
-  .stat{background:rgba(17,29,45,.92);border:1px solid #29405a;border-radius:10px;padding:7px 11px;font-size:13px;flex:1;min-width:90px}
-  .stat b{display:block;font-size:17px;color:#fff}
-  .canvas-box{position:relative;width:auto;height:100%;max-width:100%;aspect-ratio:5/6;justify-self:center;margin:auto;border:3px solid #36506a;border-radius:14px;overflow:hidden;box-shadow:0 15px 45px #0008;background:#08121e}
-  canvas{display:block;width:100%;height:100%;image-rendering:pixelated;touch-action:none}
-  .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#06101bcc;backdrop-filter:blur(2px);padding:20px}
-  .card{background:#122238;border:2px solid #46627e;border-radius:16px;padding:22px;max-width:430px;box-shadow:0 12px 40px #0009}
-  .card h2{margin:0 0 8px;font-size:26px}.card p{color:#c9d7e5;line-height:1.45;margin:7px 0 15px}
-  button{border:0;border-radius:10px;background:#63e6be;color:#07140f;font-weight:800;padding:11px 17px;cursor:pointer;font-size:15px}
-  button.secondary{background:#29415b;color:#eef7ff}
-  .actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-  .controls{margin:5px auto 0;width:min(210px,80vw);display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-  .controls button{height:42px;padding:0;font-size:22px;background:#182b40;color:#fff;border:1px solid #36506a;touch-action:manipulation}
-  .controls .empty{visibility:hidden}
-  .hint{font-size:11px;color:#8fa5b9;margin-top:5px}
-  @media(max-width:699px){.controls{margin-top:2px}.hint{margin-top:2px}}
-  @media (min-width:700px){.controls{display:none}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#143a35">
+  <title>Der Lebkuchenmann muss nach Hause!</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #193b38;
+      --muted: #55716d;
+      --cream: #fffaf0;
+      --green: #15584a;
+      --green-dark: #103d36;
+      --red: #a84236;
+      --gold: #f0c565;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 26px 16px 36px;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 10% 5%, rgba(255,255,255,.9), transparent 38%),
+        linear-gradient(150deg, #e6f2e9, #cfe2dc 52%, #f7e8c9);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+    .page { width: min(100%, 760px); margin: 0 auto; }
+    header { text-align: center; margin: 0 auto 18px; }
+    .eyebrow {
+      margin: 0 0 7px;
+      color: #a04738;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      color: var(--green-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 5vw, 2.85rem);
+      line-height: 1.05;
+      text-wrap: balance;
+    }
+    .intro { max-width: 570px; margin: 10px auto 0; color: var(--muted); line-height: 1.5; }
+    .game-card {
+      overflow: hidden;
+      padding: clamp(12px, 3vw, 22px);
+      border: 1px solid rgba(22, 74, 62, .14);
+      border-radius: 24px;
+      background: rgba(255, 250, 240, .94);
+      box-shadow: 0 18px 48px rgba(24, 64, 54, .18), 0 3px 8px rgba(24, 64, 54, .08);
+    }
+    .hud {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat {
+      min-width: 0;
+      padding: 8px 10px;
+      border: 1px solid #dfebe2;
+      border-radius: 13px;
+      background: #f4f8f1;
+      text-align: center;
+    }
+    .stat-label { display: block; color: #638078; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .stat-value { display: block; overflow: hidden; margin-top: 3px; color: var(--green-dark); font-size: 1.05rem; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+    .board-frame {
+      position: relative;
+      width: min(100%, 600px);
+      margin: 0 auto;
+      overflow: hidden;
+      border: 5px solid #174e43;
+      border-radius: 17px;
+      background: #193c42;
+      box-shadow: 0 8px 20px rgba(19, 60, 52, .22);
+      touch-action: none;
+    }
+    canvas { display: block; width: 100%; height: auto; aspect-ratio: 5 / 6; image-rendering: auto; }
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 14px 0 10px;
+    }
+    button {
+      min-height: 42px;
+      padding: 9px 15px;
+      border: 0;
+      border-radius: 12px;
+      color: #fffdf5;
+      background: var(--green);
+      box-shadow: 0 3px 0 #0d4037;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      transition: transform .08s ease, filter .15s ease, background .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:hover { filter: brightness(1.08); }
+    button:active { transform: translateY(2px); box-shadow: 0 1px 0 #0d4037; }
+    button:focus-visible { outline: 3px solid #e8b951; outline-offset: 3px; }
+    button.secondary { color: var(--green-dark); background: #e5eee5; box-shadow: 0 3px 0 #c6d7c9; }
+    button:disabled { cursor: default; opacity: .55; filter: grayscale(.25); }
+    .control-hint { margin: 3px 0 0; color: var(--muted); font-size: .9rem; text-align: center; }
+    .touch-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 54px);
+      grid-template-rows: repeat(2, 46px);
+      gap: 5px;
+      justify-content: center;
+      margin: 14px auto 2px;
+    }
+    .touch-pad button { min-height: 46px; padding: 0; border-radius: 12px; font-size: 1.25rem; touch-action: manipulation; }
+    .touch-pad .up { grid-column: 2; grid-row: 1; }
+    .touch-pad .left { grid-column: 1; grid-row: 2; }
+    .touch-pad .down { grid-column: 2; grid-row: 2; }
+    .touch-pad .right { grid-column: 3; grid-row: 2; }
+    .directions { margin: 13px auto 0; padding: 12px 14px; border-radius: 14px; background: #f2f7ef; color: #44665e; font-size: .88rem; line-height: 1.5; text-align: center; }
+    .directions strong { color: #1d5144; }
+    footer { margin-top: 15px; color: #658079; font-size: .78rem; text-align: center; }
+    @media (max-width: 480px) {
+      body { padding: 17px 9px 24px; }
+      .game-card { border-radius: 18px; }
+      .hud { grid-template-columns: repeat(2, 1fr); }
+      .stat { padding: 7px; }
+      .controls-row { gap: 8px; }
+      .controls-row button { flex: 1 1 28%; padding: 8px 9px; font-size: .9rem; }
+      .control-hint { font-size: .82rem; }
+    }
+    /* Das Kalender-Türchen zeigt das Spiel in einem kompakten iframe. */
+    @media (max-width: 680px) and (max-height: 700px) {
+      body { height: 100vh; min-height: 0; overflow: hidden; padding: 4px; }
+      .page { width: 100%; height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 4px; }
+      header { margin: 0; }
+      .eyebrow { display: none; }
+      h1 { font-size: clamp(1rem, 3.5vh, 1.45rem); line-height: 1.05; }
+      .intro { margin: 3px auto 0; font-size: .72rem; line-height: 1.25; }
+      .game-card { min-height: 0; padding: 5px; border-radius: 13px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; gap: 4px; }
+      .hud { grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 0; }
+      .stat { padding: 4px 3px; border-radius: 8px; }
+      .stat-label { font-size: .55rem; letter-spacing: .04em; }
+      .stat-value { margin-top: 1px; font-size: .82rem; }
+      .board-frame { width: auto; height: 100%; min-height: 0; max-width: 100%; aspect-ratio: 5 / 6; border-width: 3px; border-radius: 10px; }
+      canvas { width: auto; height: 100%; max-width: 100%; aspect-ratio: 5 / 6; }
+      .controls-row { gap: 5px; margin: 0; }
+      .controls-row button { min-height: 32px; padding: 4px 7px; border-radius: 8px; font-size: .75rem; box-shadow: none; }
+      .control-hint, .directions, footer { display: none; }
+      .touch-pad { grid-template-columns: repeat(3, 38px); grid-template-rows: repeat(2, 30px); gap: 3px; margin: 0 auto; }
+      .touch-pad button { min-height: 30px; padding: 0; border-radius: 7px; font-size: .95rem; box-shadow: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
 </head>
 <body>
-<div class="game-wrap">
-  <h1>🐸 Winter Frogger</h1>
-  <p class="sub">Überquere die verschneite Straße und besetze alle Weihnachts-Nester!</p>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Ein winterliches Ausweichspiel</p>
+      <h1>Der Lebkuchenmann muss nach Hause!</h1>
+      <p class="intro">Hilf dem kleinen Lebkuchenmann über die verschneite Straße. Weiche den Fahrzeugen aus und bring ihn sicher in eines der drei Lebkuchenhäuser.</p>
+    </header>
 
-  <div class="hud">
-    <div class="stat">Punkte<b id="score">0</b></div>
-    <div class="stat">Level<b id="level">1</b></div>
-    <div class="stat">Leben<b id="lives">❤️❤️❤️</b></div>
-    <div class="stat">Highscore<b id="highscore">0</b></div>
-  </div>
-
-  <div class="canvas-box">
-    <canvas id="game" width="600" height="720" aria-label="Winter Frogger Spielfeld"></canvas>
-    <div class="overlay" id="overlay">
-      <div class="card">
-        <h2 id="overlayTitle">🐸 Winter Frogger</h2>
-        <p id="overlayText">Pfeile oder WASD bewegen den Frosch. Erreiche alle fünf Weihnachts-Nester, ohne von den Fahrzeugen erwischt zu werden.</p>
-        <div class="actions">
-          <button id="startBtn">Spiel starten</button>
-          <button class="secondary" id="muteBtn">🔊 Sound an</button>
-        </div>
+    <section class="game-card" aria-label="Lebkuchenmann-Spiel">
+      <div class="hud" aria-live="polite">
+        <div class="stat"><span class="stat-label">Punkte</span><span class="stat-value" id="score">0</span></div>
+        <div class="stat"><span class="stat-label">Bestwert</span><span class="stat-value" id="highscore">0</span></div>
+        <div class="stat"><span class="stat-label">Runde</span><span class="stat-value" id="level">1</span></div>
+        <div class="stat"><span class="stat-label">Leben</span><span class="stat-value" id="lives">❤️❤️❤️</span></div>
       </div>
-    </div>
-  </div>
 
-  <div class="controls" aria-label="Touch-Steuerung">
-    <button class="empty"></button><button data-dir="up">▲</button><button class="empty"></button>
-    <button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button>
-  </div>
-  <div class="hint">Desktop: Pfeiltasten oder WASD · Mobil: Steuerkreuz · P = Pause · M = Sound</div>
-</div>
+      <div class="board-frame">
+        <canvas id="game" width="600" height="720" tabindex="0" role="img" aria-label="Spielfeld. Bewege den Lebkuchenmann mit Pfeiltasten oder WASD zu den drei Lebkuchenhäusern. Weiche den Fahrzeugen aus."></canvas>
+      </div>
 
-<script>
-(() => {
-'use strict';
+      <div class="controls-row">
+        <button id="startBtn" type="button">Spiel starten</button>
+        <button id="pauseBtn" class="secondary" type="button" disabled>Pause</button>
+        <button id="muteBtn" class="secondary" type="button" aria-pressed="false">🔊 Ton an</button>
+      </div>
+      <p class="control-hint">Tipp: Ein Wisch auf dem Spielfeld bewegt die Figur ebenfalls.</p>
 
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
-const W = canvas.width, H = canvas.height;
+      <div class="touch-pad" aria-label="Touch-Steuerung">
+        <button class="up" type="button" data-move="up" aria-label="Nach oben">▲</button>
+        <button class="left" type="button" data-move="left" aria-label="Nach links">◀</button>
+        <button class="down" type="button" data-move="down" aria-label="Nach unten">▼</button>
+        <button class="right" type="button" data-move="right" aria-label="Nach rechts">▶</button>
+      </div>
 
-const ROWS = 12, COLS = 10;
-const CELL_W = W / COLS, CELL_H = H / ROWS;
-const START_ROW = ROWS - 1;
-const GOAL_ROW = 0;
-const ROAD_START = 3, ROAD_END = 8;
-const SAFE_ROWS = [1,2,5,6,9,10];
-const GOAL_COLS = [2,4,6];
+      <div class="directions"><strong>Steuerung:</strong> Pfeiltasten oder WASD · Erreiche alle drei Häuser · Ein Treffer kostet ein Leben</div>
+    </section>
+    <footer>Viel Glück auf dem Heimweg! Die Bestleistung wird auf diesem Gerät gespeichert.</footer>
+  </main>
 
-const ui = {
-  score: document.getElementById('score'),
-  level: document.getElementById('level'),
-  lives: document.getElementById('lives'),
-  highscore: document.getElementById('highscore'),
-  overlay: document.getElementById('overlay'),
-  title: document.getElementById('overlayTitle'),
-  text: document.getElementById('overlayText'),
-  start: document.getElementById('startBtn'),
-  mute: document.getElementById('muteBtn')
-};
+  <script>
+  (() => {
+    'use strict';
 
-let score = 0;
-let level = 1;
-let lives = 3;
-let highscore = Number(localStorage.getItem('winterFroggerHighscore') || 0);
-let running = false;
-let paused = false;
-let muted = false;
-let lastTime = 0;
-let audioCtx = null;
-let vehicles = [];
-let goals = [];
-let frog = {col: 5,row:START_ROW,x:5,y:START_ROW};
-let moveLock = false;
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const highscoreEl = document.getElementById('highscore');
+    const levelEl = document.getElementById('level');
+    const livesEl = document.getElementById('lives');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const muteBtn = document.getElementById('muteBtn');
 
-const lanes = [
-  {row:3, dir:1, base:95, color:'#e74c3c'},
-  {row:4, dir:-1, base:135, color:'#3498db'},
-  {row:7, dir:1, base:125, color:'#2ecc71'},
-  {row:8, dir:-1, base:100, color:'#e67e22'}
-];
+    const COLS = 10;
+    const ROWS = 12;
+    const CELL = 60;
+    const WIDTH = COLS * CELL;
+    const HEIGHT = ROWS * CELL;
+    const TARGET_COLUMNS = [1, 4, 8];
+    const HIGH_KEY = 'winterFroggerHighscore';
+    const laneBlueprints = [
+      { row: 2, direction: 1, speed: 82, widths: [74, 54, 66], colors: ['#b4473e', '#e0a83d', '#4b7583'] },
+      { row: 3, direction: -1, speed: 110, widths: [55, 76, 58], colors: ['#477d60', '#b8423c', '#d6a33f'] },
+      { row: 4, direction: 1, speed: 94, widths: [70, 54, 78], colors: ['#436f86', '#d34e3f', '#528269'] },
+      { row: 5, direction: -1, speed: 126, widths: [56, 72, 55], colors: ['#d2a044', '#507e62', '#b7443a'] },
+      { row: 6, direction: 1, speed: 104, widths: [76, 54, 64], colors: ['#b7463d', '#4c7582', '#d4a447'] },
+      { row: 7, direction: -1, speed: 138, widths: [54, 78, 58], colors: ['#477a5e', '#c04b3f', '#497184'] }
+    ];
+    const houseColors = ['#b64c3e', '#d58b39', '#678a68', '#ba5b46', '#527a82', '#d19c43', '#9e5949', '#648464', '#bf6b4e', '#748b73'];
+    const snowflakes = Array.from({ length: 56 }, (_, i) => ({
+      x: ((i * 137 + 31) % WIDTH), y: ((i * 83 + 19) % HEIGHT), r: 1 + (i % 3) * .45, a: .10 + (i % 4) * .035
+    }));
 
-function beep(freq=440,duration=.07,type='square',gain=.035){
-  if(muted) return;
-  try{
-    audioCtx ||= new (window.AudioContext || window.webkitAudioContext)();
-    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
-    o.type=type;o.frequency.value=freq;g.gain.value=gain;
-    o.connect(g);g.connect(audioCtx.destination);
-    const now=audioCtx.currentTime;
-    g.gain.setValueAtTime(gain,now);
-    g.gain.exponentialRampToValueAtTime(.0001,now+duration);
-    o.start(now);o.stop(now+duration);
-  }catch(e){}
-}
+    let state = 'ready';
+    let score = 0;
+    let highscore = readHighscore();
+    let lives = 3;
+    let level = 1;
+    let homes = Array(TARGET_COLUMNS.length).fill(false);
+    let lanes = [];
+    let lastFrame = 0;
+    let lastMove = 0;
+    let muted = false;
+    let audioContext = null;
+    const backgroundMusic = new Audio('audio/Jolly%208-bit%20Chase.mp3');
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = 0.24;
+    backgroundMusic.preload = 'auto';
+    let notice = '';
+    let noticeUntil = 0;
+    const player = { col: 4, row: 11, fromCol: 4, fromRow: 11, movedAt: 0 };
 
-function makeLevel(){
-  vehicles=[];
-  const speedMul = 1 + (level-1)*0.14;
-  lanes.forEach((lane,i)=>{
-    const count = Math.min(3, 2 + Math.floor((level-1)/3));
-    const width = 54 + ((i+level)%3)*7;
-    const gap = W / count;
-    for(let j=0;j<count;j++){
-      vehicles.push({
-        row:lane.row, x:j*gap + (i%2)*35, width,
-        height:CELL_H*.58, speed:lane.base*speedMul*lane.dir,
-        color:lane.color, kind:(i+j)%3
+    function readHighscore() {
+      try { return Number(localStorage.getItem(HIGH_KEY)) || 0; }
+      catch (_) { return 0; }
+    }
+    function saveHighscore() {
+      try {
+        localStorage.setItem(HIGH_KEY, String(highscore));
+        if (window.parent !== window && window.location.protocol !== 'file:') {
+          window.parent.postMessage({ type: 'advent-minigame-highscore', game: 'winterFrogger', score: highscore }, window.location.origin);
+        }
+      }
+      catch (_) { /* Das Spiel läuft auch, wenn der Browser keinen Speicher erlaubt. */ }
+    }
+    function syncBackgroundMusic() {
+      if (state === 'playing' && !muted) {
+        if (backgroundMusic.paused) backgroundMusic.play().catch(() => {});
+      } else if (!backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+    function updateHud() {
+      scoreEl.textContent = String(score);
+      highscoreEl.textContent = String(highscore);
+      levelEl.textContent = String(level);
+      livesEl.textContent = lives > 0 ? '❤️'.repeat(lives) : '—';
+      livesEl.setAttribute('aria-label', `${lives} Leben`);
+      pauseBtn.disabled = state !== 'playing' && state !== 'paused';
+      pauseBtn.textContent = state === 'paused' ? 'Weiter' : 'Pause';
+      startBtn.textContent = state === 'playing' || state === 'paused' ? 'Neu starten' : state === 'over' ? 'Noch einmal' : 'Spiel starten';
+    }
+    function addScore(amount) {
+      score += amount;
+      if (score > highscore) {
+        highscore = score;
+        saveHighscore();
+      }
+      updateHud();
+    }
+    function makeLanes() {
+      const multiplier = 1 + (level - 1) * .17;
+      lanes = laneBlueprints.map((blueprint, laneIndex) => {
+        const objects = blueprint.widths.map((width, i) => {
+          const spacing = WIDTH / blueprint.widths.length;
+          const start = i * spacing + (laneIndex % 2 ? spacing * .15 : 0);
+          return { x: blueprint.direction > 0 ? start - width : start, width, color: blueprint.colors[i], ornament: (laneIndex + i) % 3 };
+        });
+        return { ...blueprint, speed: blueprint.speed * multiplier, objects };
       });
     }
-  });
-  goals = Array(GOAL_COLS.length).fill(false);
-  resetFrog();
-}
-
-function resetFrog(){
-  frog={col:5,row:START_ROW,x:5,y:START_ROW};
-  moveLock=false;
-}
-
-function newGame(){
-  score=0;level=1;lives=3;paused=false;running=true;
-  makeLevel(); hideOverlay(); updateUI();
-  lastTime=performance.now(); requestAnimationFrame(loop);
-}
-
-function hideOverlay(){ui.overlay.style.display='none'}
-function showOverlay(title,text,button='Spiel starten'){
-  ui.title.textContent=title;ui.text.textContent=text;ui.start.textContent=button;
-  ui.overlay.style.display='flex';
-}
-
-function updateUI(){
-  ui.score.textContent=score;
-  ui.level.textContent=level;
-  ui.lives.textContent='❤️'.repeat(lives)+'🖤'.repeat(3-lives);
-  ui.highscore.textContent=highscore;
-}
-
-function addScore(n){
-  score += n;
-  if(score>highscore){
-    highscore=score;localStorage.setItem('winterFroggerHighscore',highscore);
-    try{window.parent.postMessage({type:'advent-minigame-highscore',game:'winterFrogger',score:highscore},location.origin);}catch(e){}
-  }
-  updateUI();
-}
-
-function move(dx,dy){
-  if(!running || paused || moveLock) return;
-  const nc=Math.max(0,Math.min(COLS-1,frog.col+dx));
-  const nr=Math.max(0,Math.min(ROWS-1,frog.row+dy));
-  if(nc===frog.col && nr===frog.row) return;
-  if(nr===GOAL_ROW && !GOAL_COLS.includes(nc)) return;
-  moveLock=true;
-  frog.col=nc;frog.row=nr;frog.x=nc;frog.y=nr;
-  beep(520,.045,'square');
-  if(dy<0) addScore(10);
-  setTimeout(()=>moveLock=false,90);
-  checkGoal();
-}
-
-function checkGoal(){
-  if(frog.row!==GOAL_ROW) return;
-  const goalIndex=GOAL_COLS.indexOf(frog.col);
-  if(goalIndex<0){resetFrog();return;}
-  if(!goals[goalIndex]){
-    goals[goalIndex]=true;
-    addScore(100 + level*15);
-    beep(880,.1,'triangle'); setTimeout(()=>beep(1175,.12,'triangle'),80);
-    resetFrog();
-    if(goals.every(Boolean)){
-      addScore(250*level);
-      beep(660,.12,'square'); setTimeout(()=>beep(990,.18,'square'),120);
-      setTimeout(()=>{
-        level++;
-        makeLevel();updateUI();
-      },650);
+    function resetPlayer() {
+      player.col = 4;
+      player.row = 11;
+      player.fromCol = 4;
+      player.fromRow = 11;
+      player.movedAt = 0;
     }
-  } else resetFrog();
-}
-
-function loseLife(){
-  lives--;
-  beep(110,.2,'sawtooth',.05);
-  updateUI();
-  if(lives<=0){
-    running=false;
-    showOverlay('💥 Game Over',`Du hast ${score} Punkte erreicht. Highscore: ${highscore}.`,'Nochmal spielen');
-  }else{
-    resetFrog();
-  }
-}
-
-function frogRect(){
-  return {x:frog.x*CELL_W+CELL_W*.18,y:frog.y*CELL_H+CELL_H*.18,w:CELL_W*.64,h:CELL_H*.64};
-}
-function rectsOverlap(a,b){
-  return a.x < b.x+b.w && a.x+a.w>b.x && a.y<a.y+b.h && a.y+a.h>b.y;
-}
-
-function update(dt){
-  vehicles.forEach(v=>{
-    v.x += v.speed*dt;
-    if(v.speed>0 && v.x>W+80) v.x=-v.width-30;
-    if(v.speed<0 && v.x<-v.width-80) v.x=W+30;
-  });
-  const fr=frogRect();
-  for(const v of vehicles){
-    if(v.row===frog.row){
-      const vr={x:v.x,y:v.row*CELL_H+CELL_H*.21,w:v.width,h:v.height};
-      if(rectsOverlap(fr,vr)){loseLife();return;}
+    function startGame() {
+      score = 0;
+      lives = 3;
+      level = 1;
+      homes = Array(TARGET_COLUMNS.length).fill(false);
+      resetPlayer();
+      makeLanes();
+      state = 'playing';
+      notice = 'Los geht’s! Bring den Lebkuchenmann nach Hause.';
+      noticeUntil = performance.now() + 2200;
+      lastMove = 0;
+      updateHud();
+      syncBackgroundMusic();
+      playTone('start');
+      canvas.focus({ preventScroll: true });
     }
-  }
-}
+    function togglePause() {
+      if (state === 'playing') state = 'paused';
+      else if (state === 'paused') state = 'playing';
+      updateHud();
+      syncBackgroundMusic();
+      if (state === 'playing') canvas.focus({ preventScroll: true });
+    }
+    function showNotice(text, duration = 1500) {
+      notice = text;
+      noticeUntil = performance.now() + duration;
+    }
+    function movePlayer(dx, dy) {
+      if (state !== 'playing') return;
+      const now = performance.now();
+      if (now - lastMove < 105) return;
+      const nextCol = player.col + dx;
+      const nextRow = player.row + dy;
+      if (nextCol < 0 || nextCol >= COLS || nextRow < 0 || nextRow >= ROWS) return;
+      if (nextRow === 0) {
+        const targetIndex = TARGET_COLUMNS.indexOf(nextCol);
+        if (targetIndex === -1) {
+          showNotice('Nur die drei Lebkuchenhäuser sind sichere Ziele.', 1100);
+          playTone('blocked');
+          return;
+        }
+        if (homes[targetIndex]) {
+          showNotice('Dieses Haus ist schon besetzt! Such dir ein freies.', 1000);
+          playTone('blocked');
+          return;
+        }
+      }
+      lastMove = now;
+      player.fromCol = player.col;
+      player.fromRow = player.row;
+      player.col = nextCol;
+      player.row = nextRow;
+      player.movedAt = now;
+      if (dy < 0) addScore(10);
+      playTone('hop');
+      if (nextRow === 0) reachHome(nextCol);
+    }
+    function reachHome(col) {
+      const targetIndex = TARGET_COLUMNS.indexOf(col);
+      if (targetIndex === -1) return;
+      homes[targetIndex] = true;
+      const bonus = 100 + Math.max(0, 50 - (level - 1) * 5);
+      addScore(bonus);
+      playTone('goal');
+      resetPlayer();
+      if (homes.every(Boolean)) {
+        addScore(250);
+        level += 1;
+        homes = Array(TARGET_COLUMNS.length).fill(false);
+        makeLanes();
+        showNotice(`Alle drei Häuser erreicht! Runde ${level} beginnt.`, 2400);
+        playTone('level');
+      } else {
+        showNotice(`Daheim! Noch ${homes.filter(home => !home).length} Häuser offen.`, 1450);
+      }
+      updateHud();
+    }
+    function loseLife() {
+      lives -= 1;
+      resetPlayer();
+      playTone('hit');
+      if (lives <= 0) {
+        state = 'over';
+        showNotice('Die Runde ist vorbei. Versuch es noch einmal!', 3000);
+        syncBackgroundMusic();
+      } else {
+        showNotice('Uff! Ein Fahrzeug hat dich erwischt. Weiter geht’s!', 1700);
+      }
+      updateHud();
+    }
+    function checkCollision() {
+      const lane = lanes.find(item => item.row === player.row);
+      if (!lane) return;
+      const centerX = player.col * CELL + CELL / 2;
+      if (lane.objects.some(object => centerX > object.x - 8 && centerX < object.x + object.width + 8)) loseLife();
+    }
+    function moveVehicles(dt) {
+      for (const lane of lanes) {
+        for (const object of lane.objects) {
+          object.x += lane.direction * lane.speed * dt;
+          const margin = object.width + 26;
+          if (lane.direction > 0 && object.x > WIDTH + 26) object.x = -margin;
+          if (lane.direction < 0 && object.x + object.width < -26) object.x = WIDTH + 26;
+        }
+      }
+      checkCollision();
+    }
 
-function drawBackground(){
-  ctx.fillStyle='#dff4ff';ctx.fillRect(0,0,W,H);
-  // Zielbereich
-  ctx.fillStyle='#7893a8';ctx.fillRect(0,0,W,CELL_H);
-  GOAL_COLS.forEach((c,i)=>{
-    ctx.fillStyle=goals[i]?'#1b6b45':'#bde7f7';
-    ctx.fillRect(c*CELL_W+3,3,CELL_W-6,CELL_H-6);
-  });
-  // sichere Bereiche
-  SAFE_ROWS.forEach(r=>{
-    ctx.fillStyle=(r===9||r===10)?'#d8eaf5':'#cbe7f4';
-    ctx.fillRect(0,r*CELL_H,W,CELL_H);
-  });
-  // Geteilte Autobahn mit zwei Spuren je Fahrtrichtung
-  ctx.fillStyle='#252b35';ctx.fillRect(0,ROAD_START*CELL_H,W,(ROAD_END-ROAD_START+1)*CELL_H);
-  ctx.strokeStyle='#f5f1d5';ctx.lineWidth=4;ctx.setLineDash([]);
-  [ROAD_START*CELL_H,5*CELL_H,7*CELL_H,(ROAD_END+1)*CELL_H].forEach(y=>{
-    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
-  });
-  ctx.strokeStyle='#d8dce0';ctx.lineWidth=2;ctx.setLineDash([22,18]);
-  [4*CELL_H,8*CELL_H].forEach(y=>{
-    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
-  });
-  ctx.setLineDash([]);
-  // Breiter, sicherer Mittelstreifen
-  ctx.fillStyle='#587b50';ctx.fillRect(0,5*CELL_H,W,2*CELL_H);
-  ctx.fillStyle='#789b68';ctx.fillRect(0,5*CELL_H+8,W,2*CELL_H-16);
-  ctx.strokeStyle='#f4d35e';ctx.lineWidth=4;
-  [5*CELL_H+3,7*CELL_H-3].forEach(y=>{
-    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
-  });
-  for(let x=24;x<W;x+=76){
-    ctx.fillStyle='#315c39';ctx.beginPath();ctx.arc(x,6*CELL_H,7,0,Math.PI*2);ctx.fill();
-  }
-  // Start
-  ctx.fillStyle='#cfe9f5';ctx.fillRect(0,START_ROW*CELL_H,W,CELL_H);
-  // Schnee
-  ctx.fillStyle='#fff8'; 
-  for(let i=0;i<45;i++){
-    const x=(i*97)%W,y=(i*53)%H,r=(i%3)+1;
-    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
-  }
-  // Weihnachtsbäume in Zielreihe
-  for(let c=0;c<COLS;c+=2) drawTree(c*CELL_W+CELL_W/2,CELL_H*.48,.55);
-}
+    function roundedRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, r);
+    }
+    function drawBackground() {
+      const sky = ctx.createLinearGradient(0, 0, 0, HEIGHT);
+      sky.addColorStop(0, '#b7d9d0');
+      sky.addColorStop(.17, '#cde1d5');
+      sky.addColorStop(.18, '#e8f0e6');
+      sky.addColorStop(.68, '#e8f0e6');
+      sky.addColorStop(.69, '#c6ded3');
+      sky.addColorStop(1, '#b3d2c2');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-function drawTree(x,y,s){
-  ctx.fillStyle='#176b4b';
-  ctx.beginPath();ctx.moveTo(x,y-22*s);ctx.lineTo(x-17*s,y+12*s);ctx.lineTo(x+17*s,y+12*s);ctx.closePath();ctx.fill();
-  ctx.fillStyle='#7b4a2b';ctx.fillRect(x-3*s,y+10*s,6*s,8*s);
-  ctx.fillStyle='#ffd54a';ctx.fillRect(x-2*s,y-4*s,4*s,4*s);
-}
+      // Zielwiese und sichere Bereiche
+      ctx.fillStyle = '#315e4f';
+      ctx.fillRect(0, 0, WIDTH, CELL);
+      ctx.fillStyle = '#dfece4';
+      ctx.fillRect(0, CELL, WIDTH, CELL);
+      ctx.fillStyle = '#b9d4c9';
+      ctx.fillRect(0, CELL * 8, WIDTH, CELL);
+      ctx.fillStyle = '#c2d9cb';
+      ctx.fillRect(0, CELL * 9, WIDTH, CELL * 3);
 
-function drawVehicle(v){
-  const y=v.row*CELL_H+CELL_H*.21;
-  ctx.fillStyle=v.color;
-  ctx.fillRect(v.x,y,v.width,v.height);
-  ctx.fillStyle='#dff6ff';
-  const ww=v.width*.22;
-  ctx.fillRect(v.x+v.width*.18,y+6,ww,10);
-  ctx.fillRect(v.x+v.width*.60,y+6,ww,10);
-  ctx.fillStyle='#111';
-  ctx.fillRect(v.x+8,y+v.height-3,13,8);
-  ctx.fillRect(v.x+v.width-21,y+v.height-3,13,8);
-  if(v.kind===0){
-    ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
-    ctx.fillText('🎁',v.x+v.width/2,y+v.height-8);
-  }else if(v.kind===1){
-    ctx.fillStyle='#fff';ctx.font='bold 14px sans-serif';ctx.textAlign='center';
-    ctx.fillText('★',v.x+v.width/2,y+v.height-8);
-  }
-}
+      // Verschneite Seitenstreifen
+      ctx.fillStyle = 'rgba(255,255,255,.45)';
+      for (let x = 8; x < WIDTH; x += 40) {
+        ctx.beginPath(); ctx.ellipse(x, CELL * 1.65, 15, 3, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(x + 18, CELL * 8.35, 17, 3, 0, 0, Math.PI * 2); ctx.fill();
+      }
 
-function drawFrog(){
-  const x=frog.x*CELL_W+CELL_W/2, y=frog.y*CELL_H+CELL_H/2;
-  ctx.save();ctx.translate(x,y);
-  // Schatten
-  ctx.fillStyle='#0005';ctx.beginPath();ctx.ellipse(0,18,18,5,0,0,Math.PI*2);ctx.fill();
-  // Frosch
-  ctx.fillStyle='#52d273';ctx.beginPath();ctx.arc(0,2,18,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#72e98b';ctx.beginPath();ctx.arc(-10,-11,7,0,Math.PI*2);ctx.arc(10,-11,7,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#111';ctx.beginPath();ctx.arc(-10,-11,2.5,0,Math.PI*2);ctx.arc(10,-11,2.5,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='#176b38';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,3,9,0,Math.PI);ctx.stroke();
-  // Wintermütze
-  ctx.fillStyle='#e63946';ctx.beginPath();ctx.moveTo(-15,-15);ctx.lineTo(15,-15);ctx.lineTo(9,-28);ctx.lineTo(-5,-28);ctx.closePath();ctx.fill();
-  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(9,-29,4,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-}
+      // Sechs winterliche Fahrspuren
+      ctx.fillStyle = '#263b46';
+      ctx.fillRect(0, CELL * 2, WIDTH, CELL * 6);
+      for (let row = 2; row < 8; row++) {
+        const y = row * CELL;
+        ctx.fillStyle = row % 2 === 0 ? '#2b424d' : '#263b46';
+        ctx.fillRect(0, y, WIDTH, CELL);
+        if (row < 7) {
+          ctx.strokeStyle = 'rgba(231,239,228,.25)';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([15, 15]);
+          ctx.beginPath(); ctx.moveTo(0, y + CELL); ctx.lineTo(WIDTH, y + CELL); ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
+      ctx.fillStyle = 'rgba(236,246,241,.55)';
+      snowflakes.forEach((flake, i) => {
+        if (flake.y > CELL * 2 && flake.y < CELL * 8) return;
+        ctx.globalAlpha = flake.a;
+        ctx.beginPath(); ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2); ctx.fill();
+        if (i % 7 === 0) {
+          ctx.beginPath(); ctx.arc(flake.x + 7, flake.y + 5, flake.r * .55, 0, Math.PI * 2); ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = 'rgba(255,255,255,.18)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, CELL); ctx.lineTo(WIDTH, CELL); ctx.stroke();
+    }
 
-function draw(){
-  drawBackground();
-  vehicles.forEach(drawVehicle);
-  drawFrog();
-}
+    function drawHouse(cx, cy, index, reached) {
+      const wall = houseColors[index];
+      ctx.save();
+      ctx.translate(cx, cy + 1);
+      if (reached) {
+        ctx.shadowColor = 'rgba(255,219,116,.8)';
+        ctx.shadowBlur = 13;
+      }
+      // Hauskörper
+      roundedRect(-20, -4, 40, 28, 5);
+      ctx.fillStyle = reached ? '#f1c86b' : wall;
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#683c31';
+      ctx.stroke();
+      // Dach und Zuckergusskante
+      ctx.beginPath();
+      ctx.moveTo(-25, -4); ctx.lineTo(0, -25); ctx.lineTo(25, -4); ctx.closePath();
+      ctx.fillStyle = reached ? '#cf5c43' : '#873f37';
+      ctx.fill();
+      ctx.strokeStyle = '#63372f'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-23, -3); ctx.quadraticCurveTo(-14, 1, -7, -4); ctx.quadraticCurveTo(0, 1, 7, -4); ctx.quadraticCurveTo(14, 1, 23, -3);
+      ctx.strokeStyle = '#fff9e9'; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.stroke();
+      // Tür und Fenster
+      roundedRect(-5, 8, 11, 16, 4); ctx.fillStyle = '#704238'; ctx.fill();
+      ctx.fillStyle = '#ffdf91'; ctx.beginPath(); ctx.arc(3, 16, 1.2, 0, Math.PI * 2); ctx.fill();
+      roundedRect(-16, 3, 8, 8, 2); ctx.fillStyle = '#b9e5e4'; ctx.fill(); ctx.strokeStyle = '#fff4d9'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-12, 3); ctx.lineTo(-12, 11); ctx.moveTo(-16, 7); ctx.lineTo(-8, 7); ctx.stroke();
+      roundedRect(9, 3, 7, 8, 2); ctx.fillStyle = '#b9e5e4'; ctx.fill(); ctx.strokeStyle = '#fff4d9'; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(12.5, 3); ctx.lineTo(12.5, 11); ctx.moveTo(9, 7); ctx.lineTo(16, 7); ctx.stroke();
+      // Süßigkeiten am Dach
+      ['#e7c45d', '#e9e2cd', '#c95b48'].forEach((color, i) => {
+        ctx.fillStyle = color; ctx.beginPath(); ctx.arc(-12 + i * 12, -13 - (i === 1 ? 2 : 0), 2.6, 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.restore();
+    }
+    function drawHomes() {
+      for (let targetIndex = 0; targetIndex < TARGET_COLUMNS.length; targetIndex++) {
+        const col = TARGET_COLUMNS[targetIndex];
+        const cx = col * CELL + CELL / 2;
+        const cy = CELL / 2;
+        ctx.fillStyle = homes[targetIndex] ? 'rgba(244,205,107,.22)' : 'rgba(255,255,255,.1)';
+        ctx.beginPath(); ctx.ellipse(cx, cy + 7, 28, 24, 0, 0, Math.PI * 2); ctx.fill();
+        drawHouse(cx, cy, targetIndex, homes[targetIndex]);
+        if (homes[targetIndex]) {
+          ctx.fillStyle = '#fff5d6'; ctx.beginPath(); ctx.arc(cx + 20, cy - 20, 5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#e9a23e'; ctx.beginPath(); ctx.arc(cx + 20, cy - 20, 2.4, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+    function drawVehicle(object, row, direction) {
+      const y = row * CELL + CELL / 2;
+      const x = object.x;
+      const w = object.width;
+      ctx.save();
+      ctx.translate(x, y);
+      if (direction < 0) { ctx.translate(w, 0); ctx.scale(-1, 1); }
+      // Kufen / Schatten
+      ctx.fillStyle = 'rgba(9,20,27,.28)';
+      roundedRect(3, -11, w - 6, 27, 8); ctx.fill();
+      // Karosserie wie ein winterlicher Lieferwagen
+      roundedRect(0, -15, w - 8, 25, 7);
+      ctx.fillStyle = object.color; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = '#182e35'; ctx.stroke();
+      // Kabine, Scheibe und Stoßfänger
+      roundedRect(w - 27, -12, 17, 14, 5); ctx.fillStyle = '#b7d9d8'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = '#28363a';
+      ctx.beginPath(); ctx.arc(13, 12, 4, 0, Math.PI * 2); ctx.arc(w - 21, 12, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ece7d8';
+      ctx.beginPath(); ctx.arc(13, 12, 1.6, 0, Math.PI * 2); ctx.arc(w - 21, 12, 1.6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff1c5'; roundedRect(w - 10, -7, 5, 5, 2); ctx.fill();
+      // Paketaufdruck und Zuckerstange
+      if (object.ornament === 0) {
+        ctx.fillStyle = '#f3d978'; roundedRect(18, -10, Math.max(12, w - 50), 13, 3); ctx.fill();
+        ctx.strokeStyle = '#fff5dc'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(24, -9); ctx.lineTo(30, 2); ctx.moveTo(34, -9); ctx.lineTo(40, 2); ctx.stroke();
+      } else if (object.ornament === 1) {
+        ctx.strokeStyle = '#f7efe0'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(20, -9); ctx.quadraticCurveTo(27, -4, 20, 1); ctx.quadraticCurveTo(27, 6, 20, 8); ctx.stroke();
+      } else {
+        ctx.fillStyle = '#f3d978'; ctx.beginPath(); ctx.arc(w / 2 - 5, -3, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#f7eee1'; ctx.beginPath(); ctx.arc(w / 2 - 5, -3, 2, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+    }
+    function drawGingerbread(cx, cy, t) {
+      const progress = player.movedAt ? Math.min(1, (t - player.movedAt) / 125) : 1;
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const gx = (player.fromCol + (player.col - player.fromCol) * ease) * CELL + CELL / 2;
+      const gy = (player.fromRow + (player.row - player.fromRow) * ease) * CELL + CELL / 2;
+      const hop = progress < 1 ? Math.sin(progress * Math.PI) * 5 : 0;
+      ctx.save();
+      ctx.translate(gx, gy - hop);
+      ctx.fillStyle = 'rgba(18,44,37,.2)';
+      ctx.beginPath(); ctx.ellipse(0, 21 + hop, 17, 5, 0, 0, Math.PI * 2); ctx.fill();
+      // Arme und Beine
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#703d29'; ctx.lineWidth = 10;
+      ctx.beginPath(); ctx.moveTo(-7, 8); ctx.lineTo(-14, 20); ctx.moveTo(7, 8); ctx.lineTo(14, 20); ctx.stroke();
+      ctx.strokeStyle = '#9b572f'; ctx.lineWidth = 11;
+      ctx.beginPath(); ctx.moveTo(-9, -1); ctx.lineTo(-22, 5); ctx.moveTo(9, -1); ctx.lineTo(22, 5); ctx.stroke();
+      // Schuhe und Hände
+      ctx.strokeStyle = '#5b3026'; ctx.lineWidth = 8;
+      ctx.beginPath(); ctx.moveTo(-14, 20); ctx.lineTo(-18, 22); ctx.moveTo(14, 20); ctx.lineTo(18, 22); ctx.stroke();
+      ctx.fillStyle = '#a25d34';
+      ctx.beginPath(); ctx.arc(-22, 5, 5, 0, Math.PI * 2); ctx.arc(22, 5, 5, 0, Math.PI * 2); ctx.fill();
+      // Körper
+      roundedRect(-12, -8, 24, 24, 9); ctx.fillStyle = '#a85f35'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#663722'; ctx.stroke();
+      // Kopf
+      ctx.beginPath(); ctx.arc(0, -15, 11, 0, Math.PI * 2); ctx.fillStyle = '#b36a3b'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#663722'; ctx.stroke();
+      // Zuckerguss-Haube
+      ctx.beginPath(); ctx.moveTo(-10, -17); ctx.quadraticCurveTo(-11, -27, -3, -25); ctx.quadraticCurveTo(2, -30, 6, -24); ctx.quadraticCurveTo(12, -23, 10, -15); ctx.quadraticCurveTo(3, -19, -2, -16); ctx.closePath();
+      ctx.fillStyle = '#fff5dc'; ctx.fill();
+      // Lächeln, Augen und Knöpfe
+      ctx.fillStyle = '#2b2925'; ctx.beginPath(); ctx.arc(-4, -15, 1.3, 0, Math.PI * 2); ctx.arc(4, -15, 1.3, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#6e392d'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, -12, 4, .15, Math.PI - .15); ctx.stroke();
+      ['#d65346', '#e7c957', '#6fa17b'].forEach((color, i) => {
+        ctx.fillStyle = '#fff6df'; ctx.beginPath(); ctx.arc(0, -2 + i * 7, 3.6, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = color; ctx.beginPath(); ctx.arc(0, -2 + i * 7, 2.1, 0, Math.PI * 2); ctx.fill();
+      });
+      // Zuckergussstreifen an Armen und Beinen
+      ctx.strokeStyle = '#fff5df'; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(-17, 2); ctx.lineTo(-20, 7); ctx.moveTo(17, 2); ctx.lineTo(20, 7); ctx.moveTo(-11, 17); ctx.lineTo(-15, 20); ctx.moveTo(11, 17); ctx.lineTo(15, 20); ctx.stroke();
+      ctx.restore();
+    }
+    function drawOverlay() {
+      if (state === 'playing') return;
+      ctx.fillStyle = 'rgba(14, 39, 39, .66)';
+      ctx.fillRect(0, 0, WIDTH, HEIGHT);
+      const boxW = 440;
+      const boxH = state === 'over' ? 154 : 140;
+      const x = (WIDTH - boxW) / 2;
+      const y = (HEIGHT - boxH) / 2;
+      roundedRect(x, y, boxW, boxH, 22);
+      ctx.fillStyle = '#fff9eb'; ctx.fill();
+      ctx.strokeStyle = '#e8c56e'; ctx.lineWidth = 3; ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#17483d';
+      ctx.font = 'bold 30px Georgia, serif';
+      const title = state === 'ready' ? 'Auf die Plätzchen, fertig …' : state === 'paused' ? 'Kleine Verschnaufpause' : 'Runde vorbei';
+      ctx.fillText(title, WIDTH / 2, y + 54);
+      ctx.fillStyle = '#55716a'; ctx.font = '18px "Trebuchet MS", sans-serif';
+      const subtitle = state === 'ready' ? 'Bringe den Lebkuchenmann in alle drei Häuser.' : state === 'paused' ? 'Drücke „Weiter“, wenn du bereit bist.' : `Endstand: ${score} Punkte · Runde ${level}`;
+      ctx.fillText(subtitle, WIDTH / 2, y + 91);
+      ctx.fillStyle = '#a24a39'; ctx.font = 'bold 15px "Trebuchet MS", sans-serif';
+      ctx.fillText(state === 'over' ? '„Noch einmal“ startet eine neue Runde.' : 'Pfeiltasten oder WASD zum Bewegen', WIDTH / 2, y + 119);
+    }
+    function drawNotice(t) {
+      if (!notice || t > noticeUntil || state !== 'playing') return;
+      ctx.save();
+      ctx.font = 'bold 16px "Trebuchet MS", sans-serif';
+      const width = Math.min(WIDTH - 36, ctx.measureText(notice).width + 34);
+      const x = (WIDTH - width) / 2;
+      roundedRect(x, 72, width, 34, 15);
+      ctx.fillStyle = 'rgba(255,250,237,.94)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(92,126,104,.35)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = '#254b40'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(notice, WIDTH / 2, 89, width - 18);
+      ctx.restore();
+    }
+    function render(t) {
+      drawBackground();
+      drawHomes();
+      lanes.forEach(lane => lane.objects.forEach(object => drawVehicle(object, lane.row, lane.direction)));
+      drawGingerbread(0, 0, t);
+      drawNotice(t);
+      drawOverlay();
+    }
+    function frame(t) {
+      if (!lastFrame) lastFrame = t;
+      const dt = Math.min((t - lastFrame) / 1000, .04);
+      lastFrame = t;
+      if (state === 'playing') moveVehicles(dt);
+      render(t);
+      requestAnimationFrame(frame);
+    }
 
-function loop(t){
-  if(!running)return;
-  if(!paused){
-    const dt=Math.min(.035,(t-lastTime)/1000);
-    update(dt);draw();
-  }
-  lastTime=t;requestAnimationFrame(loop);
-}
+    function playTone(kind) {
+      if (muted) return;
+      const AudioCtor = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtor) return;
+      try {
+        if (!audioContext) audioContext = new AudioCtor();
+        if (audioContext.state === 'suspended') audioContext.resume();
+        const now = audioContext.currentTime;
+        const patterns = {
+          hop: [520], blocked: [260], start: [392, 523], goal: [659, 784, 988], level: [523, 659, 784, 1047], hit: [220, 165]
+        };
+        const notes = patterns[kind] || [440];
+        notes.forEach((frequency, index) => {
+          const osc = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          const startAt = now + index * .085;
+          osc.type = kind === 'hit' ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(frequency, startAt);
+          gain.gain.setValueAtTime(.0001, startAt);
+          gain.gain.exponentialRampToValueAtTime(kind === 'hop' ? .035 : .06, startAt + .012);
+          gain.gain.exponentialRampToValueAtTime(.0001, startAt + .12);
+          osc.connect(gain); gain.connect(audioContext.destination);
+          osc.start(startAt); osc.stop(startAt + .13);
+        });
+      } catch (_) { /* Audio ist optional und blockiert das Spiel nicht. */ }
+    }
+    function keyDirection(key) {
+      const k = key.toLowerCase();
+      if (k === 'arrowup' || k === 'w') return [0, -1];
+      if (k === 'arrowdown' || k === 's') return [0, 1];
+      if (k === 'arrowleft' || k === 'a') return [-1, 0];
+      if (k === 'arrowright' || k === 'd') return [1, 0];
+      return null;
+    }
 
-function togglePause(){
-  if(!running)return;
-  paused=!paused;
-  if(paused) showOverlay('⏸ Pause','Drücke P oder den Button, um weiterzuspielen.','Weiter');
-  else hideOverlay();
-}
+    window.addEventListener('keydown', event => {
+      const direction = keyDirection(event.key);
+      if (!direction) return;
+      if (state === 'playing') event.preventDefault();
+      if (!event.repeat) movePlayer(direction[0], direction[1]);
+    });
+    startBtn.addEventListener('click', startGame);
+    pauseBtn.addEventListener('click', togglePause);
+    muteBtn.addEventListener('click', () => {
+      muted = !muted;
+      muteBtn.textContent = muted ? '🔇 Ton aus' : '🔊 Ton an';
+      muteBtn.setAttribute('aria-pressed', String(muted));
+      syncBackgroundMusic();
+      if (!muted) playTone('start');
+    });
+    document.querySelectorAll('[data-move]').forEach(button => {
+      button.addEventListener('click', () => {
+        const moves = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+        const [dx, dy] = moves[button.dataset.move];
+        movePlayer(dx, dy);
+      });
+    });
+    let swipeStart = null;
+    canvas.addEventListener('pointerdown', event => {
+      swipeStart = { x: event.clientX, y: event.clientY };
+      canvas.setPointerCapture(event.pointerId);
+    });
+    canvas.addEventListener('pointerup', event => {
+      if (!swipeStart) return;
+      const dx = event.clientX - swipeStart.x;
+      const dy = event.clientY - swipeStart.y;
+      swipeStart = null;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < 22) return;
+      if (Math.abs(dx) > Math.abs(dy)) movePlayer(dx > 0 ? 1 : -1, 0);
+      else movePlayer(0, dy > 0 ? 1 : -1);
+    });
+    canvas.addEventListener('pointercancel', () => { swipeStart = null; });
 
-function toggleMute(){
-  muted=!muted;ui.mute.textContent=muted?'🔇 Sound aus':'🔊 Sound an';
-}
-
-document.addEventListener('keydown',e=>{
-  const k=e.key.toLowerCase();
-  if(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d','p','m',' '].includes(k)) e.preventDefault();
-  if(k==='arrowup'||k==='w')move(0,-1);
-  else if(k==='arrowdown'||k==='s')move(0,1);
-  else if(k==='arrowleft'||k==='a')move(-1,0);
-  else if(k==='arrowright'||k==='d')move(1,0);
-  else if(k==='p')togglePause();
-  else if(k==='m')toggleMute();
-  else if(k===' ' && !running)newGame();
-});
-
-document.querySelectorAll('[data-dir]').forEach(btn=>{
-  btn.addEventListener('pointerdown',e=>{
-    e.preventDefault();
-    const d=btn.dataset.dir;
-    if(d==='up')move(0,-1); if(d==='down')move(0,1);
-    if(d==='left')move(-1,0); if(d==='right')move(1,0);
-  });
-});
-
-ui.start.addEventListener('click',()=>{
-  if(paused){paused=false;hideOverlay();return;}
-  newGame();
-});
-ui.mute.addEventListener('click',toggleMute);
-
-makeLevel();updateUI();draw();
-})();
-</script>
+    makeLanes();
+    updateHud();
+    requestAnimationFrame(frame);
+  })();
+  </script>
 </body>
 </html>

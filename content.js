@@ -38,11 +38,12 @@ const ADVENT_CONTENT = {
     `
   },
   3: {
-    title: "Winter Frogger",
+    title: "Lebkuchenmann auf dem Heimweg",
     emoji: "🎄",
     html: `
+      <p>Ohje... da hat wohl jemand die Fußgängerbrücke vergessen und eine Verkehrssicherung gibt es auch nicht.</p>
       <div class="frogger-embed">
-        <iframe src="frogger.html" title="Winter Frogger" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="frogger.html" title="Lebkuchenmann auf dem Heimweg" loading="lazy" allow="autoplay"></iframe>
       </div>
     `
   },
@@ -92,41 +93,10 @@ const ADVENT_CONTENT = {
     `
   },
   6: {
-    title: "Weihnachtsgeschichte 1/3: Die erste, die stehen blieb",
-    emoji: "📖",
+    title: "Weihnachtsbild",
+    emoji: "🖼️",
     html: `
-      <p><strong>Episode 1: Die erste, die stehen blieb</strong></p>
-      <p>Es schneite auf der A81 so ausdauernd, als habe der Himmel eine Beschwerde eingereicht und beschlossen, sie durch Wiederholung zu bekräftigen. Der Schnee kam schräg über die Fahrbahn, legte sich auf Markierungen und Leitpfosten und machte aus jeder Spur eine vorläufige Vermutung. Der Verkehr bewegte sich noch  – jenes unentschlossene Vorankommen, bei dem jeder Fahrer glaubt, es müsse gleich besser werden, obwohl vor ihm nur weitere rote Rücklichter liegen. Noch rollten die Wagen. Noch konnte man sich einreden, man sei unterwegs. Beides sollte nicht lange anhalten.</p>
-      <p>Mara war unterwegs zu ihrer Mutter, wo Heiligabend nach festen Regeln ablief: erst Kartoffelsalat, dann Geschenke, dann Fragen, auf die niemand eine ehrliche Antwort hören wollte. Im Kofferraum lagen drei Geschenke, alle in Papier mit goldenen Sternen, das Mara an einer Tankstelle gekauft hatte. Eine Duftkerze für ihre Mutter, eine Flasche Wein für ihren Bruder und eine Spieluhr für den Neffen, die „Stille Nacht“ spielte, wenn man sie schief hielt.</p>
-      <p>Vor Mara fuhr ein orangefarbener Räum-Lkw. Ein echtes, schweres Fahrzeug, mit Pflug, Streuaufsatz, gelben Warnleuchten und einer Fahrerin, die aufrecht und konzentriert in der Kabine saß. Die Maschine arbeitete sich über die linke Spur, nicht schnell, aber stetig. Wenn man hinter ihr fuhr, konnte man beinahe glauben, das Schneetreiben sei gar nicht so schlimm.</p>
-      <p>Mara folgte ihr seit etwa zwanzig Minuten. Hinter Mara folgte ein dunkler SUV, dessen Fahrer mit der Lichthupe eine Art privates Weihnachtskonzert gab. Erst zweimal. Dann in regelmäßigen Stößen. Schließlich so ausdauernd, dass Mara im Rückspiegel das Gefühl bekam, der Mann wolle ihr eine Botschaft übermitteln, die er selbst noch nicht formuliert hatte. Sie hätte ihn ignorieren können. Sie hätte auch sein Kennzeichen notieren und später vergessen können. Stattdessen sah sie rechts eine Lücke, setzte den Blinker und wechselte bei Schrittgeschwindigkeit auf die mittlere Spur.</p>
-      <p>Der SUV schoss an ihr vorbei, soweit man bei zwölf Kilometern pro Stunde schießen kann. Er schien nun der Auffassung zu sein, einen wesentlichen Sieg errungen zu haben. Vor ihm aber war weiterhin der Räum-Lkw. Der Schnee fiel. Die Spur war schmal, die Sicht schlecht, und die Autos krochen dicht nebeneinander. Niemand konnte sich an dem breiten Räumfahrzeug vorbeidrücken, ohne den eigenen Wagen oder den eines anderen in eine sehr persönliche Beziehung mit der Leitplanke zu bringen.</p>
-      <p>Dann wurde der Lkw langsamer.</p>
-      <p>Nicht plötzlich. Nicht dramatisch. Er rollte einfach ein wenig langsamer als zuvor. Die Fahrerin betätigte etwas in der Kabine. Die Warnleuchten arbeiteten weiter, aber der Lastwagen fuhr nicht mehr.</p>
-      <p>Er stand.</p>
-      <p>Die Fahrerin probierte einen Hebel, dann noch einen. Ein tiefes hydraulisches Stöhnen antwortete ihr; danach ein hartnäckiges Klacken, das Mara an einen alten Heizkörper erinnerte, der seine besten Tage schon lange hinter sich hat. Die Fahrerin griff zum Funkgerät.</p>
-      <p>„Leitstelle, hier Räumfahrzeug Gisela. Keine Weiterfahrt, vermutlich Hydraulikfehler. Bitte Techniker schicken.“</p>
-      <p>Sie hörte zu. Draußen fielen Flocken auf die gelb blitzenden Leuchten, als wären sie kleine, unbeeindruckte Zuschauer.</p>
-      <p>„Ja, ich weiß, dass es dauert“, sagte die Fahrerin. „Schickt ihn trotzdem.“</p>
-      <p>Sie legte das Funkgerät weg und beugte sich wieder über die Schalter. „Komm schon, Gisela“, sagte sie, als könne ein Lastwagen durch gutes Zureden zu einer Einsicht gelangen.</p>
-      <p>Mara stellte das Radio aus. Der Verkehr stand nun vollständig. Vor ihr das Räumfahrzeug, neben ihr der SUV, dessen Fahrer jetzt nicht mehr blitzte, sondern beide Hände am Lenkrad festhielt. Es war erstaunlich, wie schnell Menschen ihre Überzeugung aufgaben, die Straße gehöre ihnen, sobald sie sich nicht mehr bewegen konnten.</p>
-      <p>Mara schaltete den Motor aus. Der Schnee schluckte alle anderen Geräusche. Die Stille war nicht vollkommen – Stille auf einer Autobahn enthält immer Motoren, ein fernes Hupen und irgendwo einen Menschen, der „Das gibt’s doch nicht!“ sagt –, aber sie wurde groß genug, dass Mara etwas anderes hörte: ein leises, unregelmäßiges Knacken aus Richtung des Räumfahrzeugs.</p>
-      <p>„Nun“, sagte eine Stimme, „da ist er also vorbeigekommen.“</p>
-      <p>Mara fuhr zusammen. Sie sah zur Kabine. Die Fahrerin war mit dem Versuch beschäftigt, die Räummaschine doch noch zur Fortbewegung zu bewegen und schien sie nicht zu beachten.</p>
-      <p>„Wer?“, fragte Mara.</p>
-      <p>„Der Eilige. Der Mann, der mit Lichtzeichen anzeigt, dass seine Zeit wichtiger ist als die aller anderen. Jetzt steht er hinter mir und ist genauso weit gekommen wie du.“</p>
-      <p>Mara starrte auf die Rückseite des Räumfahrzeugs.</p>
-      <p>„Du redest mit mir? Du bist ein Schneepflug.“</p>
-      <p>Das Klackern kam wieder, diesmal in einer fast empörten Folge.</p>
-      <p>„Und du bist eine Frau in einem Kleinwagen, die einen Mann vorbeigelassen hat, obwohl sie wusste, dass er sich danebenbenimmt. Wir alle tragen Dinge, die uns nicht stehen.“</p>
-      <p>Mara öffnete den Mund, schloss ihn wieder. Vielleicht war sie übermüdet. Vielleicht hatte die Heizung die letzten brauchbaren Gedanken in ihrem Kopf weichgekocht. Beides schien möglich.</p>
-      <p>„Der Techniker kommt“, sagte sie schließlich.</p>
-      <p>„Er versucht es“, antwortete der Schneepflug. „Er sitzt vermutlich ebenfalls im Schnee fest. Die Leitstelle hat eine optimistische Vorstellung davon, was ein Mensch mit Werkzeug und Warnweste gegen dreißig Kilometer Stau ausrichten kann.“</p>
-      <p>Mara sah an den Wagen vorbei. Die Straße vor Gisela lag unter einer weißen Decke. Hinter ihr standen alle Spuren still. Keine Lücke, kein Ausweg. Der Techniker würde nicht durchkommen, und kein Auto würde an dem Räumfahrzeug vorbeifahren. Die Maschine war die Einzige, die den Weg frei machen konnte – und sie bewegte sich nicht.</p>
-      <p>„Du könntest doch einfach weiterfahren“, sagte Mara.</p>
-      <p>Ein tiefes Klacken antwortete. Dann sagte Gisela: „Ich könnte vieles. Aber heute räume ich nicht für Leute, die glauben, eine Lichthupe sei eine höfliche Bitte.“</p>
-      <p>Vor Mara blitzten die Warnleuchten weiter. Schnee setzte sich auf die Motorhaube, den Pflug und Maras Windschutzscheibe. Hinter Gisela warteten Hunderte Menschen auf eine Weiterfahrt und vor ihr lag eine Straße, auf der sich immer mehr Schnee sammelte.</p>
-      <p>Mara begriff, dass sie ohne Gisela nicht weiterkamen. Gisela wusste das längst. Sie sagte es nur nicht. Sie ließ das Klacken für sich sprechen.</p>
+      <img src="https://i.pinimg.com/1200x/67/2f/ee/672feef8844da771f64cdf898126ac05.jpg" alt="Bild zu Türchen 6" loading="lazy" style="display:block;max-width:100%;max-height:70vh;height:auto;margin:0 auto;border-radius:16px;object-fit:contain;" />
     `
   },  7: {
     title: "Schneeballschlacht",
@@ -214,13 +184,10 @@ const ADVENT_CONTENT = {
     `
   },
   13: {
-    title: "Weihnachtsgeschichte 2/3: Der alte Glockenturm",
-    emoji: "📖",
+    title: "Weihnachtsbild",
+    emoji: "🖼️",
     html: `
-      <p><strong>Der Stern, der den Heimweg fand · Kapitel 2</strong></p>
-      <p>Lio und Flocke folgten den goldenen Punkten bis zum alten Glockenturm. Oben fanden sie eine leere Halterung in Form eines Sterns. Der Fund passte genau hinein – aber er blieb dunkel.</p>
-      <p>Auf dem steinernen Fensterbrett entdeckte Flocke eine eingeritzte Zeile: <em>„Ein Licht wird heller, wenn man es teilt.“</em> Die beiden blickten hinunter ins Dorf. Hinter den Fenstern war es schon dämmrig. Vielleicht brauchte der Stern viele Lichter, um wieder zu leuchten.</p>
-      <p>Sie machten sich auf den Rückweg, um die Dorfbewohner um Hilfe zu bitten. Doch ein Schneesturm zog auf und deckte ihre Spur zu. Bald wussten Lio und Flocke nicht mehr, welcher Weg ins Dorf führte.</p>
+      <img src="https://i.pinimg.com/736x/81/0c/33/810c3363c51088ef8fdc2b80fe90ff25.jpg" alt="Bild zu Türchen 13" loading="lazy" style="display:block;max-width:100%;max-height:70vh;height:auto;margin:0 auto;border-radius:16px;object-fit:contain;" />
     `
   },
   14: {
@@ -307,13 +274,10 @@ const ADVENT_CONTENT = {
     `
   },
   20: {
-    title: "Weihnachtsgeschichte 3/3: Das Licht findet heim",
-    emoji: "📖",
+    title: "Weihnachtsbild",
+    emoji: "🖼️",
     html: `
-      <p><strong>Der Stern, der den Heimweg fand · Kapitel 3</strong></p>
-      <p>Der Sturm hatte die goldene Spur zugedeckt. Lio und Flocke wussten nicht mehr, welcher Weg ins Dorf führte. Da ging im ersten Haus ein Licht an. Dann im nächsten. Nach und nach leuchteten Fenster und Laternen auf – bis der ganze Weg durch den Schnee zu sehen war.</p>
-      <p>Gemeinsam trugen die beiden den Stern zum Turm und setzten ihn in seine Halterung. Das warme Licht aus dem Dorf spiegelte sich in seinen Zacken. Plötzlich begann der Stern selbst zu leuchten: hell genug, um den Heimweg zu zeigen.</p>
-      <p>Von da an stand er jedes Jahr im Turmfenster. Und wenn es draußen schneite, fanden alle sicher nach Hause.</p>
+      <img src="https://i.pinimg.com/736x/45/1a/32/451a321a5896dcd3b0f5b99b0a54e018.jpg" alt="Bild zu Türchen 20" loading="lazy" style="display:block;max-width:100%;max-height:70vh;height:auto;margin:0 auto;border-radius:16px;object-fit:contain;" />
     `
   },
   21: {

@@ -248,7 +248,7 @@ function showDoor(day, scroll = true, openMiniGameInNewTab = false) {
 const highscoreStorageKey = "adventMiniGameHighscores";
 const legacyFroggerKey = "winterFroggerHighscore";
 const highscoreGames = [
-  { id: "winterFrogger", door: 3, name: "🐸 Winter Frogger", unit: "Punkte" },
+  { id: "winterFrogger", door: 3, name: "🍪 Lebkuchenmann auf dem Heimweg", unit: "Punkte" },
   { id: "snowballBattle", door: 7, name: "❄️ Schneeballschlacht", unit: "Siegpunkte" },
   { id: "winterJaeger", door: 10, name: "🎯 Winterjäger", unit: "Punkte" },
   { id: "winterRaeumer", door: 14, name: "🚜 Winterräumer", unit: "Punkte" },
