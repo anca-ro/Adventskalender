@@ -47,6 +47,13 @@ canvas{width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
   header{grid-column:1/-1;grid-row:1;display:grid;margin:0}
   .brand{font-size:16px}
   .stage{grid-column:1;grid-row:2;width:100%;height:100%;min-width:0;min-height:0;aspect-ratio:auto}
+  .overlay{display:flex;overflow:auto;overscroll-behavior:contain;padding:6px}
+  .overlay.hidden{visibility:hidden}
+  .overlay .card{flex:none;margin:auto;max-height:none;overflow:visible;padding:10px 12px}
+  .overlay .card h1{font-size:clamp(19px,4vh,26px);margin:0 0 5px}
+  .overlay .card p{font-size:13px;line-height:1.25;margin:4px 0 8px}
+  .overlay .card .muted{display:none}
+  .overlay .primary{min-height:44px;padding:8px 16px}
   .statusbar{grid-column:1;grid-row:3;padding:0}
   .weaponbar{justify-content:center}
   .touch-controls{grid-column:2;grid-row:2/4;width:100%;height:100%;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:center;padding:0;gap:6px}
