@@ -238,7 +238,33 @@ for(const t of tinsel){ctx.save();ctx.globalAlpha=.13+.08*(.5+.5*Math.sin(clock*
 stars.forEach(s=>{let tw=.55+.45*Math.sin(clock*1.6+s.phase);ctx.globalAlpha=tw;ctx.fillStyle=s.z>.75?'#e9f8ff':'#9fc8eb';ctx.shadowBlur=s.z>.82?7:0;ctx.shadowColor='#b9eaff';ctx.beginPath();ctx.arc((s.x-clock*(4+s.z*9)+W*20)%W,s.y,s.r*s.z,0,7);ctx.fill()});ctx.globalAlpha=1;ctx.shadowBlur=0;snow.forEach(f=>{f.y+=f.v*dt;f.x+=Math.sin(clock+f.phase)*f.w*dt;if(f.y>H+5){f.y=-5;f.x=Math.random()*W}ctx.globalAlpha=.28+f.r*.1;ctx.fillStyle='#e9f7ff';ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,7);ctx.fill()});
 // Zimtkrümel bleiben als matte, kurze Spuren hinter den normalen Spielobjekten.
 for(const c of cinnamonTrails){ctx.save();ctx.globalAlpha=.42;ctx.translate(c.x,c.y);ctx.rotate(c.a);ctx.strokeStyle='#b87843';ctx.lineWidth=Math.max(2,c.r*.8);ctx.beginPath();ctx.moveTo(-c.r*1.6,0);ctx.quadraticCurveTo(0,-c.r*.8,c.r*1.5,0);ctx.stroke();ctx.fillStyle='#e0a76c';ctx.beginPath();ctx.arc(0,0,c.r*.45,0,Math.PI*2);ctx.fill();ctx.restore()}ctx.globalAlpha=1}
-function draw(){background(0);drawNutcracker();rocks.forEach(r=>r.draw());goldenOrnaments.forEach(g=>drawOrnament(g.x,g.y,g.r,'#e5b632',g.a,true));santas.forEach(s=>s.draw());if(wreath)wreath.draw();if(strawStar)strawStar.draw();shots.forEach(b=>{ctx.fillStyle='#ffe7a8';ctx.shadowBlur=14;ctx.shadowColor='#ffcf66';ctx.font='17px Georgia';ctx.fillText('🎁',b.x-7,b.y+6)});ctx.shadowBlur=0;particles.forEach(p=>p.draw());powerups.forEach(p=>p.draw());if(player){player.draw();if(clock>=70&&clock<75)drawHeadlight(player)}ctx.shadowBlur=0;if(mode==='paused'){ctx.fillStyle='#06132988';ctx.fillRect(0,0,W,H);ctx.fillStyle='white';ctx.textAlign='center';ctx.font='bold 42px Georgia';ctx.shadowBlur=20;ctx.shadowColor='#8bdfff';ctx.fillText('PAUSE',W/2,H/2);ctx.font='16px Georgia';ctx.fillText(isMobileLandscape()?'Bitte Smartphone ins Hochformat drehen':'Weiter spielen antippen oder P drücken',W/2,H/2+34);ctx.shadowBlur=0}}
+function drawFinalTitle(){
+  if(!bgMusic||!Number.isFinite(bgMusic.duration)||bgMusic.duration<=0||mode==='finished')return;
+  const secondsLeft=bgMusic.duration-bgMusic.currentTime;
+  const titleDuration=15;
+  if(secondsLeft>titleDuration||secondsLeft<=0)return;
+  const progress=1-secondsLeft/titleDuration;
+  const size=Math.min(86,W*.095,H*.17);
+  ctx.save();
+  ctx.translate(W*(-.6+2.2*progress),H*(.58-.16*progress));
+  ctx.rotate(-.11);
+  ctx.transform(1,0,-.22,1,0,0);
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.shadowColor='#73b6ff';
+  ctx.shadowBlur=18;
+  ctx.fillStyle='#b8dcff';
+  ctx.font="italic 700 "+size*.44+"px Georgia, serif";
+  ctx.fillText('die Abenteuer des',0,-size*.65,W*.72);
+  ctx.fillStyle='#f4f8ff';
+  ctx.strokeStyle='#335eac';
+  ctx.lineWidth=3;
+  ctx.font="italic 900 "+size+"px system-ui, sans-serif";
+  ctx.strokeText('Raumschiff Mistelzweig',0,size*.18,W*.9);
+  ctx.fillText('Raumschiff Mistelzweig',0,size*.18,W*.9);
+  ctx.restore();
+}
+function draw(){background(0);drawNutcracker();drawFinalTitle();rocks.forEach(r=>r.draw());goldenOrnaments.forEach(g=>drawOrnament(g.x,g.y,g.r,'#e5b632',g.a,true));santas.forEach(s=>s.draw());if(wreath)wreath.draw();if(strawStar)strawStar.draw();shots.forEach(b=>{ctx.fillStyle='#ffe7a8';ctx.shadowBlur=14;ctx.shadowColor='#ffcf66';ctx.font='17px Georgia';ctx.fillText('🎁',b.x-7,b.y+6)});ctx.shadowBlur=0;particles.forEach(p=>p.draw());powerups.forEach(p=>p.draw());if(player){player.draw();if(clock>=70&&clock<75)drawHeadlight(player)}ctx.shadowBlur=0;if(mode==='paused'){ctx.fillStyle='#06132988';ctx.fillRect(0,0,W,H);ctx.fillStyle='white';ctx.textAlign='center';ctx.font='bold 42px Georgia';ctx.shadowBlur=20;ctx.shadowColor='#8bdfff';ctx.fillText('PAUSE',W/2,H/2);ctx.font='16px Georgia';ctx.fillText(isMobileLandscape()?'Bitte Smartphone ins Hochformat drehen':'Weiter spielen antippen oder P drücken',W/2,H/2+34);ctx.shadowBlur=0}}
 function loop(t){let dt=Math.min((t-last)/1000||0,.034);last=t;update(dt);draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
 function sound(freq,dur,type='sine'){if(muted)return;try{audio??=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.045,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+dur);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+dur)}catch{}}
 addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','Space','Shift'].includes(e.code))e.preventDefault();if(e.code==='KeyM'){muted=!muted;if(bgMusic)bgMusic.muted=muted;return}if(e.code==='KeyP'){if(mode==='playing')pauseGame();else if(mode==='paused')resumeGame();return}if((mode==='title'||mode==='finished')&&e.code==='Enter'){startGame();return}keys[e.code]=true});addEventListener('keyup',e=>keys[e.code]=false);ui.start.onclick=startGame;ui.resume.addEventListener('click',resumeGame);document.querySelectorAll('.touchbtn').forEach(b=>{let k=b.dataset.key;b.addEventListener('pointerdown',e=>{e.preventDefault();keys[k]=true;b.setPointerCapture(e.pointerId)});for(let ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,()=>keys[k]=false)});document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame()});
