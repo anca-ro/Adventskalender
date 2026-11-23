@@ -248,12 +248,12 @@ function showDoor(day, scroll = true, openMiniGameInNewTab = false) {
 const highscoreStorageKey = "adventMiniGameHighscores";
 const legacyFroggerKey = "winterFroggerHighscore";
 const highscoreGames = [
-  { id: "winterFrogger", door: 3, name: "🍪 Lebkuchenmann auf dem Heimweg", unit: "Punkte" },
-  { id: "snowballBattle", door: 7, name: "❄️ Schneeballschlacht", unit: "Siegpunkte" },
-  { id: "winterJaeger", door: 10, name: "🎯 Winterjäger", unit: "Punkte" },
-  { id: "winterRaeumer", door: 14, name: "🚜 Winterräumer", unit: "Punkte" },
-  { id: "winterAsteroids", door: 17, name: "🌌 Winter Asteroids", unit: "Punkte" },
-  { id: "keepTalkingWeihnachten", door: 21, name: "🎁 Verdächtiges Geschenk", format: "remainingTime" },
+  { id: "winterRaeumer", door: 3, name: "🚜 Winterräumer", unit: "Punkte" },
+  { id: "winterFrogger", door: 7, name: "🍪 Lebkuchenmann auf dem Heimweg", unit: "Punkte" },
+  { id: "keepTalkingWeihnachten", door: 10, name: "🎁 Verdächtiges Geschenk", format: "remainingTime" },
+  { id: "snowballBattle", door: 14, name: "❄️ Schneeballschlacht", unit: "Siegpunkte" },
+  { id: "winterAsteroids", door: 17, name: "🌌 Raumschiff Mistelzweig", unit: "Punkte" },
+  { id: "winterJaeger", door: 21, name: "🎯 Winterjäger", unit: "Punkte" },
   { id: "winterSudoku", door: 24, name: "🧩 Weihnachts-Sudoku", format: "bestTime", lowerIsBetter: true }
 ];
 

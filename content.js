@@ -38,13 +38,15 @@ const ADVENT_CONTENT = {
     `
   },
   3: {
-    title: "Lebkuchenmann auf dem Heimweg",
-    emoji: "🎄",
+    title: "Winterräumer",
+    emoji: "🚜",
     html: `
-      <p>Ohje... da hat wohl jemand die Fußgängerbrücke vergessen und eine Verkehrssicherung gibt es auch nicht.</p>
-      <div class="frogger-embed">
-        <iframe src="frogger.html" title="Lebkuchenmann auf dem Heimweg" loading="lazy" allow="autoplay"></iframe>
+      <p>Mach die Wege frei für den Weihnachtsmann! Räume die Schneeflocken ab, weiche den Wichteln aus und sammle Pylone für einen kurzen Räum-Power-Schub.</p>
+      <div class="winter-raeumer-embed">
+        <iframe src="winterraeumer.html" title="Winterräumer – Winter-Arcade-Spiel" loading="lazy" allow="autoplay"></iframe>
       </div>
+      <p><a href="winterraeumer.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
+      <p class="small">Pfeiltasten oder WASD · Mobil: wischen oder die Richtungstasten benutzen</p>
     `
   },
   4: {
@@ -69,44 +71,29 @@ const ADVENT_CONTENT = {
     `
   },
   5: {
-    title: "Dänisches Weihnachtsbasteln",
-    emoji: "✂️",
+    title: "Tannenbaum aus Papier",
+    emoji: "🎄",
     html: `
-      <p>Heute gibt es zwei klassische Bastelideen aus Papier: das geflochtene Weihnachtsherz und einen gefalteten Papierstern.</p>
-      <div class="card">
-        <h3>Flecht-Weihnachtsherz · <em>julehjerte</em></h3>
-        <p><strong>Du brauchst:</strong> zwei Blätter Papier in verschiedenen Farben, Lineal, Bleistift, Schere und einen schmalen Papierstreifen für den Henkel.</p>
-        <ol>
-          <li>Schneide aus beiden Farben je einen Streifen von etwa 8 × 20 cm aus und falte ihn in der Mitte.</li>
-          <li>Runde die offenen Enden ab. Schneide vom Falz aus zwei parallele Schlitze hinein, ohne bis zum Rand durchzuschneiden.</li>
-          <li>Lege die gefalteten Stücke im rechten Winkel aneinander. Flechte die Streifen abwechselnd durch- und umeinander, bis ein Karomuster entsteht.</li>
-          <li>Klebe innen einen Papierstreifen als Henkel fest.</li>
-        </ol>
-        <p class="small"><a href="https://nordisk.de/blogs/artikel/weihnachtsherzen-flechten-anleitung" target="_blank" rel="noopener">Bildanleitung für das Flechtherz</a></p>
-      </div>
-      <div class="card">
-        <h3>Papierstern</h3>
-        <p><strong>Du brauchst:</strong> vier lange Papierstreifen und etwas Faden zum Aufhängen.</p>
-        <p>Falte die Streifen in der Mitte und verschränke sie zu einem kleinen Flechtquadrat. Falte die Streifen nacheinander über die Mitte, um die flachen Zacken zu formen. Wende den Stern, wiederhole die Schritte auf der Rückseite und kürze die Enden.</p>
-        <p class="small"><a href="https://www.spektrum.de/fm/976/Anleitung_Froebelsterne.pdf" target="_blank" rel="noopener">Bebilderte Anleitung für den Papierstern</a></p>
-      </div>
+      <p>Heute wird aus einem Blatt Papier ein kleiner Weihnachtsbaum. Du brauchst nur ein quadratisches Blatt Papier und eine Schere.</p>
+      <p>Falte das Blatt wie auf den Bildern 1 bis 13. Schneide unten die überstehende Spitze ab und schneide die schrägen Seiten mehrmals ein. Knicke die Laschen an den Einschnitten nach unten und fächere die Papierlagen auf. Fertig ist dein Tannenbaum!</p>
+      <img src="https://i.pinimg.com/1200x/59/58/a2/5958a21738a74ab7ae00514a599e384c.jpg" alt="18 Bildschritte vom quadratischen Papier zum aufgefächerten Tannenbaum" width="564" height="902" loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:16px;" />
     `
   },
   6: {
-    title: "Weihnachtsbild",
+    title: "Yoga für Weihnachtsmänner",
     emoji: "🖼️",
     html: `
       <img src="https://i.pinimg.com/1200x/67/2f/ee/672feef8844da771f64cdf898126ac05.jpg" alt="Bild zu Türchen 6" loading="lazy" style="display:block;max-width:100%;max-height:70vh;height:auto;margin:0 auto;border-radius:16px;object-fit:contain;" />
     `
   },  7: {
-    title: "Schneeballschlacht",
-    emoji: "🐸",
+    title: "Lebkuchenmann auf dem Heimweg",
+    emoji: "🍪",
     html: `
-      <p>Zwei Teams, sechs Wichtel und ein sehr frostiges Duell. Wechselt euch ab und bringt das gegnerische Team mit Schneebällen, Geschenkbomben und Zuckerstangen-Schüssen ins Wanken!</p>
-      <div class="artillery-embed">
-        <iframe src="schneeballschlacht.html" title="Schneeballschlacht" loading="lazy" allow="autoplay"></iframe>
+      <p>Ohje... da hat wohl jemand die Fußgängerbrücke vergessen und eine Verkehrssicherung gibt es auch nicht.</p>
+      <div class="frogger-embed">
+        <iframe src="frogger.html" title="Lebkuchenmann auf dem Heimweg" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Steuerung: ← → laufen · ↑ ↓ zielen · Leertaste halten und loslassen · 1–3 Waffen wechseln</p>
+      <p><a href="frogger.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   8: {
@@ -133,14 +120,14 @@ const ADVENT_CONTENT = {
     `
   },
   10: {
-    title: "Winterjäger",
-    emoji: "🎯",
+    title: "Verdächtiges Geschenk",
+    emoji: "🎁",
     html: `
-      <p>Die Weihnachtsfreunde sausen durchs Winterland. Triff sie und sammle möglichst viele Punkte, bevor die Zeit abläuft!</p>
-      <div class="winter-jaeger-embed">
-        <iframe src="winterjaeger.html" title="Winterjäger" loading="lazy" allow="autoplay"></iframe>
+      <p>Ein Geschenk tickt! Löse die Rätsel, bevor die Zeit abläuft. Spiele allein oder zu zweit: Eine Person sieht die Module, die andere hilft mit dem Handbuch.</p>
+      <div class="gift-embed">
+        <iframe src="keep-talking-weihnachten.html" title="Verdächtiges Geschenk" loading="lazy"></iframe>
       </div>
-      <p class="small">Klicken oder tippen zum Zielen · 6 Schneebälle pro Ladung · Highscore wird in der Liste gespeichert</p>
+      <p><a href="keep-talking-weihnachten.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   11: {
@@ -168,37 +155,43 @@ const ADVENT_CONTENT = {
     `
   },
   12: {
-    title: "Basteln: Weihnachtsanhänger aus Pappe",
-    emoji: "🎄",
+    title: "Weihnachtsstern aus Teebeutel-Verpackungen",
+    emoji: "⭐",
     html: `
-      <p>Aus Verpackungskarton wird ein persönlicher Baumschmuck.</p>
+      <p>Heute wird aus leeren Teebeutel-Verpackungen ein Weihnachtsstern zum Aufhängen.</p>
       <div class="card">
-        <p><strong>Du brauchst:</strong> ein Stück dünne Pappe, Schere, Stift, Wolle oder Schnur und Stifte oder Papierreste zum Verzieren.</p>
-        <ol>
-          <li>Zeichne einen Stern, Baum oder eine Glocke auf die Pappe und schneide die Form aus.</li>
-          <li>Verziere den Anhänger mit Farben, Papierstücken oder darum gewickelter Wolle.</li>
-          <li>Stich oben vorsichtig ein Loch hinein und ziehe einen Faden zum Aufhängen hindurch.</li>
-        </ol>
-        <p class="small">Tipp: Alte Versandkartons eignen sich prima als Bastelpappe.</p>
+        <h3>Videoanleitung</h3>
+        <iframe
+          src="https://assets.pinterest.com/ext/embed.html?id=304907837300795394&amp;src=oembed"
+          title="Videoanleitung zum Weihnachtsstern auf Pinterest"
+          width="450"
+          height="900"
+          loading="lazy"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          style="display:block;max-width:100%;margin:0 auto;border:0;">
+        </iframe>
+        <p><a href="https://de.pinterest.com/pin/304907837300795394/" target="_blank" rel="noopener">Video auf Pinterest öffnen</a></p>
       </div>
     `
   },
   13: {
-    title: "Weihnachtsbild",
+    title: "Yoga für Schneemänner",
     emoji: "🖼️",
     html: `
       <img src="https://i.pinimg.com/736x/81/0c/33/810c3363c51088ef8fdc2b80fe90ff25.jpg" alt="Bild zu Türchen 13" loading="lazy" style="display:block;max-width:100%;max-height:70vh;height:auto;margin:0 auto;border-radius:16px;object-fit:contain;" />
     `
   },
   14: {
-    title: "Winterräumer",
+    title: "Schneeballschlacht",
     emoji: "❄️",
     html: `
-      <p>Mach die Wege frei für den Weihnachtsmann! Räume die Schneeflocken ab, weiche den Wichteln aus und sammle Pylone für einen kurzen Räum-Power-Schub.</p>
-      <div class="winter-raeumer-embed">
-        <iframe src="winterraeumer.html" title="Winterräumer – Winter-Arcade-Spiel" loading="lazy" allow="autoplay"></iframe>
+      <p>Zwei Teams, sechs Wichtel und ein sehr frostiges Duell. Wechselt euch ab und bringt das gegnerische Team mit Schneebällen, Geschenkbomben und Zuckerstangen-Schüssen ins Wanken!</p>
+      <div class="artillery-embed">
+        <iframe src="schneeballschlacht.html" title="Schneeballschlacht" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p class="small">Pfeiltasten oder WASD · Mobil: wischen oder die Richtungstasten benutzen</p>
+      <p class="small">Steuerung: ← → laufen · ↑ ↓ zielen · Leertaste halten und loslassen · 1–3 Waffen wechseln</p>
+      <p><a href="schneeballschlacht.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   15: {
@@ -212,24 +205,24 @@ const ADVENT_CONTENT = {
     `
   },
   16: {
-    title: "Winterwissen: Tiere im Winter",
-    emoji: "🦔",
+    title: "Winterwissen: Schnee und Sonnenlicht",
+    emoji: "❄️",
     html: `
       <div class="fact">
-        <span>🐾</span>
-        <div>Tiere kommen auf verschiedene Weise durch den Winter: Igel halten Winterschlaf, manche Zugvögel ziehen in wärmere Gegenden und andere Tiere bleiben aktiv.</div>
+        <span>☀️</span>
+        <div>Frischer Schnee reflektiert typischerweise etwa 90 % des einfallenden Sonnenlichts. Bei älterem Schnee sind es oft nur rund 40 % – frischer Schnee ist also ein richtiger Winterspiegel.</div>
       </div>
-      <p>Ein Spaziergang im Schnee kann ihre Spuren sichtbar machen – zum Beispiel kleine Pfotenabdrücke oder Vogelspuren.</p>
-      <p class="small"><a href="https://www.nabu-aachen-land.de/mitteilung/von-frostschutz-bis-winterschlaf-tierische-ueberwinterungsstrategien" target="_blank" rel="noopener">Mehr zu Überwinterungsstrategien</a></p>
+      <p>Diese Rückstrahlung heißt Albedo. Sie sorgt dafür, dass frisch verschneite Landschaften besonders hell wirken.</p>
+      <p class="small"><a href="https://www.weather.gov/media/owp/oh/hrl/docs/22snow17.pdf" target="_blank" rel="noopener">Mehr zum Energieaustausch an der Schneeoberfläche</a></p>
     `
   },
   17: {
-    title: "Asteroids",
+    title: "Raumschiff Mistelzweig",
     emoji: "🎯",
     html: `
-      <p>Zerlege die Christbaumkugeln im winterlichen Asteroids-Spiel und sammle möglichst viele Punkte!</p>
+      <p>Zerlege die Christbaumkugeln und sammle möglichst viele Punkte!</p>
       <div class="winter-asteroids-embed">
-        <iframe src="winter-asteroids.html" title="Winter Asteroids" loading="lazy" allow="autoplay"></iframe>
+        <iframe src="winter-asteroids.html" title="Raumschiff Mistelzweig" loading="lazy" allow="autoplay"></iframe>
       </div>
       <p class="small">← → drehen · ↑ Schub · Leertaste feuern · P = Pause · M = Ton</p>
       <p><a href="winter-asteroids.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
@@ -242,7 +235,7 @@ const ADVENT_CONTENT = {
       <p><strong>10 Minuten Vorbereitung · 15 Minuten Backzeit · ca. 20 Stück</strong></p>
       <div class="card">
         <h3>Letzter Kuchenmontag vor Weihnachten! 😅</h3>
-        <p>Drei Montage, drei Rezepte, 3 Montagskuchen – und kein einziges Mal musste ich dafür ins Büro. Ich nenne das moderne Arbeitsorganisation.</p>
+        <p>Drei Rezepte, drei Montage und vielleicht 3 Montagskuchen</p>
         <p>Falls jemand fragt, ob es nächstes Jahr wieder Montagskuchen gibt: Die Machbarkeit im Rahmen der Ressourcenplanung wird gerade geprüft.</p>
       </div>
       <h3>Zutaten</h3>
@@ -258,36 +251,41 @@ const ADVENT_CONTENT = {
     `
   },
   19: {
-    title: "Basteln: Geschenktüte aus Packpapier",
-    emoji: "🎁",
+    title: "Basteln: Buntes Windlicht aus Papier",
+    emoji: "⭐",
     html: `
-      <p>Eine kleine Tüte für ein Geschenk oder ein paar Plätzchen – aus altem Packpapier oder einer aufgefalteten Papiertüte.</p>
+      <p>Heute gibt es eine Anleitung für ein Windlicht. Du brauchst Origamipapier, eine Schere und ein LED-Teelicht.</p>
       <div class="card">
-        <p><strong>Du brauchst:</strong> Papier, Schere, Klebeband oder Klebestift, Schnur und optional Stifte.</p>
         <ol>
-          <li>Rolle das Papier zu einem Schlauch und klebe die lange Kante mit einer kleinen Überlappung fest.</li>
-          <li>Falte das untere Ende nach oben, klappe es wie einen Briefumschlag auf und klebe die entstandenen Bodenlaschen fest.</li>
-          <li>Öffne die Tüte, falte den oberen Rand um und verziere sie nach Wunsch.</li>
-          <li>Für einen Henkel kannst du zwei Löcher in den oberen Rand stechen und Schnur durchziehen.</li>
+          <li>Falte beide Diagonalen. Wende das Papier und falte es waagerecht und senkrecht in der Mitte. Klappe es entlang der Falze zu einem kleineren Quadrat zusammen.</li>
+          <li>Falte die seitlichen Ecken zur Mitte und schneide die übrigen Spitzen ab. Öffne die vier Laschen einzeln und drücke sie entlang der Falze flach, sodass acht schmale Laschen entstehen.</li>
+          <li>Falte die Ecken der Laschen zur Mitte und öffne das Papier wieder. Klappe die Spitzen des Achtecks nach innen und lege das Papier wieder zu einer Drachenform zusammen.</li>
+          <li>Falte die oberen Spitzen nach unten und die untere Spitze ein Stück nach oben. Öffne den Stern vorsichtig, drücke den Boden flach und stelle ein LED-Teelicht hinein.</li>
         </ol>
+        <p><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgNYhuqkRJngv6rGmoV2F77k1YDLedNe4l409k3Q0slz-HO1vDG45m-zYRvyHGNibLEizwzXtPC_qdibWWIHOEAt_4UXmm7rAwZS5u4KeO8qE7I_-yWz63N7oCGloqrvuR4D0TM5ClUcAA/s1600/windlicht+falten.png" target="_blank" rel="noopener"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgNYhuqkRJngv6rGmoV2F77k1YDLedNe4l409k3Q0slz-HO1vDG45m-zYRvyHGNibLEizwzXtPC_qdibWWIHOEAt_4UXmm7rAwZS5u4KeO8qE7I_-yWz63N7oCGloqrvuR4D0TM5ClUcAA/s1600/windlicht+falten.png" alt="Bildanleitung zum Falten des Papierwindlichts, Teil 1" loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:12px;"></a></p>
+        <p><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE7kI5380FKVk8YhR0jPDu-MVmskhT8f0upgINTS0UtODUjMnOo0aRGbLrJB8ll6YXNLZxU19JWZT-cdwll5dmu0zbMjZMj17NVI5TF99HhO5HpIHF1jTxg32423hmmAUZ64qwCD_bOvc/s1600/windlicht+falten2.png" target="_blank" rel="noopener"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhE7kI5380FKVk8YhR0jPDu-MVmskhT8f0upgINTS0UtODUjMnOo0aRGbLrJB8ll6YXNLZxU19JWZT-cdwll5dmu0zbMjZMj17NVI5TF99HhO5HpIHF1jTxg32423hmmAUZ64qwCD_bOvc/s1600/windlicht+falten2.png" alt="Bildanleitung zum Falten des Papierwindlichts, Teil 2" loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:12px;"></a></p>
+        <p><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhB-Eun5BfUdi1LqCPC92c6LUdppyIkjVLuw1WlXIArVqWqQI-X4u0wn5wQP9iGuHZ09piCMaQe5kuiYP90HopH8Wt8iadI2rH-MwAiGS2KsJrDsq3mH3-Fn8ue__0TLqbH3SZMT_Y0n18/s1600/4.png" target="_blank" rel="noopener"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhB-Eun5BfUdi1LqCPC92c6LUdppyIkjVLuw1WlXIArVqWqQI-X4u0wn5wQP9iGuHZ09piCMaQe5kuiYP90HopH8Wt8iadI2rH-MwAiGS2KsJrDsq3mH3-Fn8ue__0TLqbH3SZMT_Y0n18/s1600/4.png" alt="Fertig gefaltetes Windlicht aus Papier" loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:12px;"></a></p>
+        <p><a href="https://www.elternvommars.com/2018/12/3-einfache-last-minute-geschenkideen.html" target="_blank" rel="noopener">Originalanleitung</a></p>
       </div>
     `
   },
   20: {
-    title: "Weihnachtsbild",
+    title: "Vorbereitung ist alles",
     emoji: "🖼️",
     html: `
       <img src="https://i.pinimg.com/736x/45/1a/32/451a321a5896dcd3b0f5b99b0a54e018.jpg" alt="Bild zu Türchen 20" loading="lazy" style="display:block;max-width:100%;max-height:70vh;height:auto;margin:0 auto;border-radius:16px;object-fit:contain;" />
     `
   },
   21: {
-    title: "Verdächtiges Geschenk",
-    emoji: "🚜",
+    title: "Winterjäger",
+    emoji: "🎯",
     html: `
-      <div class="gift-embed">
-        <iframe src="keep-talking-weihnachten.html" title="Verdächtiges Geschenk" loading="lazy"></iframe>
+      <p>Die Weihnachtsfreunde sausen durchs Winterland. Triff sie und sammle möglichst viele Punkte, bevor die Zeit abläuft!</p>
+      <div class="winter-jaeger-embed">
+        <iframe src="winterjaeger.html" title="Winterjäger" loading="lazy" allow="autoplay"></iframe>
       </div>
-      <p><a href="keep-talking-weihnachten.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
+      <p class="small">Klicken oder tippen zum Zielen · 6 Schneebälle pro Ladung · Highscore wird in der Liste gespeichert</p>
+      <p><a href="winterjaeger.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   },
   22: {
@@ -302,11 +300,10 @@ const ADVENT_CONTENT = {
     `
   },
   23: {
-    title: "Weihnachtsgruß aus dem Büro",
+    title: "Weihnachtsgruß",
     emoji: "🎄",
     html: `
       <div class="card">
-        <h3>Liebe Kolleginnen und Kollegen,</h3>
         <p>Ein herzlicher Weihnachtsgruß an alle, die am 23. Dezember noch im Büro sind! Danke für euren Einsatz. Haltet durch – die Feiertage sind schon ganz nah. Wir wünschen euch schöne und erholsame Weihnachtstage und einen guten Start ins neue Jahr. 🎄</p>
       </div>
     `,
@@ -318,12 +315,19 @@ const ADVENT_CONTENT = {
     }
   },
   24: {
-    title: "Weihnachts-Sudoku",
+    title: "Frohe Weihnachten",
     emoji: "🎁",
     html: `
+      <div class="card">
+        <p>Wenn am Baum die Lichter brennen,<br>
+        darf die Arbeit Pause kennen.<br>
+        Ich wünsche euch ein frohes Fest,<br>
+        das euch zusammen feiern lässt.</p>
+      </div>
       <div class="sudoku-embed">
         <iframe src="mini-sudoku.html" title="Weihnachts-Sudoku" loading="lazy"></iframe>
       </div>
+      <p><a href="mini-sudoku.html" target="_blank" rel="noopener">Spiel in einem neuen Tab öffnen</a></p>
     `
   }
 };
